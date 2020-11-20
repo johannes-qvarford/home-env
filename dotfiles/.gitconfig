@@ -1,0 +1,31 @@
+[alias]
+	br = branch
+	ci = commit
+	co = checkout --quiet
+	de = !git clean -d -f && git undo
+	df = diff --color
+    did = !"printf \"=== CHANGED FILES ===\n\n\" >.__status && git status -s >>.__status && printf \"\n=== DIFFS ===\n\n\" >>.__status && git diff --color >>.__status && cat .__status | grep -v \\.__status && rm .__status"
+	destroy = !git clean -d -f && git reset --hard
+	lg = log --graph --pretty=format:'%Cgreen%d %Creset%ai %Cgreen%h %Cred%an %Cgreen%s'
+	cleanup-before-push = rebase --interactive master
+	move-current-branch = reset --hard
+	move-other-branch = branch -f
+	st = status -s
+	shove = !git add --all && git commit && git push
+	shovel = !git add --all && git commit && git pull && git push
+	ca = !git add --all && git commit
+	amend = commit --amend
+	adda = add --all
+	back = reset --hard HEAD^
+[core]
+	editor = vim
+	safecrlf = false
+	autocrlf = false
+	excludesfile = ~/.gitignore
+[user]
+	email = jq.email+gitlab@pm.me
+	name = Johannes Qvarford
+[credential]
+	helper = cache
+[push]
+	default = simple

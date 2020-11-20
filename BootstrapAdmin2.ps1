@@ -7,3 +7,5 @@ wsl --set-default-version 2
 choco install -y wsl-fedoraremix vcxsrv
 fedoraremix.exe run 'useradd jq -g wheel; passwd jq;'
 fedoraremix.exe config --username jq
+Set-Location ~/win-env-temp
+fedoraremix.exe run './bootstrap-wsl.sh'

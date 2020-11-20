@@ -1,10 +1,11 @@
-Type Win+Powershell, right click run as administrator
+# Instructions
 
+* Type Win+Powershell, right click run as administrator
 * Copy+Paste "Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://gitlab.com/johannes-q/win-env/-/raw/master/
 BootstrapAdmin1.ps1'));"
 * Restart
-* ./BootstrapAdmin2.ps1
-
+* Copy+Paste "Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://gitlab.com/johannes-q/win-env/-/raw/master/
+BootstrapAdmin1.ps1'));"
 
 ## References
 
