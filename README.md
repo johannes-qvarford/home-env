@@ -5,7 +5,7 @@
 BootstrapAdmin1.ps1'));"
 * Restart
 * Copy+Paste "Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://gitlab.com/johannes-q/win-env/-/raw/master/
-BootstrapAdmin1.ps1'));"
+BootstrapAdmin2.ps1'));"
 
 ## References
 
@@ -16,7 +16,6 @@ BootstrapAdmin1.ps1'));"
 
 ## TODO
 
-* TODO: sync configfiles  
-* TODO: sync gitconfig (setup/main.js called by bootstrap-wsl)
 * TODO: sync visual studio code config
 * TODO: Evaluate https://chocolatey.org/packages/caprine
+* TODO: Evaluate IntelliJ through X

@@ -18,14 +18,12 @@
 	adda = add --all
 	back = reset --hard HEAD^
 [core]
-	editor = vim
+	editor = vscode
 	safecrlf = false
 	autocrlf = false
 	excludesfile = ~/.gitignore
 [user]
 	email = jq.email+gitlab@pm.me
 	name = Johannes Qvarford
-[credential]
-	helper = cache
 [push]
 	default = simple
