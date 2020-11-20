@@ -16,6 +16,5 @@ BootstrapAdmin2.ps1'));"
 
 ## TODO
 
-* TODO: sync visual studio code config
 * TODO: Evaluate https://chocolatey.org/packages/caprine
 * TODO: Evaluate IntelliJ through X
