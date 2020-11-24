@@ -3,7 +3,7 @@ sudo dnf install -y git fish
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 curl https://packages.microsoft.com/config/rhel/7/prod.repo | sudo tee /etc/yum.repos.d/microsoft.repo
 sudo dnf check-update
-sudo dnf install -y compat-openssl10 powershell util-linux-user node fzf
+sudo dnf install -y compat-openssl10 powershell util-linux-user node fzf snapd
 
 git config user.name 'Johannes Qvarford'
 git config user.email 'jq.email+gitlab@pm.me'
@@ -33,5 +33,7 @@ ln -s /mnt/c/Users/Johannes\ Qvarford/ ~/win
 mkdir -p ~/win-env/vscode-settings
 ln -s ~/win/AppData/Roaming/Code/User/settings.json ~/win-env/vscode-settings/settings.json
 ln -s ~/win/AppData/Roaming/Code/User/snippets ~/win-env/vscode-settings/snippets
+
+# sudo snap install intellij-idea-community --classic
 
 fisher

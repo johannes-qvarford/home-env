@@ -16,5 +16,4 @@ BootstrapAdmin2.ps1'));"
 
 ## TODO
 
-* TODO: Evaluate https://chocolatey.org/packages/caprine
 * TODO: Evaluate IntelliJ through X
