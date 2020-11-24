@@ -17,7 +17,7 @@ echo
 read -p "Have you copied the above? "
 echo 
 
-git clone https://gitlab.com/johannes-q/win-env ~/win-env
+git clone git@gitlab.com:johannes-q/win-env.git ~/win-env
 
 NEW=~
 OLD=~/win-env/dotfiles
@@ -33,6 +33,7 @@ ln -s /mnt/c/Users/Johannes\ Qvarford/ ~/win
 mkdir -p ~/win-env/vscode-settings
 ln -s ~/win/AppData/Roaming/Code/User/settings.json ~/win-env/vscode-settings/settings.json
 ln -s ~/win/AppData/Roaming/Code/User/snippets ~/win-env/vscode-settings/snippets
+
 
 # sudo snap install intellij-idea-community --classic
 
