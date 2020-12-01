@@ -3,6 +3,7 @@ Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://cho
 
 choco install -y microsoft-windows-terminal --pre 
 choco install -y dropdown vscode keepass megasync brave steam musicbee
+choco install -y kindlepreviewer --ignore-checksums
 
 dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart

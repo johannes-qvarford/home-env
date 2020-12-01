@@ -34,6 +34,10 @@ mkdir -p ~/win-env/vscode-settings
 ln -s ~/win/AppData/Roaming/Code/User/settings.json ~/win-env/vscode-settings/settings.json
 ln -s ~/win/AppData/Roaming/Code/User/snippets ~/win-env/vscode-settings/snippets
 
+sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf -y install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf -y install ffmpeg
+sudo npm install -g crunchyroll-dl
 
 # sudo snap install intellij-idea-community --classic
 
