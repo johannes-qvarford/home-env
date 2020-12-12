@@ -17,3 +17,9 @@ BootstrapAdmin2.ps1'));"
 ## TODO
 
 * TODO: Evaluate IntelliJ through X
+* TODO: Automatically setup win-server domain on router
+* TODO: Automatically setup win-server domain locally.
+* TODO: Backup and restore Jackett Trackers
+* TODO: Backup and restore Radarr Trackers
+* TODO: Backup and restore Sonarr Trackers
+* TODO: Add and backup and restore QBitTorrent Trackers
