@@ -17,9 +17,10 @@ BootstrapAdmin2.ps1'));"
 ## TODO
 
 * TODO: Evaluate IntelliJ through X
-* TODO: Automatically setup win-server domain on router
-* TODO: Automatically setup win-server domain locally.
-* TODO: Backup and restore Jackett Trackers
-* TODO: Backup and restore Radarr Trackers
-* TODO: Backup and restore Sonarr Trackers
-* TODO: Add and backup and restore QBitTorrent Trackers
+* TODO: Automatically setup win-server.lan domain on router
+* TODO: Convert win-server docker script to docker-compose
+* TODO: Automatically start win-server on boot.
+
+## Temporary Garbage
+
+sudo docker run --name docker-nginx -p 80:80 -v ~/win-env/win-server/sites-enabled:/etc/nginx/conf.d nginx
