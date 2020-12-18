@@ -24,3 +24,6 @@ BootstrapAdmin2.ps1'));"
 ## Temporary Garbage
 
 sudo docker run --name docker-nginx -p 80:80 -v ~/win-env/win-server/sites-enabled:/etc/nginx/conf.d nginx
+
+\\wsl$\fedoraremix\home\jq\win-env
+C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp
