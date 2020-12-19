@@ -14,16 +14,21 @@ BootstrapAdmin2.ps1'));"
 * Read https://docs.microsoft.com/en-us/windows/terminal/get-started
 * Read https://techcommunity.microsoft.com/t5/windows-dev-appconsult/running-wsl-gui-apps-on-windows-10/ba-p/1493242
 
+For some reason the personal startup directory changed from Startup to STARTUP-.
+Had to restore it:
+https://answers.microsoft.com/en-us/windows/forum/windows_7-performance/shortcuts-in-the-startup-folder-not-running-during/646845d6-8c10-4456-b6ef-b99f4a03aa10
+
 ## TODO
 
-* TODO: Evaluate IntelliJ through X
-* TODO: Automatically setup win-server.lan domain on router
-* TODO: Convert win-server docker script to docker-compose
-* TODO: Automatically start win-server on boot.
-
+* Evaluate IntelliJ through X
+* Convert win-server docker script to docker-compose
+* Setup automatic loading of cmdlets.
+* Cmdlet for switching to administrator (interactive)
+* Cmdlet for running file as Administrator
+* Cmdlet for opening wsl jq home directory
+* Cmdlet for switching to wsl
+* Cmdlet for switching to wsl and open current directory
+* Script for opening powershell as administrator
+* Script for opening powershell
+* Script for opening pwsh as administrator
 ## Temporary Garbage
-
-sudo docker run --name docker-nginx -p 80:80 -v ~/win-env/win-server/sites-enabled:/etc/nginx/conf.d nginx
-
-\\wsl$\fedoraremix\home\jq\win-env
-C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp
