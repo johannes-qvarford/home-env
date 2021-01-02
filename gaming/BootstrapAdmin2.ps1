@@ -11,7 +11,7 @@ fedoraremix.exe config --username jq
 $tempDir = [System.IO.Path]::GetTempPath();
 Invoke-WebRequest "https://gitlab.com/johannes-q/home-env/-/archive/master/home-env-master.zip" -OutFile "~/Downloads/home-env-master.zip";
 Expand-Archive "~/Downloads/home-env-master.zip" -DestinationPath  "$tempDir"
-Set-Location "$tempDir/home-env-master"
+Set-Location "$tempDir/home-env-master/gaming"
 fedoraremix.exe run './bootstrap-wsl.sh'
 
 $WshShell = New-Object -comObject WScript.Shell

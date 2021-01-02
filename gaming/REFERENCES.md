@@ -1,0 +1,11 @@
+
+## References
+
+* Read https://docs.microsoft.com/en-us/windows/wsl/install-win10
+* Read https://itnext.io/using-wsl-2-to-develop-java-application-on-windows-8aac1123c59b?gi=adf3bcc4fa53
+* Read https://docs.microsoft.com/en-us/windows/terminal/get-started
+* Read https://techcommunity.microsoft.com/t5/windows-dev-appconsult/running-wsl-gui-apps-on-windows-10/ba-p/1493242
+
+For some reason the personal startup directory changed from Startup to STARTUP-.
+Had to restore it:
+https://answers.microsoft.com/en-us/windows/forum/windows_7-performance/shortcuts-in-the-startup-folder-not-running-during/646845d6-8c10-4456-b6ef-b99f4a03aa10
