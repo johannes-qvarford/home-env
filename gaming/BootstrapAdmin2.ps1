@@ -14,11 +14,6 @@ Expand-Archive "~/Downloads/home-env-master.zip" -DestinationPath  "$tempDir"
 Set-Location "$tempDir/home-env-master/gaming"
 fedoraremix.exe run './bootstrap-wsl.sh'
 
-$WshShell = New-Object -comObject WScript.Shell
-$Shortcut = $WshShell.CreateShortcut("C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\home-env.lnk")
-$Shortcut.TargetPath = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\home-env.bat";
-$Shortcut.Save()
-
 Copy-Item autostartup/home-env.bat "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
 
 Set-Location ~
