@@ -9,16 +9,16 @@ fedoraremix.exe run 'useradd jq -g wheel; passwd jq;'
 fedoraremix.exe config --username jq
 
 $tempDir = [System.IO.Path]::GetTempPath();
-Invoke-WebRequest "https://gitlab.com/johannes-q/win-env/-/archive/master/win-env-master.zip" -OutFile "~/Downloads/win-env-master.zip";
-Expand-Archive "~/Downloads/win-env-master.zip" -DestinationPath  "$tempDir"
-Set-Location "$tempDir/win-env-master"
+Invoke-WebRequest "https://gitlab.com/johannes-q/home-env/-/archive/master/home-env-master.zip" -OutFile "~/Downloads/home-env-master.zip";
+Expand-Archive "~/Downloads/home-env-master.zip" -DestinationPath  "$tempDir"
+Set-Location "$tempDir/home-env-master"
 fedoraremix.exe run './bootstrap-wsl.sh'
 
 $WshShell = New-Object -comObject WScript.Shell
-$Shortcut = $WshShell.CreateShortcut("C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\win-env.lnk")
-$Shortcut.TargetPath = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\win-env.bat";
+$Shortcut = $WshShell.CreateShortcut("C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\home-env.lnk")
+$Shortcut.TargetPath = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\home-env.bat";
 $Shortcut.Save()
 
-Copy-Item autostartup/win-env.bat "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
+Copy-Item autostartup/home-env.bat "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
 
 Set-Location ~

@@ -12,5 +12,5 @@ sleep 1
 
 docker stop docker-nginx
 docker rm docker-nginx
-docker run --name docker-nginx -p 80:80 -v /home/jq/win-env/win-server/sites-enabled:/etc/nginx/conf.d -d nginx
+docker run --name docker-nginx -p 80:80 -v /home/jq/home-env/win-server/sites-enabled:/etc/nginx/conf.d -d nginx
 sleep 5
