@@ -20,3 +20,12 @@ Javascript is the programming language of choice - it can be used for server bac
 * Copy+Paste the content of the install file.
 * Restart
 * Copy+Paste the content of the install2 file.
+
+# How to Connect
+
+ssh "johannes qvarford@gaming.lan"
+
+Note: Two accounts exists:
+* johannes.qvarford@outlook.com (alias johan),
+* Johannes Qvarford
+The second one doesn't have the expected password, and needs to change for ssh to work (using Ctrl+Alt+Delete -> Change Password).

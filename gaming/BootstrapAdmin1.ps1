@@ -6,3 +6,9 @@ choco install -y dropbox vscode keepass megasync brave steam plexmediaserver tea
 
 dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+
+Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+Set-Service -Name sshd -StartupType 'Automatic'
+New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\WINDOWS\System32\bash.exe" -PropertyType String -Force
+Get-Service -Name ssh-agent | Set-Service -StartupType Automatic
+Start-Service sshd

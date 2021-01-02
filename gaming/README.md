@@ -21,3 +21,12 @@ Username has to be "Johannes Qvarford".
 * Copy+Paste the content of the install file.
 * Restart
 * Copy+Paste the content of the install2 file.
+
+# How to connect
+
+ssh "johannes qvarford@gaming.lan"
+
+Note: Two accounts exists:
+* johannes.qvarford@outlook.com (alias johan),
+* Johannes Qvarford
+The second one doesn't have the expected password, and needs to change for ssh to work (using Ctrl+Alt+Delete -> Change Password).

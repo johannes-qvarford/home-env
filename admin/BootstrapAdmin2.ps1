@@ -22,3 +22,6 @@ $Shortcut.Save()
 Copy-Item autostartup/home-env.bat "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
 
 Set-Location ~
+
+Stop-Service sshd
+Start-Service sshd
