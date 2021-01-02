@@ -9,6 +9,8 @@ Computer runs windows for PC game, emulator and LaunchBox compatibility.
 
 Suppports bluetooth.
 
+Might not need WSL, but has it because I prefer writing setup-scripts in bash/fish.
+
 Wireless Switch Pro Controller is the joypad of choice.
 
 Username has to be "Johannes Qvarford".

@@ -1,0 +1,1 @@
+Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://gitlab.com/johannes-q/home-env/-/raw/master/admin/BootstrapAdmin1.ps1'));

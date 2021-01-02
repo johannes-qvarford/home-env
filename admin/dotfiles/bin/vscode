@@ -1,0 +1,2 @@
+#!/bin/sh
+/mnt/c/Program\ Files/Microsoft\ VS\ Code/bin/code --wait "$1"
