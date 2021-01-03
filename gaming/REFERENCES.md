@@ -7,6 +7,7 @@
 * Read https://techcommunity.microsoft.com/t5/windows-dev-appconsult/running-wsl-gui-apps-on-windows-10/ba-p/1493242
 * Read https://www.hanselman.com/blog/the-easy-way-how-to-ssh-into-bash-and-wsl2-on-windows-10-from-an-external-machine
 * Read https://github.com/PowerShell/Win32-OpenSSH/wiki/Logging-Facilities
+* Read https://www.cnet.com/how-to/automatically-log-in-to-your-windows-10-pc/
 
 For some reason the personal startup directory changed from Startup to STARTUP-.
 Had to restore it:
