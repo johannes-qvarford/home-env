@@ -1,3 +1,5 @@
+* Organise store-link better  (inc. write tests).
+* Allow multiple urls for store-link.
 * Setup automatic loading of cmdlets.
 * Cmdlet for switching to administrator (interactive)
 * Cmdlet for running file as Administrator

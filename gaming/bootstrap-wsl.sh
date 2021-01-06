@@ -60,7 +60,6 @@ rm -rf ~/win/AppData/Roaming/Code/User/snippets
 ln -s ~/home-env/gaming/vscode-settings/settings.json ~/win/AppData/Roaming/Code/User/settings.json
 ln -s ~/home-env/gaming/vscode-settings/snippets ~/win/AppData/Roaming/Code/User/snippets 
 
-sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-sudo dnf -y install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+ln -s /mnt/c/ProgramData/chocolatey/bin/megatools.exe ~/bin/megatools
 
 fisher
