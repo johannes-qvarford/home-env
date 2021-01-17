@@ -3,7 +3,7 @@ sudo dnf install -y git fish
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 curl https://packages.microsoft.com/config/rhel/7/prod.repo | sudo tee /etc/yum.repos.d/microsoft.repo
 sudo dnf check-update
-sudo dnf install -y compat-openssl10 powershell util-linux-user node fzf nmap
+sudo dnf install -y compat-openssl10 powershell util-linux-user node fzf nmap python3-pip
 
 git config user.name 'Johannes Qvarford'
 git config user.email 'jq.email+gitlab@pm.me'
@@ -47,11 +47,11 @@ git push
 NEW=~
 OLD=~/home-env/gaming/dotfiles
 mkdir -p $NEW/.config
-mkdir -p ~/bin
 ln -s  $OLD/.config/fish $NEW/.config/fish 
 rm -f $NEW/.gitconfig
 ln -s $OLD/.gitconfig $NEW/.gitconfig
-ln -s $OLD/bin/vscode $NEW/bin/vscode
+
+ln -s $OLD/bin $NEW/bin
 
 ln -s /mnt/c/Users/Johannes\ Qvarford/ ~/win
 
@@ -61,5 +61,11 @@ ln -s ~/home-env/gaming/vscode-settings/settings.json ~/win/AppData/Roaming/Code
 ln -s ~/home-env/gaming/vscode-settings/snippets ~/win/AppData/Roaming/Code/User/snippets 
 
 ln -s /mnt/c/ProgramData/chocolatey/bin/megatools.exe ~/bin/megatools
+
+
+python3 -m pip install --user pipx
+python3 -m pipx ensurepath
+set PATH $PATH /home/jq/.local/bin
+pipx install twitch-dl
 
 fisher

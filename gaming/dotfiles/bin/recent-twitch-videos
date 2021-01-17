@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+readarray -t subs < ~/home-env/.twitch-subscriptions
+
+for sub in "${subs[@]}"
+do
+    twitch-dl videos "$sub" --limit 3
+done | less -R

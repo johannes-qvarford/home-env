@@ -12,3 +12,6 @@ set -gx PATH $HOME/bin /usr/local/bin /usr/bin /bin / $PATH
 set -gx fish_function_path $HOME/.config/fish/functions $fish_function_path
 
 remove_duplicates_in_array PATH
+
+# Created by `userpath` on 2021-01-16 12:36:08
+set PATH $PATH /home/jq/.local/bin
