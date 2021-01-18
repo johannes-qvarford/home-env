@@ -4,22 +4,25 @@ const prompt = require('prompt-sync')()
 const { v4: createUuid } = require('uuid');
 
 function leftpadNumber(n, digits) {
-    const currentNumber = n;
-    const limit = 1;
-    const currentDigits = 1;
+    let currentNumber = n;
+    let limit = 1;
+    let currentDigits = 1;
     while (currentDigits < digits) {
         ++currentDigits;
         limit *= 10;
-        currentNumber = n < limit ? "0"+n : n; 
+        currentNumber = currentNumber < limit ? "0"+currentNumber : currentNumber; 
     }
     return currentNumber;
 }
 
 // There might be an extractor for files that contain multiple episodes.
-// That would probably special handling.
-export function regexEpisodeExtractor({ regex }) {
+// That would probably require special handling.
+function regexEpisodeExtractor(regex) {
     return function(filename) {
         const matches = regex.exec(filename)
+        if (!matches) {
+            return {}
+        }
         return matches.groups
     }
 }
@@ -34,13 +37,14 @@ export function regexEpisodeExtractor({ regex }) {
         seasonDigits: 2
     })
 */
-export function seasonRename({ executableFilename, episodeExtractor, replacement, episodeDigits, seasonDigits }) {
+function seasonRename({ executableFilename, episodeExtractor, replacement, episodeDigits, seasonDigits }) {
     if (process.argv.length <= 3) {
-        console.log("Usage: " + executableFilename + " path/to/directory season");
+        console.log("Usage: " + executableFilename + " show/season-directory season");
         process.exit(-1);
     }
 
-    const rootDirectory = process.argv[2]
+    const show = process.argv[2]
+    const rootDirectory = `/mnt/d/Source/Videos/TV Shows/${show}/`
 
     const filenames = fs.readdirSync(rootDirectory)
     const seasonNumber = process.argv[3]
@@ -49,37 +53,48 @@ export function seasonRename({ executableFilename, episodeExtractor, replacement
     const action = prompt("What action to take: preview/do [preview] ?")
 
     const runUuid = createUuid()
-    const backupDirectory = `${rootDirectory}/../../BackupRenamedVideos/${runUuid}`
+    const backupDirectory = `${rootDirectory}/../../../BackupRenamedVideos/${runUuid}`
     
-    if (action != "preview") {
-        fs.mkdir(backupDirectory)
+    if (action == "do") {
+        fs.mkdirSync(backupDirectory)
     }
     
-    for (const f of filenames)
+    for (const filename of filenames)
     {
-        const { episode, season } = episodeExtractor({ filename })
+        const { episode, season } = episodeExtractor(filename)
 
-        const finalEpisodeNumber = episode
-            ? leftpadNumber(episode, episodeDigits)
-            : episodeNumber;
+        const finalEpisodeNumber =
+            leftpadNumber(
+                episode != null
+                    ? parseInt(episode)
+                    : episodeNumber,
+                episodeDigits);
 
-        const finalSeasonNumber = season
-            ? leftpadNumber(season, seasonDigits)
-            : episodeNumber;
+        const finalSeasonNumber =
+            leftpadNumber(
+                season != null
+                    ? parseInt(season)
+                    : seasonNumber,
+                seasonDigits);
 
         const finalFilename = replacement
             .replace("__season__", finalSeasonNumber)
-            .replace("__episode__", finalSeasonNumber);
+            .replace("__episode__", finalEpisodeNumber);
 
         console.log(filename, finalFilename)
 
-        if (action != "preview") {
+        if (action == "do") {
             fs.linkSync(`${rootDirectory}/${filename}`, `${backupDirectory}/${filename}`)
-            fs.renameSync(`${rootDirectory}/${f}`, `${rootDirectory}/${finalFilename}`)
+            fs.renameSync(`${rootDirectory}/${filename}`, `${rootDirectory}/${finalFilename}`)
         }
 
         episodeNumber++;
     }
+}
+
+module.exports = {
+    regexEpisodeExtractor,
+    seasonRename
 }
 
 // '/mnt/g/TemporaryMedia/Videos/TV Shows/Animaniacs (1993)/Animaniacs Season 2 (1994)'
