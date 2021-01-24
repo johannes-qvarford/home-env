@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+echo "Performing backup"
+
+rsync -av '/mnt/c/Users/Johannes Qvarford/AppData/Roaming/qBittorrent' \
+    '/mnt/g/MEGAsync/Media/Torrents'
+
+echo "Done with backup"
+sleep 3
