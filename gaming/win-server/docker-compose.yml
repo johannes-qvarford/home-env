@@ -51,17 +51,17 @@ services:
     ports:
       - 9117:9117
     restart: unless-stopped
-  # radarr:
-  #   image: ghcr.io/linuxserver/radarr
-  #   container_name: radarr
-  #   environment:
-  #     - PUID=1000
-  #     - PGID=1000
-  #     - TZ=Europe/Stockholm
-  #   volumes:
-  #     - /mnt/g/MEGAsync/Media/Torrents/docker/radarr:/config
-  #     - /mnt/d/data:/data
-  #   ports:
-  #     - 7878:7878
-  #   restart: unless-stopped
+  radarr:
+    image: ghcr.io/linuxserver/radarr
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Stockholm
+    volumes:
+      - /mnt/g/MEGAsync/Media/Torrents/docker/radarr:/config
+      - /mnt/d/data:/data
+    ports:
+      - 7878:7878
+    restart: unless-stopped
 # Based on https://trash-guides.info/Misc/how-to-set-up-hardlinks-and-atomic-moves/
