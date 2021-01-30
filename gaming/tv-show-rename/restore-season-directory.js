@@ -9,9 +9,9 @@ if (process.argv.length <= 3) {
 }
 
 const show = process.argv[2]
-const rootDirectory = `/mnt/d/Source/Videos/TV Shows/${show}/`
+const rootDirectory = `/mnt/d/data/media/tv/${show}/`
 const backupId = process.argv[3]
-const backupDirectory = `${rootDirectory}/../../../BackupRenamedVideos/${backupId}`
+const backupDirectory = `/mnt/d/BackupRenamedVideos/${backupId}`
 const filenames = fs.readdirSync(backupDirectory)
 
 rimraf.sync(rootDirectory)

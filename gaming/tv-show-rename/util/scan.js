@@ -44,7 +44,7 @@ function seasonRename({ executableFilename, episodeExtractor, replacement, episo
     }
 
     const show = process.argv[2]
-    const rootDirectory = `/mnt/d/Source/Videos/TV Shows/${show}/`
+    const rootDirectory = `/mnt/d/data/media/tv/${show}/`
 
     const filenames = fs.readdirSync(rootDirectory)
     const seasonNumber = process.argv[3]
@@ -53,7 +53,7 @@ function seasonRename({ executableFilename, episodeExtractor, replacement, episo
     const action = prompt("What action to take: preview/do [preview] ?")
 
     const runUuid = createUuid()
-    const backupDirectory = `${rootDirectory}/../../../BackupRenamedVideos/${runUuid}`
+    const backupDirectory = `/mnt/d/BackupRenamedVideos/${runUuid}`
     
     if (action == "do") {
         fs.mkdirSync(backupDirectory)
@@ -61,7 +61,11 @@ function seasonRename({ executableFilename, episodeExtractor, replacement, episo
     
     for (const filename of filenames)
     {
-        const { episode, season } = episodeExtractor(filename)
+        const { episode, episode2, season } = episodeExtractor(filename)
+
+        if (episode == null) {
+            continue;
+        }
 
         const finalEpisodeNumber =
             leftpadNumber(
@@ -69,6 +73,14 @@ function seasonRename({ executableFilename, episodeExtractor, replacement, episo
                     ? parseInt(episode)
                     : episodeNumber,
                 episodeDigits);
+        
+        const finalEpisodeNumber2 =
+            leftpadNumber(
+                episode != null
+                    ? parseInt(episode2)
+                    : null,
+                episodeDigits);
+
 
         const finalSeasonNumber =
             leftpadNumber(
@@ -78,10 +90,11 @@ function seasonRename({ executableFilename, episodeExtractor, replacement, episo
                 seasonDigits);
 
         const finalFilename = replacement
-            .replace("__season__", finalSeasonNumber)
-            .replace("__episode__", finalEpisodeNumber);
+            .replace(/__season__/g, finalSeasonNumber)
+            .replace("__episode__", finalEpisodeNumber)
+            .replace("__episode2__", finalEpisodeNumber2);
 
-        console.log(filename, finalFilename)
+        console.log(filename, "\n", finalFilename)
 
         if (action == "do") {
             fs.linkSync(`${rootDirectory}/${filename}`, `${backupDirectory}/${filename}`)

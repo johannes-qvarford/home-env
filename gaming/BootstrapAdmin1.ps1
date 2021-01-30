@@ -25,4 +25,4 @@ function Register-Weekly-Backup {
     Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Backup $Name" -Description "Backup $Name"  -TaskPath "\Backups\"
 }
 
-Register-Weekly-Backup -Name qbittorrent -At "11:00 am"
+# Register-Weekly-Backup -Name qbittorrent -At "11:00 am"
