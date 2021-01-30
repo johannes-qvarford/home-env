@@ -7,19 +7,19 @@ services:
       - 80:80
     volumes:
       - /home/jq/home-env/gaming/win-server/sites-enabled:/etc/nginx/conf.d
-  # qbittorrent:
-  #   image: ghcr.io/linuxserver/qbittorrent
-  #   container_name: qbittorrent
-  #   environment:
-  #     - PUID=1000
-  #     - PGID=1000
-  #     - TZ=Europe/London
-  #     - WEBUI_PORT=8080
-  #   volumes:
-  #     - </path/to/appdata/config>:/config
-  #     - </path/to/downloads>:/downloads
-  #   ports:
-  #     - 6881:6881
-  #     - 6881:6881/udp
-  #     - 8080:8080
-  #   restart: unless-stopped
+  qbittorrent:
+    image: ghcr.io/linuxserver/qbittorrent
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - WEBUI_PORT=5544
+    volumes:
+      - /mnt/g/MEGAsync/Media/Torrents/docker/qbittorrent:/config
+      - /mnt/d/Torrents:/downloads
+    ports:
+      - 6881:6881
+      - 6881:6881/udp
+      - 5544:8080
+    restart: unless-stopped
