@@ -57,8 +57,6 @@ ln -s /mnt/c/Users/Johannes\ Qvarford/ ~/win
 
 rm ~/win/AppData/Roaming/Code/User/settings.json
 rm -rf ~/win/AppData/Roaming/Code/User/snippets
-ln -s ~/home-env/gaming/vscode-settings/settings.json ~/win/AppData/Roaming/Code/User/settings.json
-ln -s ~/home-env/gaming/vscode-settings/snippets ~/win/AppData/Roaming/Code/User/snippets 
 
 ln -s /mnt/c/ProgramData/chocolatey/bin/megatools.exe ~/bin/megatools
 
