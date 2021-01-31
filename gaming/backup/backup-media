@@ -4,12 +4,12 @@ echo "Performing backup"
 
 mkdir -p '/mnt/f/Source/Videos/Twitch/Rewatchable'
 
-rsync -av '/mnt/d/Source/Videos/Twitch/Rewatchable' \
+rsync -av --delete-delay '/mnt/d/Source/Videos/Twitch/Rewatchable/' \
     '/mnt/f/Source/Videos/Twitch/Rewatchable'
 
 mkdir -p '/mnt/f/Source/Videos/Youtube/Rewatchable'
 
-rsync -av '/mnt/d/Source/Videos/Youtube/Rewatchable' \
+rsync -av --delete-delay '/mnt/d/Source/Videos/Youtube/Rewatchable/' \
     '/mnt/f/Source/Videos/Youtube/Rewatchable'
 
 rsync -av '/mnt/d/Source/Videos/Youtube/tartube.db' \
