@@ -21,9 +21,9 @@ function regexEpisodeExtractor(regex) {
     return function(filename) {
         const matches = regex.exec(filename)
         if (!matches) {
-            return {}
+            return { match: false }
         }
-        return matches.groups
+        return Object.assign({}, matches, { match: true })
     }
 }
 
@@ -37,7 +37,7 @@ function regexEpisodeExtractor(regex) {
         seasonDigits: 2
     })
 */
-function seasonRename({ executableFilename, episodeExtractor, replacement, episodeDigits, seasonDigits }) {
+function seasonRename({ executableFilename, episodeExtractor, replacement, episodeDigits, seasonDigits, useAlphabeticalEpisodeNumber=false }) {
     if (process.argv.length <= 3) {
         console.log("Usage: " + executableFilename + " show/season-directory season");
         process.exit(-1);
@@ -56,14 +56,18 @@ function seasonRename({ executableFilename, episodeExtractor, replacement, episo
     const backupDirectory = `/mnt/d/BackupRenamedVideos/${runUuid}`
     
     if (action == "do") {
-        fs.mkdirSync(backupDirectory)
+        fs.mkdirSync(backupDirectory, { recursive: true })
     }
     
     for (const filename of filenames)
     {
-        const { episode, episode2, season } = episodeExtractor(filename)
+        const r = episodeExtractor(filename)
+        const episode = r.episode;
+        const episode2 = r.episode2;
+        const season = r.season;
+        const match = r.match;
 
-        if (episode == null) {
+        if (!match) {
             continue;
         }
 
