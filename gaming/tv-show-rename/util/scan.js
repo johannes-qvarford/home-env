@@ -37,11 +37,13 @@ function regexEpisodeExtractor(regex) {
         seasonDigits: 2
     })
 */
-function seasonRename({ executableFilename, episodeExtractor, replacement, episodeDigits, seasonDigits, useAlphabeticalEpisodeNumber=false }) {
+function seasonRename({ executableFilename, episodeExtractor, episodeCountExtractor = null, replacement = null, replacements = null, episodeDigits, seasonDigits, useAlphabeticalEpisodeNumber=false }) {
     if (process.argv.length <= 3) {
         console.log("Usage: " + executableFilename + " show/season-directory season");
         process.exit(-1);
     }
+
+    const episodeCountExtractor2 = episodeCountExtractor != null ? episodeCountExtractor : () => 1;
 
     const show = process.argv[2]
     const rootDirectory = `/mnt/d/data/media/tv/${show}/`
@@ -62,6 +64,7 @@ function seasonRename({ executableFilename, episodeExtractor, replacement, episo
     for (const filename of filenames)
     {
         const r = episodeExtractor(filename)
+        const episodeCount = episodeCountExtractor2(filename);
         const episode = r.episode;
         const episode2 = r.episode2;
         const season = r.season;
@@ -70,7 +73,8 @@ function seasonRename({ executableFilename, episodeExtractor, replacement, episo
         if (!match) {
             continue;
         }
-
+        
+         
         const finalEpisodeNumber =
             leftpadNumber(
                 episode != null
@@ -82,7 +86,7 @@ function seasonRename({ executableFilename, episodeExtractor, replacement, episo
             leftpadNumber(
                 episode != null
                     ? parseInt(episode2)
-                    : null,
+                    : (episodeCount > 1 ? episodeNumber + 1 : null),
                 episodeDigits);
 
 
@@ -93,7 +97,11 @@ function seasonRename({ executableFilename, episodeExtractor, replacement, episo
                     : seasonNumber,
                 seasonDigits);
 
-        const finalFilename = replacement
+        const finalReplacement =
+                replacement != null ? replacement
+                : replacements[episodeCount-1]
+
+        const finalFilename = finalReplacement
             .replace(/__season__/g, finalSeasonNumber)
             .replace("__episode__", finalEpisodeNumber)
             .replace("__episode2__", finalEpisodeNumber2);
@@ -105,7 +113,7 @@ function seasonRename({ executableFilename, episodeExtractor, replacement, episo
             fs.renameSync(`${rootDirectory}/${filename}`, `${rootDirectory}/${finalFilename}`)
         }
 
-        episodeNumber++;
+        episodeNumber+=episodeCount;
     }
 }
 
