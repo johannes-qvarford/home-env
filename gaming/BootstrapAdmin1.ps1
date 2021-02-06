@@ -14,15 +14,16 @@ New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\WI
 Get-Service -Name ssh-agent | Set-Service -StartupType Automatic
 Start-Service sshd
 
-function Register-Weekly-Backup {
+function Register-Weekly-Task {
     param (
         $Name,
         $At
     )
 
     $trigger =  New-ScheduledTaskTrigger -Weekly -DaysOfWeek Sunday -At $At
-    $action = New-ScheduledTaskAction -Execute 'C:\WINDOWS\system32\wsl.exe' -Argument "/home/jq/home-env/gaming/backup/backup-$Name"
-    Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Backup $Name" -Description "Backup $Name"  -TaskPath "\Backups\"
+    $action = New-ScheduledTaskAction -Execute 'C:\WINDOWS\system32\wsl.exe' -Argument "/home/jq/home-env/gaming/schedule/$Name"
+    Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "$Name" -Description "$Name"  -TaskPath "\Schedule\"
 }
 
-Register-Weekly-Backup -Name media -At "11:00 am"
+Register-Weekly-Task -Name backup-media -At "11:00 am"
+Register-Weekly-Task -Name shred-data -At "8:00 am"

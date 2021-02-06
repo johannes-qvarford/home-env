@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+echo Beginning to shred
+
+"/mnt/c/Program Files (x86)/BleachBit/bleachbit_console.exe" --clean --overwrite\
+    firefox.cookies firefox.dom firefox.forms firefox.passwords firefox.site_preferences firefox.url_history
+"/mnt/c/Program Files (x86)/BleachBit/bleachbit_console.exe" --shred\
+    "G:\Secrets\"
+
+mkdir /mnt/g/Secrets
+
+echo Done shreding
+sleep 3
