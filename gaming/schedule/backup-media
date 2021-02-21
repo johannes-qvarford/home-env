@@ -2,14 +2,19 @@
 
 echo 'Performing backup'
 
+if test ! -d /mnt/f/Source; then
+    echo Directory not found, something is wrong, exiting.
+    exit
+fi
+
 mkdir -p '/mnt/f/Source/Videos/Twitch/Rewatchable'
 
-rsync -av --delete-delay '/mnt/d/Source/Videos/Twitch/Rewatchable/' \
+rsync -av '/mnt/d/Source/Videos/Twitch/Rewatchable/' \
     '/mnt/f/Source/Videos/Twitch/Rewatchable'
 
 mkdir -p '/mnt/f/Source/Videos/Youtube/Rewatchable'
 
-rsync -av --delete-delay '/mnt/d/Source/Videos/Youtube/Rewatchable/' \
+rsync -av '/mnt/d/Source/Videos/Youtube/Rewatchable/' \
     '/mnt/f/Source/Videos/Youtube/Rewatchable'
 
 rsync -av '/mnt/d/Source/Videos/Youtube/tartube.db' \
@@ -17,7 +22,7 @@ rsync -av '/mnt/d/Source/Videos/Youtube/tartube.db' \
 
 mkdir -p '/mnt/f/data'
 
-rsync -av --delete-delay --exclude='incomplete' '/mnt/d/data/' '/mnt/f/data'
+rsync -av --exclude='incomplete' '/mnt/d/data/' '/mnt/f/data'
 
 echo 'Done with backup'
 sleep 3
