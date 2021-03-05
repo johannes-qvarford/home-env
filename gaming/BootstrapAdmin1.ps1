@@ -2,7 +2,7 @@
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'));
 
 choco install -y microsoft-windows-terminal --pre 
-choco install -y dropbox vscode keepass megasync firefox steam kodi teamviewer itch docker-desktop megatools vlc cpod bleachbit sqlitebrowser stretchly wireshark
+choco install -y dropbox vscode keepass megasync firefox steam kodi teamviewer itch docker-desktop megatools vlc cpod bleachbit sqlitebrowser stretchly wireshark handbrake
 # sonarr has to be installed manually, since chocolatey don't support v3
 
 dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
