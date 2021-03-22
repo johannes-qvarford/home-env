@@ -78,4 +78,18 @@ services:
       - 8080:8080
       - 9090:9090
     restart: unless-stopped
+
+  mylar3:
+    image: ghcr.io/linuxserver/mylar3
+    container_name: mylar3
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Stockholm
+    volumes:
+      - /mnt/g/MEGAsync/Media/Torrents/docker/mylar3:/config
+      - /mnt/d/data:/data
+    ports:
+      - 8090:8090
+    restart: unless-stopped
 # Based on https://trash-guides.info/Misc/how-to-set-up-hardlinks-and-atomic-moves/
