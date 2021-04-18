@@ -17,13 +17,17 @@ Start-Service sshd
 function Register-Weekly-Task {
     param (
         $Name,
-        $At
+        $At,
+        $Type
     )
 
     $trigger =  New-ScheduledTaskTrigger -Weekly -DaysOfWeek Sunday -At $At
     $action = New-ScheduledTaskAction -Execute 'C:\WINDOWS\system32\wsl.exe' -Argument "/home/jq/home-env/gaming/schedule/$Name"
+    if ($Type -eq "pwsh") {
+        $action = New-ScheduledTaskAction -Execute 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe' -Argument "\\wsl$\fedoraremix\home\jq\home-env\gaming\schedule\$Name.ps1"
+    }
     Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "$Name" -Description "$Name"  -TaskPath "\Schedule\"
 }
 
-Register-Weekly-Task -Name backup-media -At "11:00 am"
-Register-Weekly-Task -Name shred-data -At "8:00 am"
+Register-Weekly-Task -Name backup-media -Type wsl -At "11:00 am"
+Register-Weekly-Task -Name shred-data -Type wsl -At "10:00 am"
