@@ -1,8 +1,9 @@
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072;
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'));
 
-choco install -y microsoft-windows-terminal --pre 
-choco install -y dropbox vscode keepass megasync firefox steam kodi teamviewer itch docker-desktop megatools vlc cpod bleachbit sqlitebrowser stretchly wireshark handbrake fiddler
+choco feature enable -n allowGlobalConfirmation
+choco install microsoft-windows-terminal --pre 
+choco install dropbox vscode keepass megasync firefox steam kodi teamviewer itch docker-desktop megatools vlc bleachbit sqlitebrowser stretchly wireshark handbrake fiddler
 # sonarr has to be installed manually, since chocolatey don't support v3
 
 dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
