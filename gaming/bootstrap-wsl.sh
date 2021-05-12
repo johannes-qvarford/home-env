@@ -64,4 +64,6 @@ python3 -m pipx ensurepath
 set PATH $PATH /home/jq/.local/bin
 pipx install twitch-dl
 
-fisher
+chsh -s /usr/bin/fish
+
+fish -c "fisher"
