@@ -3,8 +3,7 @@ Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://cho
 
 choco feature enable -n allowGlobalConfirmation
 choco install microsoft-windows-terminal --pre 
-choco install dropbox vscode keepass megasync firefox steam kodi teamviewer itch docker-desktop megatools vlc bleachbit sqlitebrowser stretchly wireshark handbrake fiddler
-# sonarr has to be installed manually, since chocolatey don't support v3
+choco install dropbox vscode keepass megasync firefox brave steam kodi teamviewer itch docker-desktop megatools vlc bleachbit sqlitebrowser stretchly wireshark handbrake fiddler
 
 dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
