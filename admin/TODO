@@ -3,7 +3,7 @@
 * Setup automatic loading of cmdlets.
 * Cmdlet for switching to administrator (interactive)
 * Cmdlet for running file as Administrator
-* Cmdlet for opening wsl jq home directory
+* Cmdlet for opening wsl johqva home directory
 * Cmdlet for switching to wsl
 * Cmdlet for switching to wsl and open current directory
 * Script for opening powershell as administrator

@@ -6,7 +6,7 @@ services:
     ports:
       - 80:80
     volumes:
-      - /home/jq/home-env/gaming/win-server/sites-enabled:/etc/nginx/conf.d
+      - /home/johqva/home-env/gaming/win-server/sites-enabled:/etc/nginx/conf.d
     restart: unless-stopped
   qbittorrent:
     image: ghcr.io/linuxserver/qbittorrent

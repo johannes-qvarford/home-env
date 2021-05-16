@@ -5,8 +5,8 @@ Invoke-Expression ($exePath)
 wsl --set-default-version 2
 
 choco install -y wsl-fedoraremix vcxsrv
-fedoraremix.exe run 'useradd jq -g wheel; passwd jq;'
-fedoraremix.exe config --username jq
+fedoraremix.exe run 'useradd johqva -g wheel; passwd jq;'
+fedoraremix.exe config --username johqva
 
 $tempDir = [System.IO.Path]::GetTempPath();
 Invoke-WebRequest "https://gitlab.com/johannes-q/home-env/-/archive/master/home-env-master.zip" -OutFile "~/Downloads/home-env-master.zip";

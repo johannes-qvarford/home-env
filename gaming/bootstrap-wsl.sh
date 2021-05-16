@@ -6,7 +6,7 @@ sudo dnf check-update
 sudo dnf install -y powershell util-linux-user nodejs fzf nmap python3-pip rsync emacs-nox racket
 
 git config user.name 'Johannes Qvarford'
-git config user.email 'jq.email+gitlab@pm.me'
+git config user.email 'johqva.email+gitlab@pm.me'
 
 ssh-keygen -t rsa -b 2048 -C "jq.email+gitlab@pm.me"
 echo
@@ -61,9 +61,20 @@ ln -s /mnt/c/ProgramData/chocolatey/bin/megatools.exe ~/bin/megatools
 
 python3 -m pip install --user pipx
 python3 -m pipx ensurepath
-set PATH $PATH /home/jq/.local/bin
+set PATH $PATH /home/johqva/.local/bin
 pipx install twitch-dl
 
 chsh -s /usr/bin/fish
-
 fish -c "fisher"
+
+
+# Racket pretty-printer
+sudo dnf install -y make clang gmp-devel
+curl -sSL https://get.haskellstack.org/ | sh
+TEMP=$(mktemp -d)
+git clone https://github.com/Shuumatsu/racket-pretty-printer "$TEMP"
+cd "$TEMP/core"
+stack install
+
+# Rash
+raco pkg install rash stream-etc algorithms

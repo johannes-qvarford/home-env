@@ -3,7 +3,7 @@ curl https://packages.microsoft.com/config/rhel/7/prod.repo | sudo tee /etc/yum.
 sudo dnf check-update
 sudo dnf install -y compat-openssl10 powershell util-linux-user node fzf nmap git fish
 
-sudo chsh -s /bin/fish jq
+sudo chsh -s /bin/fish johqva
 
 git config user.name 'Johannes Qvarford'
 git config user.email 'jq.email+gitlab@pm.me'
