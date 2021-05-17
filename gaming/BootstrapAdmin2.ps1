@@ -5,7 +5,7 @@ Invoke-Expression ($exePath)
 wsl --set-default-version 2
 
 choco install -y wsl-fedoraremix vcxsrv
-fedoraremix.exe run 'useradd johqva -g wheel; passwd jq;'
+fedoraremix.exe run 'useradd johqva -g wheel; passwd johqva;'
 fedoraremix.exe config --username johqva
 
 $tempDir = [System.IO.Path]::GetTempPath();

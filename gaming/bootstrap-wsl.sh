@@ -78,3 +78,6 @@ stack install
 
 # Rash
 raco pkg install rash stream-etc algorithms
+
+# docker-compose dependencies
+sudo dnf install -y libxcrypt-compat
