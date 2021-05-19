@@ -22,9 +22,9 @@ function Register-Weekly-Task {
     )
 
     $trigger =  New-ScheduledTaskTrigger -Weekly -DaysOfWeek Sunday -At $At
-    $action = New-ScheduledTaskAction -Execute 'C:\WINDOWS\system32\wsl.exe' -Argument "-d fedoraremix /home/jq/home-env/gaming/schedule/$Name"
+    $action = New-ScheduledTaskAction -Execute 'C:\WINDOWS\system32\wsl.exe' -Argument "-d fedoraremix /home/current/home-env/gaming/schedule/$Name"
     if ($Type -eq "pwsh") {
-        $action = New-ScheduledTaskAction -Execute 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe' -Argument "\\wsl$\fedoraremix\home\johqva\home-env\gaming\schedule\$Name.ps1"
+        $action = New-ScheduledTaskAction -Execute 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe' -Argument "\\wsl$\fedoraremix\home\current\home-env\gaming\schedule\$Name.ps1"
     }
     Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "$Name" -Description "$Name"  -TaskPath "\Schedule\"
 }

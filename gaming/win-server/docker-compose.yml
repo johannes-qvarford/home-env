@@ -6,7 +6,7 @@ services:
     ports:
       - 80:80
     volumes:
-      - /home/johqva/home-env/gaming/win-server/sites-enabled:/etc/nginx/conf.d
+      - /home/current/home-env/gaming/win-server/sites-enabled:/etc/nginx/conf.d
     restart: unless-stopped
   qbittorrent:
     image: ghcr.io/linuxserver/qbittorrent
@@ -23,7 +23,6 @@ services:
       - 6881:6881
       - 6881:6881/udp
       - 5544:8080
-    restart: unless-stopped
   sonarr:
     image: ghcr.io/linuxserver/sonarr:preview
     container_name: sonarr
@@ -36,7 +35,6 @@ services:
       - /mnt/d/data:/data
     ports:
       - 8989:8989
-    restart: unless-stopped
   jackett:
     image: ghcr.io/linuxserver/jackett
     container_name: jackett
@@ -50,7 +48,6 @@ services:
       - /mnt/g/MEGAsync/Media/Torrents/docker/jackett:/config
     ports:
       - 9117:9117
-    restart: unless-stopped
   radarr:
     image: ghcr.io/linuxserver/radarr
     container_name: radarr
@@ -63,7 +60,6 @@ services:
       - /mnt/d/data:/data
     ports:
       - 7878:7878
-    restart: unless-stopped
   sabnzbd:
     image: ghcr.io/linuxserver/sabnzbd
     container_name: sabnzbd
@@ -77,8 +73,6 @@ services:
     ports:
       - 8080:8080
       - 9090:9090
-    restart: unless-stopped
-
   mylar3:
     image: ghcr.io/linuxserver/mylar3
     container_name: mylar3
@@ -91,5 +85,4 @@ services:
       - /mnt/d/data:/data
     ports:
       - 8090:8090
-    restart: unless-stopped
 # Based on https://trash-guides.info/Misc/how-to-set-up-hardlinks-and-atomic-moves/
