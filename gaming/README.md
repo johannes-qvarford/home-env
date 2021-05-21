@@ -1,21 +1,29 @@
 # Introduction
 
-Powerful gaming computer for PC Games and for emulation
+Powerful gaming computer for programming, writing, browsing, PC Games and for emulation
 with high performance requirements, like Nintendo Gamecube, Wii etc.
 
-Connected to tv device.
+Connected to tv.
 
 Computer runs windows for PC game, emulator and LaunchBox compatibility.
 
 Suppports bluetooth.
 
-Might not need WSL, but has it because I prefer writing setup-scripts in bash/fish.
+Uses windows with WSL for great software compatibility.
 
 Wireless Switch Pro Controller is the joypad of choice.
 
-Username has to be "Johannes Qvarford".
+Fish is the shell of choice. Might be Rash in the future.
+
+Racket is the programming language of choice.
+The expressive power of the language helps me to stay
+focused and keeps my motivation up.
+
+I use VSCode and Emacs.
 
 # Instructions
+
+Username has to be "Johannes Qvarford".
 
 * Type Win+Powershell, right click run as administrator
 * Copy+Paste the content of the install file.
@@ -23,10 +31,3 @@ Username has to be "Johannes Qvarford".
 * Copy+Paste the content of the install2 file.
 
 # How to connect
-
-ssh "johannes qvarford@gaming.lan"
-
-Note: Two accounts exists:
-* johannes.qvarford@outlook.com (alias johan),
-* Johannes Qvarford
-The second one doesn't have the expected password, and needs to change for ssh to work (using Ctrl+Alt+Delete -> Change Password).

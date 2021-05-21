@@ -12,12 +12,6 @@ $modulePath = [Environment]::GetEnvironmentVariable('PSModulePath', 'User')
 $modulePath += ';\\wsl$\fedoraremix\home\johqva\home-env\gaming\powershell'
 [Environment]::SetEnvironmentVariable('PSModulePath', $modulePath, 'User')
 
-Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
-Set-Service -Name sshd -StartupType 'Automatic'
-New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\WINDOWS\System32\bash.exe" -PropertyType String -Force
-Get-Service -Name ssh-agent | Set-Service -StartupType Automatic
-Start-Service sshd
-
 function Register-Weekly-Task {
     param (
         $Name,
