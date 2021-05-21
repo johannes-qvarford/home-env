@@ -1,0 +1,4 @@
+#!/usr/bin/env racket
+#lang rash
+
+powershell.exe
