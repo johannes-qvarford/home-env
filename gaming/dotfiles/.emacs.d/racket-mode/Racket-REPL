@@ -1,0 +1,7 @@
+(find-triplett-product 100)
+(find-triplet-product 100)
+(find-triplet-product 100)
+(find-triplet-product 25)
+(find-triplet-product 25)
+(triplet? 3 4 5)
+(find-triplet-product 1000)
