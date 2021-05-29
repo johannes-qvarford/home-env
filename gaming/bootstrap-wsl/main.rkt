@@ -1,7 +1,7 @@
 #lang rash
 
 racket default-user.rkt
-racket gitlab.rkt
+racket github.rkt
 racket clone-home-env.rkt
 racket dotfiles.rkt
 racket fish.rkt
