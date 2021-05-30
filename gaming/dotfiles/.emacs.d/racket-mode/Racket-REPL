@@ -5,3 +5,32 @@
 (find-triplet-product 25)
 (triplet? 3 4 5)
 (find-triplet-product 1000)
+
+ls
+(exit)
+5
+5
+(sum-of-primes-less-than 10)
+
+5
+(sum-of-primes-less-than 10)
+
+10
+(sum-of-primes-less-than 10)
+(sum-of-primes-less-than 10)
+(stream-take-while (in-naturals) (lambda (x) (< x 10)))
+(stream-take-while (lambda (x) (< x 10)) (in-naturals))
+stream-take-while
+(stream-take-while)
+(stream-take-while (in-naturals) (in-naturals))
+(stream-take-while (stream 1) (stream 2))
+(stream-take-while 10 (stream 2))
+(stream-take-while (in-range 10) (in-range 10))
+(stream-take-while empty-stream empty-stream)
+(stream? (in-naturals))
+(sequence? (in-naturals))
+(stream? (sequence->stream (in-naturals)))
+(stream-filter prime? (in-naturals))
+(stream-first (stream 1))
+(stream-first (in-naturals))
+10
