@@ -9,3 +9,5 @@ docker-compose -f /home/current/home-env/gaming/win-server/docker-compose.yml up
 sleep 5s
 docker-compose -f /home/current/home-env/gaming/win-server/docker-compose.yml up -d
 sleep 5s
+docker-compose -f /home/current/home-env/gaming/win-server/docker-compose.yml up -d
+sleep 5s
