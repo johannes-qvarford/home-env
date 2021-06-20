@@ -11,4 +11,5 @@ racket racket-pretty-printer.rkt
 racket mega.rkt
 racket twitch-dl.rkt
 racket backup.rkt
+racket upipe.rkt
 racket extra.rkt
