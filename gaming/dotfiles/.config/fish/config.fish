@@ -4,8 +4,8 @@ set color_repo_branch cyan
 set color_repo_dirty yellow
 
 set -x PYTHONIOENCODING utf-8
-set -x EDITOR vscode
-set -x VISUAL vscode
+set -x EDITOR emacs
+set -x VISUAL emacs
 set -x PAGER less
 
 set -gx PATH $HOME/bin $HOME/.local/bin /usr/local/bin /usr/bin /bin / $PATH 
