@@ -6,8 +6,9 @@
                          (or (file-name-directory #$) (car load-path))))
 
 
-;;;### (autoloads nil "smartparens" "smartparens.el" (0 0 0 0))
-;;; Generated autoloads from smartparens.el
+;;;### (autoloads nil "smartparens" "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens.el"
+;;;;;;  "83fe0a2b565a898125c953acfad5702c")
+;;; Generated autoloads from ../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens.el
 
 (autoload 'sp-cheat-sheet "smartparens" "\
 Generate a cheat sheet of all the smartparens interactive functions.
@@ -187,157 +188,205 @@ Turn on `show-smartparens-mode'." t nil)
 
 (autoload 'turn-off-show-smartparens-mode "smartparens" "\
 Turn off `show-smartparens-mode'." t nil)
+
+;;;### (autoloads "actual autoloads are elsewhere" "smartparens"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens.el
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "smartparens" '("smartparens-" "sp-")))
 
 ;;;***
+
+;;;***
 
-;;;### (autoloads nil "smartparens-clojure" "smartparens-clojure.el"
+;;;### (autoloads "actual autoloads are elsewhere" "smartparens-clojure"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-clojure.el"
 ;;;;;;  (0 0 0 0))
-;;; Generated autoloads from smartparens-clojure.el
+;;; Generated autoloads from ../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-clojure.el
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "smartparens-clojure" '("sp-clojure-prefix")))
 
 ;;;***
 
-;;;### (autoloads nil "smartparens-config" "smartparens-config.el"
+;;;### (autoloads "actual autoloads are elsewhere" "smartparens-config"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-config.el"
 ;;;;;;  (0 0 0 0))
-;;; Generated autoloads from smartparens-config.el
+;;; Generated autoloads from ../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-config.el
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "smartparens-config" '("sp-lisp-invalid-hyperlink-p")))
 
 ;;;***
 
-;;;### (autoloads nil "smartparens-crystal" "smartparens-crystal.el"
+;;;### (autoloads "actual autoloads are elsewhere" "smartparens-crystal"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-crystal.el"
 ;;;;;;  (0 0 0 0))
-;;; Generated autoloads from smartparens-crystal.el
+;;; Generated autoloads from ../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-crystal.el
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "smartparens-crystal" '("sp-crystal-")))
 
 ;;;***
 
-;;;### (autoloads nil "smartparens-elixir" "smartparens-elixir.el"
+;;;### (autoloads "actual autoloads are elsewhere" "smartparens-elixir"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-elixir.el"
 ;;;;;;  (0 0 0 0))
-;;; Generated autoloads from smartparens-elixir.el
+;;; Generated autoloads from ../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-elixir.el
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "smartparens-elixir" '("sp-elixir-")))
 
 ;;;***
 
-;;;### (autoloads nil "smartparens-ess" "smartparens-ess.el" (0 0
-;;;;;;  0 0))
-;;; Generated autoloads from smartparens-ess.el
+;;;### (autoloads "actual autoloads are elsewhere" "smartparens-ess"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-ess.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-ess.el
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "smartparens-ess" '("sp-ess-")))
 
 ;;;***
 
-;;;### (autoloads nil "smartparens-haskell" "smartparens-haskell.el"
+;;;### (autoloads "actual autoloads are elsewhere" "smartparens-haskell"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-haskell.el"
 ;;;;;;  (0 0 0 0))
-;;; Generated autoloads from smartparens-haskell.el
+;;; Generated autoloads from ../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-haskell.el
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "smartparens-haskell" '("sp-")))
 
 ;;;***
 
-;;;### (autoloads nil "smartparens-html" "smartparens-html.el" (0
-;;;;;;  0 0 0))
-;;; Generated autoloads from smartparens-html.el
+;;;### (autoloads "actual autoloads are elsewhere" "smartparens-html"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-html.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-html.el
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "smartparens-html" '("sp-html-")))
 
 ;;;***
 
-;;;### (autoloads nil "smartparens-latex" "smartparens-latex.el"
+;;;### (autoloads "actual autoloads are elsewhere" "smartparens-latex"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-latex.el"
 ;;;;;;  (0 0 0 0))
-;;; Generated autoloads from smartparens-latex.el
+;;; Generated autoloads from ../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-latex.el
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "smartparens-latex" '("sp-latex-")))
 
 ;;;***
 
-;;;### (autoloads nil "smartparens-lua" "smartparens-lua.el" (0 0
-;;;;;;  0 0))
-;;; Generated autoloads from smartparens-lua.el
+;;;### (autoloads "actual autoloads are elsewhere" "smartparens-lua"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-lua.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-lua.el
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "smartparens-lua" '("sp-lua-post-keyword-insert")))
 
 ;;;***
 
-;;;### (autoloads nil "smartparens-markdown" "smartparens-markdown.el"
+;;;### (autoloads "actual autoloads are elsewhere" "smartparens-markdown"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-markdown.el"
 ;;;;;;  (0 0 0 0))
-;;; Generated autoloads from smartparens-markdown.el
+;;; Generated autoloads from ../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-markdown.el
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "smartparens-markdown" '("sp-")))
 
 ;;;***
 
-;;;### (autoloads nil "smartparens-org" "smartparens-org.el" (0 0
-;;;;;;  0 0))
-;;; Generated autoloads from smartparens-org.el
+;;;### (autoloads "actual autoloads are elsewhere" "smartparens-org"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-org.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-org.el
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "smartparens-org" '("sp-")))
 
 ;;;***
 
-;;;### (autoloads nil "smartparens-python" "smartparens-python.el"
+;;;### (autoloads "actual autoloads are elsewhere" "smartparens-python"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-python.el"
 ;;;;;;  (0 0 0 0))
-;;; Generated autoloads from smartparens-python.el
+;;; Generated autoloads from ../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-python.el
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "smartparens-python" '("sp-python-")))
 
 ;;;***
 
-;;;### (autoloads nil "smartparens-rst" "smartparens-rst.el" (0 0
-;;;;;;  0 0))
-;;; Generated autoloads from smartparens-rst.el
+;;;### (autoloads "actual autoloads are elsewhere" "smartparens-rst"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-rst.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-rst.el
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "smartparens-rst" '("sp-rst-point-after-backtick")))
 
 ;;;***
 
-;;;### (autoloads nil "smartparens-ruby" "smartparens-ruby.el" (0
-;;;;;;  0 0 0))
-;;; Generated autoloads from smartparens-ruby.el
+;;;### (autoloads "actual autoloads are elsewhere" "smartparens-ruby"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-ruby.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-ruby.el
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "smartparens-ruby" '("sp-")))
 
 ;;;***
 
-;;;### (autoloads nil "smartparens-rust" "smartparens-rust.el" (0
-;;;;;;  0 0 0))
-;;; Generated autoloads from smartparens-rust.el
+;;;### (autoloads "actual autoloads are elsewhere" "smartparens-rust"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-rust.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-rust.el
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "smartparens-rust" '("sp-")))
 
 ;;;***
 
-;;;### (autoloads nil "smartparens-scala" "smartparens-scala.el"
+;;;### (autoloads "actual autoloads are elsewhere" "smartparens-scala"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-scala.el"
 ;;;;;;  (0 0 0 0))
-;;; Generated autoloads from smartparens-scala.el
+;;; Generated autoloads from ../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-scala.el
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "smartparens-scala" '("sp-scala-wrap-with-indented-newlines")))
 
 ;;;***
 
-;;;### (autoloads nil "smartparens-text" "smartparens-text.el" (0
-;;;;;;  0 0 0))
-;;; Generated autoloads from smartparens-text.el
+;;;### (autoloads "actual autoloads are elsewhere" "smartparens-text"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-text.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-text.el
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "smartparens-text" '("sp-text-mode-")))
 
 ;;;***
 
-;;;### (autoloads nil "sp-sublimetext-like" "sp-sublimetext-like.el"
+;;;### (autoloads "actual autoloads are elsewhere" "sp-sublimetext-like"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/sp-sublimetext-like.el"
 ;;;;;;  (0 0 0 0))
-;;; Generated autoloads from sp-sublimetext-like.el
+;;; Generated autoloads from ../../../../../../.emacs.d/elpa/smartparens-20210529.1129/sp-sublimetext-like.el
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "sp-sublimetext-like" '("sp-point-not-before-word")))
 
 ;;;***
 
-;;;### (autoloads nil nil ("smartparens-c.el" "smartparens-javascript.el"
-;;;;;;  "smartparens-ml.el" "smartparens-pkg.el" "smartparens-racket.el")
+;;;### (autoloads nil nil ("../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-autoloads.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-c.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-clojure.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-config.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-crystal.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-elixir.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-ess.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-haskell.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-html.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-javascript.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-latex.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-lua.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-markdown.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-ml.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-org.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-pkg.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-python.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-racket.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-rst.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-ruby.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-rust.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-scala.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens-text.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/smartparens.el"
+;;;;;;  "../../../../../../.emacs.d/elpa/smartparens-20210529.1129/sp-sublimetext-like.el")
 ;;;;;;  (0 0 0 0))
 
 ;;;***
