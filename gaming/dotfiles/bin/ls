@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if which lsd; then
+    exec lsd "$@"
+else
+    exec /bin/ls "$@"
+fi

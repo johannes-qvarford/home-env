@@ -5,6 +5,7 @@ racket github.rkt
 racket clone-home-env.rkt
 racket dotfiles.rkt
 racket fish.rkt
+racket colors.rkt
 
 racket powershell.rkt
 racket racket-pretty-printer.rkt

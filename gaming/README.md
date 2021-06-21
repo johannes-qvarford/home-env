@@ -30,4 +30,4 @@ Username has to be "Johannes Qvarford".
 * Restart
 * Copy+Paste the content of the install2 file.
 
-# How to connect
+Use the following font for cool icons: https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/CascadiaCode/Regular/complete/Caskaydia%20Cove%20Regular%20Nerd%20Font%20Complete%20Windows%20Compatible.otf

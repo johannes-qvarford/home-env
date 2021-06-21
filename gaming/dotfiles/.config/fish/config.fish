@@ -4,8 +4,8 @@ set color_repo_branch cyan
 set color_repo_dirty yellow
 
 set -x PYTHONIOENCODING utf-8
-set -x EDITOR emacs
-set -x VISUAL emacs
+set -x EDITOR "emacs -nw"
+set -x VISUAL "emacs -nw"
 set -x PAGER less
 
 set -gx PATH $HOME/bin $HOME/.local/bin /usr/local/bin /usr/bin /bin / $PATH 
@@ -14,7 +14,7 @@ set -gx fish_function_path $HOME/.config/fish/functions $fish_function_path
 remove_duplicates_in_array PATH
 
 # Force Windows Terminal to use more colors.
-set -x TERM xterm-color
+# set -x TERM xterm-color
 
 
 
@@ -24,7 +24,20 @@ set -gx FZF_FIND_FILE_COMMAND "
     -o -type d -print \
     -o -type l -print 2> /dev/null | sed 's@^\./@@'"
 
+set -gx FZF_CD_COMMAND "
+    command find -L \$dir -mindepth 1 \\( -path \$dir'*/\\.*' -o -path './winhome/*' -o -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' \\) -prune \
+    -o -type d -print 2> /dev/null | sed 's@^\./@@'"
 
+set -gx FZF_CD_WITH_HIDDEN_COMMAND "
+    command find -L \$dir \
+    \\( -path '*/\\.git*' -o -path './winhome/*' -o -fstype 'dev' -o -fstype 'proc' \\) -prune \
+    -o -type d -print 2> /dev/null | sed 1d | cut -b3-"
+
+set -gx FZF_OPEN_COMMAND "
+    command find -L \$dir -mindepth 1 \\( -path \$dir'*/\\.*' -o -path './winhome/*' -o -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' \\) -prune \
+    -o -type f -print \
+    -o -type d -print \
+    -o -type l -print 2> /dev/null | sed 's@^\./@@'"
 
 # May be needed for gwsl.
 # TODO: Remove when proper graphical support comes to wsl.
