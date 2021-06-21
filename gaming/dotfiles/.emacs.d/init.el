@@ -35,7 +35,8 @@
 (evil-define-key '(normal visual) 'global
   "s" nil
   "sw" 'save-buffer
-  "sf" 'find-file)
+  "sf" 'find-file
+  "sq" 'save-buffers-kill-terminal)
 
 (evil-define-key 'insert 'global
   "jk" 'evil-force-normal-state

@@ -16,6 +16,16 @@ remove_duplicates_in_array PATH
 # Force Windows Terminal to use more colors.
 set -x TERM xterm-color
 
+
+
+set -gx FZF_FIND_FILE_COMMAND "
+    command find -L \$dir -mindepth 1 \\( -path \$dir'*/\\.*' -o -path './winhome/*' -o -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' \\) -prune \
+    -o -type f -print \
+    -o -type d -print \
+    -o -type l -print 2> /dev/null | sed 's@^\./@@'"
+
+
+
 # May be needed for gwsl.
 # TODO: Remove when proper graphical support comes to wsl.
 set --export WSL2 1
