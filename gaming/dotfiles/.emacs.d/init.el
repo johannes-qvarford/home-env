@@ -6,7 +6,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(smartparens evil-surround evil-collection evil dracula-theme rainbow-delimiters racket-mode magit)))
+   '(yasnippet-snippets yasnippet smartparens evil-surround evil-collection evil dracula-theme rainbow-delimiters racket-mode magit)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -21,6 +21,7 @@
 (require 'evil)
 (require 'evil-surround)
 (require 'smartparens)
+(require 'yasnippet)
 
 ;; CUSTOM
 
@@ -29,6 +30,7 @@
 (setq visible-bell 1)
 (global-evil-surround-mode 1)
 (smartparens-global-mode 1)
+(yas-global-mode 1)
 
 ;; KEYBINDINGS
 
@@ -60,6 +62,8 @@
 ;; LISPS
 
 (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
+(sp-with-modes 'emacs-lisp-mode
+  (sp-local-pair "'" nil :actions nil))
 
 (add-hook 'eval-expression-minibuffer-setup-hook #'smartparens-mode)
 (add-hook 'eval-expression-minibuffer-setuo-hook #'rainbow-delimiters-mode)
