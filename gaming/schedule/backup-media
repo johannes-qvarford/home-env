@@ -18,7 +18,12 @@ rsync -av '/mnt/d/Source/Videos/Youtube/Rewatchable/' \
     '/mnt/f/Source/Videos/Youtube/Rewatchable'
 
 rsync -av '/mnt/d/Source/Videos/Youtube/tartube.db' \
-    '/mnt/f/Source/Videos/Youtube/tartube.db'
+      '/mnt/f/Source/Videos/Youtube/tartube.db'
+
+shopt -s extglob
+
+rsync -t "~/winhome/Music/iTunes/?(*.itdb|*.itl|*.xml|sentinel)" \
+      '/mnt/g/MEGAsync/Media/Podcasts'
 
 mkdir -p '/mnt/f/data'
 
