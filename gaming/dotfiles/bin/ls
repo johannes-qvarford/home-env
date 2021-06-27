@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if which lsd; then
+if which lsd >/dev/null; then
     exec lsd "$@"
 else
     exec /bin/ls "$@"
