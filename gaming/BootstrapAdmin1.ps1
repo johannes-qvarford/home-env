@@ -19,12 +19,36 @@ function Register-Weekly-Task {
         $Type
     )
 
-    $trigger =  New-ScheduledTaskTrigger -Weekly -DaysOfWeek Sunday -At $At
-    $action = New-ScheduledTaskAction -Execute 'C:\WINDOWS\system32\wsl.exe' -Argument "-d fedoraremix /home/current/home-env/gaming/schedule/$Name"
+    $trigger =  Trigger-Sunday -At $At
+    $action = WSL-Task -Name $Name
     if ($Type -eq "pwsh") {
-        $action = New-ScheduledTaskAction -Execute 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe' -Argument "\\wsl$\fedoraremix\home\current\home-env\gaming\schedule\$Name.ps1"
+        $action = Powershell-Task -Name $Name
     }
-    Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "$Name" -Description "$Name"  -TaskPath "\Schedule\"
+    Register -Action $action -Trigger $trigger -Name "$Name"
+}
+
+function WSL-Task {
+    param ($Name)
+    return New-ScheduledTaskAction -Execute 'C:\WINDOWS\system32\wsl.exe' -Argument "-d fedoraremix /home/current/home-env/gaming/schedule/$Name"
+}
+
+function Powershell-Task {
+    param ($Name)
+    return New-ScheduledTaskAction -Execute 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe' -Argument "\\wsl$\fedoraremix\home\current\home-env\gaming\schedule\$Name.ps1"
+}
+
+function Trigger-Sunday {
+    param($At)
+    return New-ScheduledTaskTrigger -Weekly -DaysOfWeek Sunday -At $At
+}
+
+function Register {
+    param (
+        $Action,
+        $Trigger,
+        $Name
+    )
+    Register-ScheduledTask -Action $Action -Trigger $Trigger -TaskName "$Name" -Description "$Name"  -TaskPath "\Schedule\"
 }
 
 Register-Weekly-Task -Name backup-media -Type wsl -At "11:00 am"
