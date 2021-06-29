@@ -24,7 +24,7 @@ services:
       - 6881:6881/udp
       - 5544:8080
   sonarr:
-    image: ghcr.io/linuxserver/sonarr:preview
+    image: ghcr.io/linuxserver/sonarr:develop
     container_name: sonarr
     environment:
       - PUID=1000
@@ -85,4 +85,9 @@ services:
       - /mnt/d/data:/data
     ports:
       - 8090:8090
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /root/.docker/config.json:/config.json
 # Based on https://trash-guides.info/Misc/how-to-set-up-hardlinks-and-atomic-moves/
