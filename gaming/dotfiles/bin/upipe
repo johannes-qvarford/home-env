@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+cd ~/projects/upipe
+exec ./upipe.clj "$@"

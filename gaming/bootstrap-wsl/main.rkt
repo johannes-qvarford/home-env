@@ -5,8 +5,10 @@ racket github.rkt
 racket clone-home-env.rkt
 racket dotfiles.rkt
 racket fish.rkt
+racket clojure.rkt
 racket colors.rkt
 
+bash haskell.sh
 racket powershell.rkt
 racket racket-pretty-printer.rkt
 racket mega.rkt

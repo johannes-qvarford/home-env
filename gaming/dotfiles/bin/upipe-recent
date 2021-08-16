@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-cd ~/projects/upipe
-exec racket ~/projects/upipe/upipe-recent.rkt "$@"
