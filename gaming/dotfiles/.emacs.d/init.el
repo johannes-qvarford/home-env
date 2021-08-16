@@ -6,7 +6,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(yasnippet-snippets yasnippet smartparens evil-surround evil-collection evil dracula-theme rainbow-delimiters racket-mode magit)))
+   '(neotree yasnippet-snippets yasnippet smartparens evil-surround evil-collection evil dracula-theme rainbow-delimiters racket-mode magit)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -22,6 +22,7 @@
 (require 'evil-surround)
 (require 'smartparens)
 (require 'yasnippet)
+(require 'neotree)
 
 ;; CUSTOM
 
@@ -31,6 +32,7 @@
 (global-evil-surround-mode 1)
 (smartparens-global-mode 1)
 (yas-global-mode 1)
+(global-set-key [f8] 'neotree-toggle)
 
 ;; KEYBINDINGS
 
