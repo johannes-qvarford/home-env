@@ -1,0 +1,22 @@
+{
+    "manifest_version": 2,
+    "name": "save-to-mega",
+    "version": "1.0",
+  
+    "description": "Adds context items to menus to save files directly to mega without having to first download them.",
+  
+    "icons": {
+      "48": "icons/mega.nz.png"
+    },
+
+    "permissions": [
+        "contextMenus",
+        "<all_urls>"
+    ],
+    "background": {
+        "scripts": [
+            "save-to-mega.js"
+        ]
+    }
+}
+  
