@@ -9,14 +9,17 @@
       "48": "icons/mega.nz.png"
     },
 
+    "browser_action": {
+        "default_title": "Save to Mega",
+        "default_popup": "src/popup.html",
+        "default_icon": {
+            "48": "icons/mega.nz.png"
+        }
+    },
+
     "permissions": [
-        "contextMenus",
+        "menus",
         "<all_urls>"
-    ],
-    "background": {
-        "scripts": [
-            "save-to-mega.js"
-        ]
-    }
+    ]
 }
   
