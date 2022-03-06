@@ -16,3 +16,4 @@ racket twitch-dl.rkt
 racket backup.rkt
 racket upipe.rkt
 racket extra.rkt
+bash privacy.sh
