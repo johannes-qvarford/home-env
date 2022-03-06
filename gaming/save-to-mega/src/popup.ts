@@ -1,3 +1,4 @@
+import { sendSubmissionEvent } from "./event"
 import { load } from "./load"
 
 function registerField(name: string) {
@@ -33,14 +34,10 @@ async function init() {
         const password = localStorage.getItem("password") ?? ""
         const root = localStorage.getItem("root") ?? ""
         try {
-            await load(email, password, root, (error) => {
-                //alert(error)
-                errorElement.innerText = error.toString()
-            })
-            errorElement.innerText = "Success!"
+            sendSubmissionEvent({ email, password, root })
         } catch (error) {
             console.log("Failed to login with the extension", error)
-            errorElement.innerText = error.toString()
+            errorElement.innerText = error + ""
         }
         
     }
