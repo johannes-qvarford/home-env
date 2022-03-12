@@ -14,6 +14,7 @@ if (!(Test-Path ~/.BootstrapPowershell)) {
   Read-Host -Prompt "Have you installed winget yet? https://www.microsoft.com/sv-se/p/app-installer/9nblggh4nns1?rtc=1&activetab=pivot:overviewtab"
   winget install Dropbox.Dropbox
   winget install Keepass
+  winget install "Docker Desktop"
 
   wsl.exe bash ./bootstrap-wsl.sh
   # home-env should now be installed in $HOME/home-env and fish should be the default shell.
