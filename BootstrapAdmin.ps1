@@ -1,5 +1,5 @@
 if (!(Test-Path ~/.BootstrapPowershell)) {
-  wsl --install
+  wsl --install -d Ubuntu
   New-Item ~/.BootstrapPowershell
 } else {
   # We want to download the repository right away.
