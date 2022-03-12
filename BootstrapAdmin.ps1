@@ -11,6 +11,8 @@ if (!(Test-Path ~/.BootstrapPowershell)) {
   Set-Location "$tempDir/home-env-master"
 
   # In order for bootstrap-wsl to download the repository using git, we need to acquire the Github credentials.
+  Read-Host -Prompt "Have you installed winget yet?
+  https://www.microsoft.com/sv-se/p/app-installer/9nblggh4nns1?rtc=1&activetab=pivot:overviewtab"
   winget install Dropbox.Dropbox
   winget install Keepass
 
