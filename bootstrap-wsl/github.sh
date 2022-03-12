@@ -1,9 +1,6 @@
 #!/bin/bash
 
-sudo dnf install -y git
-
-git config user.name 'Johannes Qvarford'
-git config user.email 'johqva.email+github@pm.me'
+sudo apt install -y git
 
 ssh-keygen -t rsa -b 2048 -C "jq.email+github@pm.me"
 echo
