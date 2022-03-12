@@ -7,5 +7,5 @@ $packages = "Windows Terminal Preview", "Mozilla Firefox", "Microsoft Visual Stu
 
 foreach ($package in $packages)
 {
-  winget $package
+  winget install $package
 }
