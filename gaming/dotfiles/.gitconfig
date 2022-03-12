@@ -23,7 +23,7 @@
 	autocrlf = false
 	excludesfile = ~/.gitignore
 [user]
-	email = jq.email+gitlab@pm.me
+	email = jq.email+github@pm.me
 	name = Johannes Qvarford
 [push]
 	default = simple

@@ -1,16 +1,24 @@
+$packages = "Windows Terminal Preview", "Mozilla Firefox", "Microsoft Visual Studio Code", `
+    "Brave", "Dropbox", "Keepass", "MEGAsync", "Steam",  `
+;
+
+foreach ($package in $packages)
+{
+  winget $package
+}
+
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072;
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'));
 
 choco feature enable -n allowGlobalConfirmation
 choco install microsoft-windows-terminal  --pre
-choco install freetube --pre
-choco install dropbox vscode keepass megasync firefox brave steam kodi teamviewer itch docker-desktop megatools vlc bleachbit sqlitebrowser stretchly wireshark handbrake fiddler gsudo microsoft-windows-terminal autohotkey
+choco install  kodi teamviewer itch docker-desktop vlc bleachbit sqlitebrowser wireshark handbrake fiddler gsudo microsoft-windows-terminal autohotkey protonvpn
 
 dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
 
 $modulePath = [Environment]::GetEnvironmentVariable('PSModulePath', 'User')
-$modulePath += ';\\wsl$\fedoraremix\home\johqva\home-env\gaming\powershell'
+$modulePath += ';\\wsl$\fedoraremix\home\johqva\home-env\powershell'
 [Environment]::SetEnvironmentVariable('PSModulePath', $modulePath, 'User')
 
 function Register-Weekly-Task {
@@ -30,12 +38,12 @@ function Register-Weekly-Task {
 
 function WSL-Task {
     param ($Name)
-    return New-ScheduledTaskAction -Execute 'C:\WINDOWS\system32\wsl.exe' -Argument "-d fedoraremix /home/current/home-env/gaming/schedule/$Name"
+    return New-ScheduledTaskAction -Execute 'C:\WINDOWS\system32\wsl.exe' -Argument "-d fedoraremix /home/current/home-env/schedule/$Name"
 }
 
 function Powershell-Task {
     param ($Name)
-    return New-ScheduledTaskAction -Execute 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe' -Argument "\\wsl$\fedoraremix\home\current\home-env\gaming\schedule\$Name.ps1"
+    return New-ScheduledTaskAction -Execute 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe' -Argument "\\wsl$\fedoraremix\home\current\home-env\schedule\$Name.ps1"
 }
 
 function Trigger-Sunday {
