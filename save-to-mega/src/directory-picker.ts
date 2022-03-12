@@ -55,14 +55,22 @@ class DirectoryPickerImpl implements DirectoryPicker {
 
     private addDirectoryTreeToMenu(tree: DirectoryTree, directory: string, parentId?: string) {
         const id = this.directoryTreeId(directory)
+        const currentDirectoryId = `${id}/.`
         browser.menus.create({
             id,
             parentId,
             title: tree.name ?? undefined,
             contexts: ["image", "audio", "video"]
         }, () => console.log(id, "Created!"))
+        browser.menus.create({
+            id: currentDirectoryId,
+            parentId: id,
+            title: tree.name ?? undefined,
+            contexts: ["image", "audio", "video"]
+        }, () => console.log(currentDirectoryId, "Created!"))
         
         if (tree.children) {
+            tree.children.sort((a, b) => (a?.name ?? "") < (b?.name ?? "") ? -1 : 1)
             tree.children.forEach(child => {
                 const newDirectory = directory ? `${directory}/${child.name}` : child.name
                 if (!newDirectory) {
