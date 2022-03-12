@@ -1,3 +1,3 @@
 #!/bin/bash
 
-git clone git@gitlab.com:johannes-q/home-env.git ~/home-env
+git clone git@github.com:johannes-qvarford/home-env.git ~/home-env
