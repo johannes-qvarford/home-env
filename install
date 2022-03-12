@@ -1,1 +1,1 @@
-Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/johannes-qvarford/home-env/master/BootstrapAdmin.ps1'));
+Set-ExecutionPolicy Unrestricted; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/johannes-qvarford/home-env/master/BootstrapAdmin.ps1'));
