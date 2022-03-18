@@ -7,4 +7,5 @@ sudo apt update
 
 sudo apt install -y fish
 chsh -s /usr/bin/fish
-fish -c "fisher"
+fish -c "curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher"
+fisher install jorgebucaran/nvm.fish
