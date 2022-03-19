@@ -20,3 +20,5 @@ cd /tmp
 wget http://mirrors.kernel.org/ubuntu/pool/universe/r/rust-fd-find/$file
 sudo dpkg -i /tmp/$file
 sudo apt install -f
+
+sudo apt install -y bat

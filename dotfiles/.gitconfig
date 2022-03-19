@@ -18,7 +18,7 @@
 	adda = add --all
 	back = reset --hard HEAD^
 [core]
-	editor = vscode
+	editor = code
 	safecrlf = false
 	autocrlf = false
 	excludesfile = ~/.gitignore

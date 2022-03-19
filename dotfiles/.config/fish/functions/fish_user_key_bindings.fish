@@ -9,9 +9,4 @@ function fish_user_key_bindings
     end
     bind -M default j history-search-forward
     bind -M default k history-search-backward
-
-    bind -M default -m insert ff '__fzf_find_file'
-    bind -M default -m insert fr '__fzf_reverse_isearch'
-    bind -M default -m insert fc '__fzf_cd'
-    bind -M default -m insert fC '__fzf_cd --hidden'
 end
