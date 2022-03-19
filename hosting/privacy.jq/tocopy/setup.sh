@@ -4,13 +4,21 @@ if [[ "$USER" != "jq" ]]; then
     echo "Running as root on the first invocation..."
     sudo adduser jq
     sudo usermod -aG sudo jq
-    sudo cp -rp /root/tocopy/* /home/jq/tocopy
-    sudo chown -R jq:jq /home/jq/tocopy
+    
     cd /home/jq
     sudo su --login jq -- tocopy/setup.sh
     exit 0
 fi
 echo "Now running as jq..."
+
+function disable-root-login() {
+    sudo cp -rp /root/tocopy/* ~/tocopy
+    sudo chown -R jq:jq ~/tocopy
+    sudo cp -R /root/.ssh ~
+    chown -R jq:jq ~/.ssh
+    sudo sed -i 's/^[# ]*PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config
+    sudo service ssh restart
+}
 
 function install-docker() {
     sudo apt update
@@ -65,6 +73,7 @@ function install-invidious() {
     sudo docker-compose up -d
 }
 
+disable-root-login
 install-certbot
 install-docker
 install-invidious
