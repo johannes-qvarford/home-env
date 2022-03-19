@@ -22,7 +22,7 @@ export async function load(email: string, password: string, root: string, errorH
             errorHandler("Successful saving for " + count)
         } catch (error) {
             console.log(error)
-            errorHandler(error)
+            errorHandler((error as any as Error).toString())
             throw error
         }
     })
