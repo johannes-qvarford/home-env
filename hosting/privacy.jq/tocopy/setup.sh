@@ -65,18 +65,25 @@ function install-nginx() {
 }
 
 function install-invidious() {
-    cd /home/jq
+    cd ~
     sudo apt install -y git
     git clone https://github.com/johannes-qvarford/invidious.git
     cd invidious
     git checkout jq
-    sudo docker-compose up -d
+    # sudo
+    docker-compose up -d
+}
+
+function install-nitter() {
+    cd ~/tocopy/nitter
+    docker-compose up -d
 }
 
 disable-root-login
 install-certbot
 install-docker
 install-invidious
+install-nitter
 install-nginx
 
 

@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+
+  nitter:
+  # zedeus/nitter:latest 
+    image: quay.io/unixfox/nitter:latest
+    container_name: nitter
+    ports:
+      - "8080:8080" # Replace with "8080:8080" if you don't use a reverse proxy
+    volumes:
+      - ./nitter5.conf:/data/nitter.conf
+    depends_on:
+      - nitter-redis
+    restart: unless-stopped
+
+  nitter-redis:
+    image: redis:6-alpine
+    container_name: nitter-redis
+    command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - nitter-redis:/data
+    restart: unless-stopped
+
+volumes:
+  nitter-redis:
