@@ -12,5 +12,4 @@ bash powershell.sh
 bash backup.sh
 bash fzf.sh
 bash extra.sh
-bash privacy.sh
 bash media.sh
