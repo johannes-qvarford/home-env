@@ -1,3 +1,3 @@
 #!/bin/bash
 
-sudo apt install -y tmux
+sudo apt install -y tmux zip
