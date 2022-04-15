@@ -2,4 +2,4 @@
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 rustup update
-sudo apt install build-essential
+sudo apt install -y build-essential pkg-config libssl-dev
