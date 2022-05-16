@@ -20,7 +20,7 @@ function WSL-Task {
 
 function Powershell-Task {
     param ($Name)
-    return New-ScheduledTaskAction -Execute 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe' -Argument "\\wsl$\fedoraremix\home\current\home-env\schedule\$Name.ps1"
+    return New-ScheduledTaskAction -Execute 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe' -Argument "\\wsl$\Ubuntu\home\jq\home-env\schedule\$Name.ps1"
 }
 
 function Trigger-Sunday {
@@ -38,4 +38,4 @@ function Register {
 }
 
 Register-Weekly-Task -Name backup-media -Type wsl -At "11:00 am"
-Register-Weekly-Task -Name shred-data -Type wsl -At "10:00 am"
+Register-Weekly-Task -Name Shred-Data -Type pwsh -At "10:00 am"
