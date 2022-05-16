@@ -16,3 +16,4 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 choco feature enable -n=allowGlobalConfirmation
 choco install bleachbit
 choco install 7zip
+choco install tartube
