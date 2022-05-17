@@ -12,7 +12,7 @@ Username has to be "Johannes Qvarford".
 * Install Firefox extensions manually.
 * * Tampermonkey should have 2 downloader scripts.
 * Set game directory for Steam on G:
-* Install https://kodi.wiki/view/Add-on:Backup for Kodi, and restore backup from G:\MEGAsync\Media\T...
+* Install https://kodi.wiki/view/Add-on:Backup for Kodi, and restore backup from G:\MEGAsync\Public\Media\T...
 * * If there is a Kodi version mismatch - When adding video sources, remember that movies are in separate directories.
 * * Setup a backup schedule.
 

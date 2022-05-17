@@ -17,7 +17,7 @@ services:
       - TZ=Europe/Stockholm
       - WEBUI_PORT=5544
     volumes:
-      - /mnt/g/MEGAsync/Media/Torrents/docker/qbittorrent:/config
+      - /mnt/g/MEGAsync/Public/Media/Torrents/docker/qbittorrent:/config
       - /mnt/d/data:/data
     ports:
       - 6881:6881
@@ -31,7 +31,7 @@ services:
       - PGID=1000
       - TZ=Europe/Stockholm
     volumes:
-      - /mnt/g/MEGAsync/Media/Torrents/docker/sonarr:/config
+      - /mnt/g/MEGAsync/Public/Media/Torrents/docker/sonarr:/config
       - /mnt/d/data:/data
     ports:
       - 8989:8989
@@ -45,7 +45,7 @@ services:
       - AUTO_UPDATE=true
       #- RUN_OPTS=<run options here> #optional
     volumes:
-      - /mnt/g/MEGAsync/Media/Torrents/docker/jackett:/config
+      - /mnt/g/MEGAsync/Public/Media/Torrents/docker/jackett:/config
     ports:
       - 9117:9117
   radarr:
@@ -56,7 +56,7 @@ services:
       - PGID=1000
       - TZ=Europe/Stockholm
     volumes:
-      - /mnt/g/MEGAsync/Media/Torrents/docker/radarr:/config
+      - /mnt/g/MEGAsync/Public/Media/Torrents/docker/radarr:/config
       - /mnt/d/data:/data
     ports:
       - 7878:7878
@@ -68,7 +68,7 @@ services:
       - PGID=1000
       - TZ=Europe/Stockholm
     volumes:
-      - /mnt/g/MEGAsync/Media/Torrents/docker/sabnzbd:/config
+      - /mnt/g/MEGAsync/Public/Media/Torrents/docker/sabnzbd:/config
       - /mnt/d/data:/data
     ports:
       - 8080:8080
@@ -81,7 +81,7 @@ services:
       - PGID=1000
       - TZ=Europe/Stockholm
     volumes:
-      - /mnt/g/MEGAsync/Media/Torrents/docker/mylar3:/config
+      - /mnt/g/MEGAsync/Public/Media/Torrents/docker/mylar3:/config
       - /mnt/d/data:/data
     ports:
       - 8090:8090
@@ -96,7 +96,7 @@ services:
       - UMASK=002
       - TZ=Europe/Stockholm
     volumes:
-      - /mnt/g/MEGAsync/Media/Torrents/docker/bazarr:/config
+      - /mnt/g/MEGAsync/Public/Media/Torrents/docker/bazarr:/config
       - /mnt/d/data:/data
   watchtower:
     image: containrrr/watchtower
