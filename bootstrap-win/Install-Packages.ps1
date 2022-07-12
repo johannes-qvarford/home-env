@@ -2,9 +2,8 @@ $packages = "Microsoft.WindowsTerminal", "Mozilla.Firefox", "Microsoft Visual St
     "Brave", "Dropbox", "Keepass", "MEGAsync", "Valve.Steam",  "XBMCFoundation.Kodi", "TeamViewer.TeamViewer", `
      "Docker Desktop", "VLC media player", "BleachBit", "DBBrowserForSQLite.DBBrowserForSQLite", `
      "Wireshark", "HandBrake", "Telerik.Fiddler.Classic", "gsudo", "AutoHotkey", "ProtonVPN", `
-     "Messenger", "SlackTechnologies.Slack", "Stretchly.Stretchly" `
+     "Messenger", "SlackTechnologies.Slack", "Stretchly.Stretchly", "Oracle.VirtualBox" `
 ;
-
 foreach ($package in $packages)
 {
   winget install $package
