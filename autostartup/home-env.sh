@@ -1,5 +1,10 @@
 #!/bin/bash
 
+echo "Starting Jetbrains Toolbox..."
+
+box
+
+echo "Starting Docker..."
 # Make sure that you don't enable automatic Docker Desktop startup - it cannot be restarted with a command from what I know.
 cd "$(wslpath -a "C:\Program Files\Docker\Docker")"
 "./Docker Desktop.exe" &
@@ -11,7 +16,7 @@ for i in $(seq 10); do
         echo "Server is up!"
         break
     fi
-    bash -c "docker-compose -f /home/current/home-env/win-server/docker-compose.yml up -d"
+    bash -c "docker-compose -f /home/jq/home-env/win-server/docker-compose.yml up -d"
     echo "Waiting for server to start..."
     sleep 1m
 done

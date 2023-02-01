@@ -3,7 +3,7 @@ $packages = "Microsoft.WindowsTerminal", "Mozilla.Firefox", "Microsoft Visual St
     "Docker Desktop", "VLC media player", "BleachBit", "DBBrowserForSQLite.DBBrowserForSQLite", `
     "Wireshark", "HandBrake", "Telerik.Fiddler.Classic", "gsudo", "AutoHotkey", "ProtonVPN", `
     "Messenger", "SlackTechnologies.Slack", "Stretchly.Stretchly", "Oracle.VirtualBox", "WinDirStat.WinDirStat", `
-    "BleachBit.BleachBit", "7zip.7zip", "Microsoft.PowerToys", "Canonical.Ubuntu"`
+    "BleachBit.BleachBit", "7zip.7zip", "Microsoft.PowerToys", "Canonical.Ubuntu", `
 ;
 foreach ($package in $packages)
 {

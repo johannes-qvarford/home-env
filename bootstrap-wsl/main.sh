@@ -10,6 +10,8 @@ bash colors.sh
 
 bash powershell.sh
 bash rust.sh
+bash java.sh
+
 bash backup.sh
 bash fzf.sh
 bash extra.sh

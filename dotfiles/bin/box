@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/opt/jetbrains-toolbox-1.27.2.13801/jetbrains-toolbox "$@"

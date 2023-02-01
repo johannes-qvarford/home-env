@@ -20,7 +20,7 @@
 [core]
 	editor = code
 	safecrlf = false
-	autocrlf = false
+	autocrlf = input
 	excludesfile = ~/.gitignore
 [user]
 	email = jq.email+github@pm.me
@@ -45,3 +45,5 @@
 
 [interactive]
     diffFilter = delta --color-only
+[init]
+	defaultBranch = main
