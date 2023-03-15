@@ -1,8 +1,5 @@
 #!/bin/bash
 
-echo "Starting Jetbrains Toolbox..."
-
-box
 
 echo "Starting Docker..."
 # Make sure that you don't enable automatic Docker Desktop startup - it cannot be restarted with a command from what I know.
