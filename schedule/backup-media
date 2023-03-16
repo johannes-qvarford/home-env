@@ -24,5 +24,10 @@ mkdir -p '/mnt/f/data'
 
 rsync -av --exclude='incomplete' '/mnt/d/data/' '/mnt/f/data'
 
+mkdir -p '/mnt/g/MEGAsync/Public/Media/Torrents/win-server'
+
+rsync -av '/mnt/g/win-server' \
+    '/mnt/g/MEGAsync/Public/Media/Torrents/win-server'
+
 echo 'Done with backup'
 sleep 3
