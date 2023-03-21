@@ -1,4 +1,3 @@
 #!/bin/bash
 
-sudo apt install -y tmux zip gforth
-
+sudo apt install -y tmux zip xdg-utils ffmpeg
