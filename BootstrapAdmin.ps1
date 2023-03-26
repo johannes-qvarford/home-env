@@ -1,7 +1,6 @@
 if (!(Test-Path ~/.BootstrapPowershell)) {
   wsl --install -d Ubuntu
   Read-Host -Prompt "Have you installed winget yet? https://www.microsoft.com/sv-se/p/app-installer/9nblggh4nns1?rtc=1&activetab=pivot:overviewtab"
-  winget install "Docker Desktop"
   New-Item ~/.BootstrapPowershell
 } else {
   # We want to download the repository right away.
