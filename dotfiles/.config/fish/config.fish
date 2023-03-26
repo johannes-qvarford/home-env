@@ -8,7 +8,7 @@ set -gx EDITOR "code"
 set -gx VISUAL "code"
 set -gx PAGER less
 
-set -gx PATH $HOME/bin $HOME/.local/bin $HOME/.cargo/bin /usr/local/bin /usr/bin /bin / $PATH 
+set -gx PATH $HOME/bin $HOME/.local/share/JetBrains/Toolbox/scripts $HOME/.local/bin $HOME/.cargo/bin /usr/local/bin /usr/bin /bin / $PATH 
 set -gx fish_function_path $HOME/.config/fish/functions $fish_function_path
 
 remove_duplicates_in_array PATH
