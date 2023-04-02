@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd ~/projects/kangaszuru
+exec cargo run -- "$@"

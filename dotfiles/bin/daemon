@@ -1,0 +1,3 @@
+#!/bin/bash
+
+setsid "$@" >/tmp/daemon-stdout 2>/tmp/daemon-stderr &
