@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Get-Clipboard spits out a \r\n newline that wasn't part of the clipboard
+powershell.exe -c Get-Clipboard | head -c -2
