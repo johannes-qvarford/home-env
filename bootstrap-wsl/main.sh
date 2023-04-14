@@ -6,6 +6,7 @@ cd ~/home-env/bootstrap-wsl
 
 bash systemd.sh
 bash docker.sh
+bash ansible.sh
 bash dotfiles.sh
 bash fish.sh
 bash colors.sh
