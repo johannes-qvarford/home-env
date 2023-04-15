@@ -16,3 +16,6 @@ ln -s $old/.docker/config.json $new/.docker/config.json
 
 rm -f $new/bin
 ln -s $old/bin $new/bin
+
+rm -f $new/.ssh/config
+ln -s $old/.ssh/config $new/.ssh/config
