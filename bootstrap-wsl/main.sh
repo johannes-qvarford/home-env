@@ -4,6 +4,7 @@ bash github.sh
 bash clone-home-env.sh
 cd ~/home-env/bootstrap-wsl
 
+bash wslu.sh
 bash systemd.sh
 bash docker.sh
 bash ansible.sh
