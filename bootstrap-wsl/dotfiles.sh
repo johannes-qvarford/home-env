@@ -1,21 +1,25 @@
 #!/bin/bash
 
-new=$HOME
-old="$HOME/home-env/dotfiles"
-mkdir -p $new/.config
-rm -f $new/.config/fish
-ln -s  $old/.config/fish $new/.config/fish
+dir() {
+    path="$1"
+    mkdir -p ~/"$path"
+}
 
-rm -f $new/.gitconfig
-ln -s $old/.gitconfig $new/.gitconfig
-rm -f $new/.tmux.conf
-ln -s $old/.tmux.conf $new/.tmux.conf
-rm -f $new/.docker/config.json
-mkdir -p $new/.docker
-ln -s $old/.docker/config.json $new/.docker/config.json
+link() {
+    path="$1"
+    ln -sfn ~/home-env/dotfiles/"$path" ~/"$path"
+}
 
-rm -f $new/bin
-ln -s $old/bin $new/bin
+dir .ssh
+link .ssh/config
 
-rm -f $new/.ssh/config
-ln -s $old/.ssh/config $new/.ssh/config
+dir .config
+link .config/fish
+link .config/icons
+
+dir .docker
+link .docker/config.json
+
+link bin
+link .gitconfig
+link .tmux.conf

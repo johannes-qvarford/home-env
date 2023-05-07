@@ -2,8 +2,37 @@
 
 sudo apt install libfuse2
 
-curl 'https://download-cdn.jetbrains.com/toolbox/jetbrains-toolbox-1.27.2.13801.tar.gz' -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8' -H 'Accept-Language: en-GB,en;q=0.5' -H 'Accept-Encoding: gzip, deflate, br' -H 'Connection: keep-alive' -H 'Cookie: cf_country-region=SE-O' -H 'Upgrade-Insecure-Requests: 1' -H 'Sec-Fetch-Dest: document' -H 'Sec-Fetch-Mode: navigate' -H 'Sec-Fetch-Site: same-site' -H 'Sec-Fetch-User: ?1'
-curl -L https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.27.2.13801.tar.gz >/tmp/toolbox.tar.gz
-cd /tmp
-sudo tar -xzf toolbox.tar.gz -C /opt
+curl -fsSL https://raw.githubusercontent.com/nagygergo/jetbrains-toolbox-install/master/jetbrains-toolbox.sh | bash
 
+# This doesn't work for some reason
+sudo cp ~/.config/icons/IntelliJ_IDEA_icon.svg /usr/share/icons/hicolor/scalable/apps/idea.svg
+sudo cp ~/.config/icons/IntelliJ_IDEA_icon_512x512.png /usr/share/icons/hicolor/512x512/apps/idea.png
+
+# This has trouble starting, probably related to how it uses the tray.
+sudo tee /usr/share/applications/idea.desktop <<EOF
+[Desktop Entry]
+Name=IntelliJ IDEA
+Icon=idea
+Comment=IntelliJ IDEA
+Exec="$HOME/.local/share/JetBrains/Toolbox/scripts/idea" %f
+Version=1.0
+Type=Application
+Categories=Development;IDE;
+Terminal=false
+StartupNotify=true
+EOF
+
+sudo tee /usr/share/applications/jetbrains-toolbox.desktop <<EOF
+[Desktop Entry]
+Name=Jetbrains Toolbox
+Icon=idea
+Comment=Jetbrains Toolbox
+Exec="/usr/local/bin/jetbrains-toolbox" %f
+Version=1.0
+Type=Application
+Categories=Development;IDE;
+Terminal=false
+StartupNotify=true
+EOF
+
+# /usr/share/applications/org.gnome.gedit.desktop
