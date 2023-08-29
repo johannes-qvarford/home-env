@@ -7,7 +7,6 @@ services:
       - 80:80
     volumes:
       - /home/jq/home-env/win-server/sites-enabled:/etc/nginx/conf.d
-    restart: unless-stopped
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent
     container_name: qbittorrent
@@ -23,7 +22,6 @@ services:
       - 6881:6881
       - 6881:6881/udp
       - 5544:8080
-    restart: unless-stopped
   sonarr:
     image: lscr.io/linuxserver/sonarr:develop
     container_name: sonarr
@@ -36,7 +34,6 @@ services:
       - /mnt/d/data:/data
     ports:
       - 8989:8989
-    restart: unless-stopped
   jackett:
     image: lscr.io/linuxserver/jackett
     container_name: jackett
@@ -45,12 +42,10 @@ services:
       - PGID=1000
       - TZ=Europe/Stockholm
       - AUTO_UPDATE=true
-      #- RUN_OPTS=<run options here> #optional
     volumes:
       - /mnt/g/win-server/jackett:/config
     ports:
       - 9117:9117
-    restart: unless-stopped
   radarr:
     image: lscr.io/linuxserver/radarr
     container_name: radarr
@@ -63,7 +58,6 @@ services:
       - /mnt/d/data:/data
     ports:
       - 7878:7878
-    restart: unless-stopped
   sabnzbd:
     image: lscr.io/linuxserver/sabnzbd
     container_name: sabnzbd
@@ -77,7 +71,6 @@ services:
     ports:
       - 8080:8080
       - 9090:9090
-    restart: unless-stopped
   mylar3:
     image: lscr.io/linuxserver/mylar3
     container_name: mylar3
@@ -90,7 +83,6 @@ services:
       - /mnt/d/data:/data
     ports:
       - 8090:8090
-    restart: unless-stopped
   bazarr:
     container_name: bazarr
     image: lscr.io/linuxserver/bazarr
@@ -104,11 +96,9 @@ services:
     volumes:
       - /mnt/g/win-server/bazarr:/config
       - /mnt/d/data:/data
-    restart: unless-stopped
   watchtower:
     image: containrrr/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /root/.docker/config.json:/config.json
-    restart: unless-stopped
 # Based on https://trash-guides.info/Misc/how-to-set-up-hardlinks-and-atomic-moves/

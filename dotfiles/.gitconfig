@@ -18,7 +18,7 @@
 	adda = add --all
 	back = reset --hard HEAD^
 [core]
-	editor = code
+	editor = vim
 	safecrlf = false
 	autocrlf = input
 	excludesfile = ~/.gitignore
@@ -47,3 +47,5 @@
     diffFilter = delta --color-only
 [init]
 	defaultBranch = main
+[pull]
+	rebase = false
