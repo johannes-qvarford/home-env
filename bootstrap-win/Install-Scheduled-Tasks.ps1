@@ -37,7 +37,5 @@ function Register {
     Register-ScheduledTask -Action $Action -Trigger $Trigger -TaskName "$Name" -Description "$Name"  -TaskPath "\Schedule\"
 }
 
-
-Register-Weekly-Task -Name Shred-Data -Type pwsh -At "10:00 am"
 Register-Weekly-Task -Name backup-media -Type wsl -At "11:00 am"
 Register-Weekly-Task -Name upgrade-tools -Type wsl -At "12:00 pm"
