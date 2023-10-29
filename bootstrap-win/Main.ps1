@@ -2,3 +2,4 @@
 ./Install-Scheduled-Tasks.ps1
 ./Install-Nerd-Font.ps1
 ./Connect-Windows-Terminal.ps1
+./Handle-Sensitive-Information.ps1

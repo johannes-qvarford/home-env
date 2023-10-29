@@ -1,9 +1,9 @@
 $packages = "Microsoft.WindowsTerminal", "Mozilla.Firefox", "Microsoft.VisualStudioCode", `
-    "Brave.Brave", "Dropbox.Dropbox", "DominikReichl.KeePass", "Mega.MEGASync", "Valve.Steam",  "XBMCFoundation.Kodi", "TeamViewer.TeamViewer", `
+    "Brave.Brave", "DominikReichl.KeePass", "Valve.Steam",  "XBMCFoundation.Kodi", "TeamViewer.TeamViewer", `
     "VideoLAN.VLC", "DBBrowserForSQLite.DBBrowserForSQLite", `
     "WiresharkFoundation.Wireshark", "HandBrake.HandBrake", "Telerik.Fiddler.Classic", "gerardog.gsudo", "Lexikos.AutoHotkey", "ProtonTechnologies.ProtonVPN", `
-    "Facebook.Messenger", "SlackTechnologies.Slack", "Stretchly.Stretchly", "Oracle.VirtualBox", "WinDirStat.WinDirStat", `
-    "BleachBit.BleachBit", "7zip.7zip", "Microsoft.PowerToys", "Canonical.Ubuntu", "Proton.ProtonDrive", "Logseq.Logseq" `
+    "Facebook.Messenger", "Oracle.VirtualBox", "WinDirStat.WinDirStat", `
+    "BleachBit.BleachBit", "7zip.7zip", "Microsoft.PowerToys", "Canonical.Ubuntu", "Proton.ProtonDrive", "Bitwarden.Bitwarden" `
 ;
 foreach ($package in $packages)
 {
