@@ -20,9 +20,9 @@ rsync -av '/mnt/d/Source/Videos/Youtube/Rewatchable/' \
 rsync -av '/mnt/d/Source/Videos/Youtube/tartube.db' \
       '/mnt/f/Source/Videos/Youtube/tartube.db'
 
-mkdir -p '/mnt/f/data'
+mkdir -p '/mnt/f/data/media'
 
-rsync -av --exclude='incomplete' '/mnt/d/data/' '/mnt/f/data'
+rsync -av '/mnt/d/data/media' '/mnt/f/data/media'
 
 mkdir -p '/mnt/g/MEGAsync/Public/Media/Torrents/win-server'
 
