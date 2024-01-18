@@ -1,5 +1,5 @@
-function fish_prompt -d "Write out the prompt"
-	printf '%s %s %s' \
+function _fish_prompt -d "Write out the prompt"
+	printf '__ %s %s %s' \
 		(set_color $fish_color_cwd; prompt_pwd) \
 		(branch) \
 		(set_color $fish_color_normal; printf "> ")
@@ -38,4 +38,16 @@ function print_bind_mode
 		printf "[N]"
 	end
 	set_color -b black normal
+end
+
+function git_in_repo
+	[ -d .git ]; or git rev-parse --git-dir >/dev/null 2>&1
+end
+
+function git_is_dirty
+	git status -s | read line
+end
+
+function git_dir
+	git rev-parse --git-dir >/dev/null; and git rev-parse --git-dir; or false;
 end

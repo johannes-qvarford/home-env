@@ -1,0 +1,12 @@
+ls nu-0.89.0-x86_64-unknown-linux-gn
+ls nu-0.89.0-x86_64-unknown-linux-gnu/
+file
+file .
+ls
+file .
+file . | grep gnu
+find .
+pwd
+ls
+find nu-0.89.0-x86_64-unknown-linux-gnu/
+find nu-0.89.0-x86_64-unknown-linux-gnu/ | grep gnu

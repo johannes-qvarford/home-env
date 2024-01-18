@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Used to remove an executable's directory from the PATH.
+# Useful if you are using a command to shadow another command, and then want to call the one you shadowed.
+dir="$(dirname $1)"
+echo "$PATH" | sed "s|$dir:||" | sed "s|:$dir||"

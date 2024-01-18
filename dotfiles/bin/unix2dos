@@ -1,0 +1,3 @@
+#!/bin/bash
+
+awk 'BEGIN { ORS = "\r\n" } { print }'

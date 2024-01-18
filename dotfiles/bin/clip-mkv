@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "$0"
+
+#ffmpeg -i "Umineko - When They Cry - S01E$1"* -ss 00:$2 -t 00:$3 -vf subtitles="$1" file:s2/_$(date +"%FT%_H_%M_%_S")___$4.mp4
+#ffmpeg -i "$1" -ss 00:$2 -t 00:$3 -c:v copy -c:a copy file:$(date -Iseconds).mkv

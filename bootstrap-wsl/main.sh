@@ -9,6 +9,7 @@ bash systemd.sh
 bash docker.sh
 bash ansible.sh
 bash dotfiles.sh
+bash nushell.sh
 bash fish.sh
 bash colors.sh
 
