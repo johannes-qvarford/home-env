@@ -1,0 +1,6 @@
+#!/bin/bash
+
+repo="$1"
+pattern="$2"
+version=$(gh-release-latest "$repo")
+gh release -R "$repo" download --pattern $pattern $version

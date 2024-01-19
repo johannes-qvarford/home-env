@@ -1,0 +1,3 @@
+#!/bin/bash
+
+gh release -R $1 list | take 1 | cut -f 1

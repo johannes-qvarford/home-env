@@ -1,24 +1,14 @@
 #!/bin/bash
 
-# lsd
-# https://github.com/Peltoche/lsd/releases/download/0.21.0/lsd_0.21.0_amd64.deb
-file=lsd_0.21.0_amd64.deb
-cd /tmp
-wget https://github.com/Peltoche/lsd/releases/download/0.21.0/$file
-sudo dpkg -i /tmp/$file
-sudo apt install -f
+install () {
+    repo="$1"
+    pattern="$2"
+    cd $(mktemp -d)
+    gh-release-latest-download "$repo" "$pattern"
+    sudo dpkg -i *
+    sudo apt install -f
+}
 
-file=git-delta_0.11.3_amd64.deb
-cd /tmp
-wget https://github.com/dandavison/delta/releases/download/0.11.3/$file
-sudo dpkg -i /tmp/$file
-sudo apt install -f
-
-# http://mirrors.kernel.org/ubuntu/pool/universe/r/rust-fd-find/fd-find_7.4.0-2build1_amd64.deb
-file=fd-find_7.4.0-2build1_amd64.deb
-cd /tmp
-wget http://mirrors.kernel.org/ubuntu/pool/universe/r/rust-fd-find/$file
-sudo dpkg -i /tmp/$file
-sudo apt install -f
-
-sudo apt install -y bat
+install Peltoche/lsd "lsd_*_amd64.deb"
+install dandavison/delta "git-delta_*_amd64.deb"
+sudo apt install -y fd-find bat
