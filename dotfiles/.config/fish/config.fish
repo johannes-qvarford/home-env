@@ -9,7 +9,10 @@ set -gx VISUAL "code"
 set -gx PAGER less
 
 if test "X$has_expanded_path" = "X"
-    set -gx PATH $HOME/bin $HOME/.local/share/JetBrains/Toolbox/scripts $HOME/.local/bin $HOME/.cargo/bin /usr/local/bin /usr/bin /bin / $PATH
-    set -gx fish_function_path ~/.config/fish/functions ~/.local/share/fish/vendor_functions.d /usr/share/fish/vendor_functions.d /usr/share/fish/functions /etc/fish/functions
+    set -gpx PATH $HOME/.cargo/bin
+    set -gpx PATH $HOME/.local/bin
+    set -gpx PATH $HOME/.local/share/JetBrains/Toolbox/scripts
+    set -gpx PATH $HOME/bin
+    set -gpx fish_function_path ~/.config/fish/functions
     set -gx has_expanded_path true
 end

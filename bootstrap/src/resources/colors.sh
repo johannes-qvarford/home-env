@@ -4,7 +4,7 @@ install () {
     repo="$1"
     pattern="$2"
     cd $(mktemp -d)
-    ~/bin/gh-release-latest-download "$repo" "$pattern"
+    gh-release-latest-download "$repo" "$pattern"
     sudo dpkg -i *
     sudo apt install -f
 }

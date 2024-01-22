@@ -1,0 +1,11 @@
+#!/bin/bash
+
+file=$(basename "/mnt/d/data/media/tv/Umineko - When They Cry/Season 1/s2/"*)
+mv "/mnt/d/data/media/tv/Umineko - When They Cry/Season 1/s2/"* "/mnt/g/ProtonDrive/My files/Public/Personal/Umineko/Anime/Chapter 4/media"
+
+type=image
+if [[ $file == *.mp4 ]]; then
+    type=video
+fi
+
+echo "$type::./media/$file[]"

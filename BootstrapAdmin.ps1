@@ -11,9 +11,7 @@ if (!(Test-Path ~/.BootstrapPowershell)) {
   Expand-Archive "~/Downloads/home-env-master.zip" -DestinationPath  "$tempDir"
   Set-Location "$tempDir/home-env-master"
 
-  # In order for bootstrap-wsl to download the repository using git, we need to acquire the Github credentials.
-  winget install Dropbox.Dropbox
-  winget install Keepass
+  winget install GitHub.cli
 
   wsl.exe bash ./bootstrap-wsl.sh
   # home-env should now be installed in $HOME/home-env and fish should be the default shell.
