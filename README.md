@@ -13,3 +13,12 @@ Username has to be "Johannes Qvarford".
 * Set game directory for Steam on G:
 * Install https://kodi.wiki/view/Add-on:Backup for Kodi, and restore backup from G:\MEGAsync\Public\Media\T...
 * * If there is a Kodi version mismatch - When adding video sources, remember that movies are in separate directories.
+
+
+Commands to cross-compile to windows from Ubuntu.
+
+```
+rustup target add x86_64-pc-windows-gnu
+sudo apt-get install -y mingw-w64
+cargo run --target x86_64-pc-windows-gnu
+```
