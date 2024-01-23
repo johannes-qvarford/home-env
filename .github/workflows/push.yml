@@ -10,19 +10,23 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - name: Compile
-        id: compile
-        uses: rust-build/rust-build.action@v1.4.4
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Toolchain
+        uses: actions-rs/toolchain@v1
         with:
-          RUSTTARGET: x86_64-pc-windows-gnu
-          UPLOAD_MODE: none
+          toolchain: stable
+      - name: Build
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+
+          ### TODO
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
-          prerelease: true
           title: "Development Build"
           files: |
             ${{ steps.compile.outputs.BUILT_ARCHIVE }}

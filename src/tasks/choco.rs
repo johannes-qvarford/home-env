@@ -1,9 +1,9 @@
-use color_eyre::{Result, eyre::Context};
+use color_eyre::{eyre::Context, Result};
 
-use crate::{utility::task, utility::process};
+use crate::{utility::process, utility::task};
 
 pub(crate) struct Choco {
-    pub(crate) package_name: &'static str
+    pub(crate) package_name: &'static str,
 }
 
 impl task::Task for Choco {
@@ -14,7 +14,8 @@ impl task::Task for Choco {
 
     fn execute(&self) -> Result<()> {
         let package_name = self.package_name;
-        process::execute("choco.exe", &["install", "-y", self.package_name], &[]).wrap_err(format!("Calling choco install {package_name}"))
+        process::execute("choco.exe", &["install", "-y", self.package_name], &[])
+            .wrap_err(format!("Calling choco install {package_name}"))
     }
 }
 

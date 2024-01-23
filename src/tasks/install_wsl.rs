@@ -1,6 +1,6 @@
-use color_eyre::{Result, eyre::Context};
+use color_eyre::{eyre::Context, Result};
 
-use crate::{utility::task, utility::process};
+use crate::{utility::process, utility::task};
 
 pub(crate) struct InstallWsl;
 

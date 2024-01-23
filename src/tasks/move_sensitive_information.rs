@@ -1,6 +1,9 @@
-use color_eyre::{Result, eyre::Context};
+use color_eyre::{eyre::Context, Result};
 
-use crate::{utility::task::{self}, utility::process};
+use crate::{
+    utility::process,
+    utility::task::{self},
+};
 
 pub(crate) struct MoveSensitiveInformation;
 
@@ -11,7 +14,8 @@ impl task::Task for MoveSensitiveInformation {
 
     fn execute(&self) -> Result<()> {
         let powershell_string = powershell_string(self);
-        process::execute("powershell.exe", &["-command", &powershell_string], &[]).wrap_err_with(|| format!("Executing powershell string '{powershell_string}'"))
+        process::execute("powershell.exe", &["-command", &powershell_string], &[])
+            .wrap_err_with(|| format!("Executing powershell string '{powershell_string}'"))
     }
 }
 
@@ -45,7 +49,8 @@ fn powershell_string(_task: &MoveSensitiveInformation) -> String {
     Move-AppData -Directory "Roaming\Mozilla"
     Move-AppData -Directory "Roaming\Bitwarden"
     Move-AppData -Directory "Local\Mozilla"
-    "#.to_owned()
+    "#
+    .to_owned()
 }
 
 pub(crate) fn move_sensitive_information() -> Box<dyn task::Task> {
