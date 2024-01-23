@@ -7,26 +7,21 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@master
-      - name: Toolchain
-        uses: actions-rs/toolchain@v1
+      - uses: moonrepo/setup-rust@v1
         with:
-          toolchain: stable
+          targets: 'x86_64-pc-windows-gnu'
       - name: Build
-        uses: actions-rs/cargo@v1
-        with:
-          command: build
-
-          ### TODO
-
-      - uses: "marvinpinto/action-automatic-releases@latest"
+        run: cargo build --target x86_64-pc-windows-gnu 
+      - name: Release
+        uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
           title: "Development Build"
           files: |
-            ${{ steps.compile.outputs.BUILT_ARCHIVE }}
+            target/x86_64-pc-windows-gnu/debug/bootstrap.exe
