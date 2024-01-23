@@ -10,7 +10,7 @@ impl task::Task for InstallWsl {
     }
 
     fn execute(&self) -> Result<()> {
-        process::execute("wsl.exe", &["--install"], &[]).wrap_err(format!("Installing WSL"))
+        process::execute("wsl.exe", &["--install"], &[]).wrap_err("Installing WSL".to_string())
     }
 
     fn requires_restart(&self) -> bool {
