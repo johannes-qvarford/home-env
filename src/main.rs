@@ -1,3 +1,5 @@
+#![windows_subsystem = "console"]
+
 use color_eyre::{Result, eyre::Context};
 
 // TODO: Separate utility from tasks
@@ -98,10 +100,6 @@ fn main() -> Result<()> {
         // winget("Telerik.Fiddler.Classic"),
     ];
 
-    // let tasks: Vec<Box<dyn Task>> = vec![
-    //     // Z: Drive
-    // ];
-
     for task in tasks {
         let name = task.name();
         let execution = task.execute_if_needed().wrap_err_with(|| format!("Executing task '{name}' if needed"))?;
@@ -110,6 +108,9 @@ fn main() -> Result<()> {
             return Ok(())
         }
     }
+
+    println!("{}", "Done! Press any button!".green());
+    std::io::stdin().read_line(&mut String::new()).unwrap();
 
     Ok(())
 }
