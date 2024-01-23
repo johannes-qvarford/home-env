@@ -8,20 +8,23 @@ on:
 jobs:
   build:
     name: Deploy
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout
         uses: actions/checkout@master
       - uses: moonrepo/setup-rust@v1
-        with:
-          targets: 'x86_64-pc-windows-gnu'
+      #   with:
+      #     targets: 'x86_64-pc-windows-gnu'
+      # - name: Dependencies
+      #   run: sudo apt-get install -y mingw-w64
       - name: Build
-        run: cargo build --target x86_64-pc-windows-gnu 
+      #   run: cargo build --release --target x86_64-pc-windows-gnu
+        run: cargo build --release
       - name: Release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
-          title: "Development Build"
+          title: "Latest Home-Env Bootstrap"
           files: |
-            target/x86_64-pc-windows-gnu/debug/bootstrap.exe
+            target/release/bootstrap.exe
