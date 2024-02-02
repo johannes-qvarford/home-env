@@ -1,0 +1,6 @@
+#!/bin/bash
+
+target="$1"
+link_name="$2"
+
+sudopws New-Item -Path "$link_name" -ItemType SymbolicLink -Value "$target"

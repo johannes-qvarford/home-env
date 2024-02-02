@@ -24,9 +24,14 @@ mkdir -p '/mnt/f/data/media'
 
 rsync -av '/mnt/d/data/media' '/mnt/f/data/media'
 
-mkdir -p '/mnt/g/MEGAsync/Public/Media/Torrents/win-server'
+echo "Removing all Kodi backups, except the last two."
+local_kodi_dir=/mnt/g/win-server/kodi
+everything_except_latest_backup=$(ls "$local_kodi_dir" | sort | head -n -2)
+for x in $everything_except_latest_backup; do
+    rm -rf "$local_kodi_dir/$x";
+done
 
-rsync -av '/mnt/g/win-server' \
+rsync --delete -av '/mnt/g/win-server' \
     '/mnt/g/ProtonDrive/My files/Public/Media/Torrents/'
 
 echo 'Done with backup'
