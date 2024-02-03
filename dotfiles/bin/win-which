@@ -1,0 +1,3 @@
+#!/bin/bash
+
+pws -Command "(Get-Command "$@").Source"
