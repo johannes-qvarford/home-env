@@ -2,27 +2,28 @@
 
 echo 'Performing backup'
 
-if test ! -d /mnt/f/Source; then
+if test ! -d /mnt/e/Source; then
     echo Directory not found, something is wrong, exiting.
     exit
 fi
 
-mkdir -p '/mnt/f/Source/Videos/Twitch/Rewatchable'
+mkdir -p '/mnt/e/Source/Videos/Twitch/Rewatchable'
 
 rsync -av '/mnt/d/Source/Videos/Twitch/Rewatchable/' \
-    '/mnt/f/Source/Videos/Twitch/Rewatchable'
+    '/mnt/e/Source/Videos/Twitch/Rewatchable'
 
-mkdir -p '/mnt/f/Source/Videos/Youtube/Rewatchable'
+mkdir -p '/mnt/e/Source/Videos/Youtube/Rewatchable'
 
 rsync -av '/mnt/d/Source/Videos/Youtube/Rewatchable/' \
-    '/mnt/f/Source/Videos/Youtube/Rewatchable'
+    '/mnt/e/Source/Videos/Youtube/Rewatchable'
 
 rsync -av '/mnt/d/Source/Videos/Youtube/tartube.db' \
-      '/mnt/f/Source/Videos/Youtube/tartube.db'
+      '/mnt/e/Source/Videos/Youtube/tartube.db'
 
-mkdir -p '/mnt/f/data/media'
+mkdir -p '/mnt/e/data/media'
 
-rsync -av '/mnt/d/data/media' '/mnt/f/data/media'
+rsync -av '/mnt/d/data/m/' '/mnt/e/data/m'
+rsync -av '/mnt/d/data/media/' '/mnt/e/data/media'
 
 echo "Removing all Kodi backups, except the last two."
 local_kodi_dir=/mnt/g/win-server/kodi
