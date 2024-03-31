@@ -25,14 +25,14 @@ mkdir -p '/mnt/e/data/media'
 rsync -av '/mnt/d/data/m/' '/mnt/e/data/m'
 rsync -av '/mnt/d/data/media/' '/mnt/e/data/media'
 
-echo "Removing all Kodi backups, except the last two."
-local_kodi_dir=/mnt/g/win-server/kodi
-everything_except_latest_backup=$(ls "$local_kodi_dir" | sort | head -n -2)
-for x in $everything_except_latest_backup; do
-    rm -rf "$local_kodi_dir/$x";
-done
+# echo "Removing all Kodi backups, except the last two."
+# local_kodi_dir=//home/jq/.config/win-server/kodi
+# everything_except_latest_backup=$(ls "$local_kodi_dir" | sort | head -n -2)
+# for x in $everything_except_latest_backup; do
+#     rm -rf "$local_kodi_dir/$x";
+# done
 
-rsync --delete -av '/mnt/g/win-server' \
+rsync --delete -av '/home/jq/.config/win-server' \
     '/mnt/g/ProtonDrive/My files/Public/Media/Torrents/'
 
 echo 'Done with backup'
