@@ -7,10 +7,14 @@ if test ! -d /mnt/e/Source; then
     exit
 fi
 
+echo "Copying Twitch videos"
+
 mkdir -p '/mnt/e/Source/Videos/Twitch/Rewatchable'
 
 rsync -av '/mnt/d/Source/Videos/Twitch/Rewatchable/' \
     '/mnt/e/Source/Videos/Twitch/Rewatchable'
+
+echo "Copying Youtube videos"
 
 mkdir -p '/mnt/e/Source/Videos/Youtube/Rewatchable'
 
@@ -20,9 +24,10 @@ rsync -av '/mnt/d/Source/Videos/Youtube/Rewatchable/' \
 rsync -av '/mnt/d/Source/Videos/Youtube/tartube.db' \
       '/mnt/e/Source/Videos/Youtube/tartube.db'
 
+echo "Copying Media"
+
 mkdir -p '/mnt/e/data/media'
 
-rsync -av '/mnt/d/data/m/' '/mnt/e/data/m'
 rsync -av '/mnt/d/data/media/' '/mnt/e/data/media'
 
 # echo "Removing all Kodi backups, except the last two."
@@ -34,6 +39,10 @@ rsync -av '/mnt/d/data/media/' '/mnt/e/data/media'
 
 rsync --delete -av '/home/jq/.config/win-server' \
     '/mnt/g/ProtonDrive/My files/Public/Media/Torrents/'
+
+echo "Copying Terminal settings"
+
+cp /mnt/c/Users/deffo/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json ~/home-env/terminal/settings.json
 
 echo 'Done with backup'
 sleep 3

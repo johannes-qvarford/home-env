@@ -1,7 +1,0 @@
-#!/bin/bash
-
-if which lsd >/dev/null; then
-    exec lsd "$@"
-else
-    exec /bin/ls "$@"
-fi
