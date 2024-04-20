@@ -8,11 +8,7 @@ set -gx EDITOR "code"
 set -gx VISUAL "code"
 set -gx PAGER less
 
-if test "X$has_expanded_path" = "X"
-    set -gpx PATH $HOME/.cargo/bin
-    set -gpx PATH $HOME/.local/bin
-    set -gpx PATH $HOME/.local/share/JetBrains/Toolbox/scripts
-    set -gpx PATH $HOME/bin
-    set -gpx fish_function_path ~/.config/fish/functions
-    set -gx has_expanded_path true
-end
+fish_add_path $HOME/.cargo/bin
+fish_add_path $HOME/.local/bin
+fish_add_path $HOME/.local/share/JetBrains/Toolbox/scripts
+fish_add_path $HOME/bin
