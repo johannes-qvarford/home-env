@@ -1,0 +1,4 @@
+#!/bin/bash
+
+PORT=$(powershell.exe -Command "(Get-NetTCPConnection -LocalPort $1).OwningProcess")
+taskkill.exe /PID $PORT /F

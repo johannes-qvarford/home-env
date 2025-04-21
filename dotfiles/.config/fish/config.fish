@@ -7,6 +7,7 @@ set -gx PYTHONIOENCODING utf-8
 set -gx EDITOR "code"
 set -gx VISUAL "code"
 set -gx PAGER less
+set -gx PULSE_SERVER unix:/mnt/wslg/PulseServer
 
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.local/bin

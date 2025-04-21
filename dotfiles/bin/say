@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker-ollama llama2-uncensored "$@"
