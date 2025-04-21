@@ -1,2 +1,11 @@
 #!/bin/bash
 
+h=$(wslpath "$(wslvar USERPROFILE)")
+cmd="$1"
+shift
+mkdir -p "$h"/bin
+cat >"$h"/bin/$cmd.bat <<EOF
+@echo off
+wsl bash -c '$cmd %*'
+$@
+EOF
