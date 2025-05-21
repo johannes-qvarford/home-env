@@ -38,11 +38,18 @@ rsync -av '/mnt/d/data/media/' '/mnt/e/data/media'
 # done
 
 rsync --delete -av '/home/jq/.config/win-server' \
-    '/mnt/g/ProtonDrive/My files/Public/Media/Torrents/'
+    ~/myfiles/home/personal/torrents/
 
 echo "Copying Terminal settings"
 
 cp /mnt/c/Users/deffo/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json ~/home-env/terminal/settings.json
+#      -v "$(wslpath "$(wslvar USERPROFILE)")/ProtonDrive/My files/home/personal/torrents/ai:/backup" \
+
+docker run --rm \
+      -v "ai_open-webui":/backup-volume \
+      -v ~/myfiles/home/personal/ai:/backup \
+      busybox \
+      sh -c "cp -R /backup-volume/webui.db /backup/webui.db"
 
 echo 'Done with backup'
 sleep 3
