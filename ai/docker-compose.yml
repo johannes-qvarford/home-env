@@ -16,6 +16,9 @@ services:
     image: ollama/ollama:${OLLAMA_DOCKER_TAG-latest}
     ports:
       - 11434:11434
+    environment:
+      - OLLAMA_LOG_LEVEL=DEBUG
+      - OLLAMA_DEBUG=1
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-main}
@@ -38,6 +41,7 @@ services:
     container_name: openai-edge-tts
     ports:
       - 5050:5050
+    restart: unless-stopped
   
   fooocus:
     image: ghcr.io/lllyasviel/fooocus
