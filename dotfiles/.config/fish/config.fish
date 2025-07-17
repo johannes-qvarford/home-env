@@ -8,6 +8,7 @@ set -gx EDITOR "code"
 set -gx VISUAL "code"
 set -gx PAGER less
 set -gx PULSE_SERVER unix:/mnt/wslg/PulseServer
+set -gx OPENAI_API_KEY sk-af18da76518d4847bac595061c86109c
 
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.local/bin
