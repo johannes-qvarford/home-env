@@ -18,4 +18,3 @@ fish_add_path $HOME/bin
 fish_add_path $HOME/projects/vcpkg
 set -x CMAKE_TOOLCHAIN_FILE $HOME/projects/vcpkg/scripts/buildsystems/vcpkg.cmake
 alias claude="/home/jq/.claude/local/claude"
-
