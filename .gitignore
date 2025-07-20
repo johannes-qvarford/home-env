@@ -7,3 +7,7 @@ node_modules
 dist
 target
 .quarkus
+
+# Claude Code Router
+.claude-code-router.pid
+claude-code-router.log

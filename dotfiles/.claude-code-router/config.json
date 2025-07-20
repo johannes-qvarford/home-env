@@ -1,0 +1,27 @@
+{
+  "LOG": true,
+  "Providers": [
+    {
+      "name": "openrouter",
+      "api_base_url": "https://openrouter.ai/api/v1/chat/completions",
+      "api_key": "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",
+      "models": [
+        "anthropic/claude-sonnet-4",
+        "anthropic/claude-opus-3",
+        "google/gemini-2.5-flash",
+        "google/gemini-2.5-pro",
+        "deepseek/deepseek-r1-0528:free",
+        "comment:gemma_and_free_deekseek_doesnt_support_tools"
+      ]
+    }
+  ],
+  "Router": {
+    "default": "anthropic/claude-sonnet-4",
+    "routes": [
+      {
+        "model_name_pattern": "*",
+        "target_provider_name": "openrouter"
+      }
+    ]
+  }
+}
