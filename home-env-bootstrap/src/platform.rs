@@ -11,6 +11,7 @@ pub(crate) fn tasks() -> Vec<Box<dyn task::Task>> {
         bash_task!("github"),
         bash_task!("clone-home-env"),
         // Home-env usage.
+        bash_task!("dotfiles-service"),
         bash_task!("fish"),
         // win-server
         bash_task!("wslu"),
