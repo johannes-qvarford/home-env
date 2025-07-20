@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - "main"
+    paths:
+      - "home-env-bootstrap/**"
 
 env:
   cache-version: v6
