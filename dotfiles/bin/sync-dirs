@@ -34,17 +34,32 @@ class SyncHandler(FileSystemEventHandler):
 
     def get_sync_pair_for_path(self, file_path):
         for sync_pair in self.config['sync_pairs']:
-            dir1 = (self.base_dir / sync_pair['dir1']).resolve()
-            dir2 = (self.base_dir / sync_pair['dir2']).resolve()
-            
-            file_path_resolved = Path(file_path).resolve()
-            
-            if file_path_resolved.is_relative_to(dir1):
-                return sync_pair, dir1, dir2, file_path_resolved.relative_to(dir1)
-            elif file_path_resolved.is_relative_to(dir2):
-                return sync_pair, dir2, dir1, file_path_resolved.relative_to(dir2)
+            # Check if this is a file-to-file sync pair
+            if self.is_file_sync_pair(sync_pair):
+                file1 = (self.base_dir / sync_pair['file1']).resolve()
+                file2 = (self.base_dir / sync_pair['file2']).resolve()
+                file_path_resolved = Path(file_path).resolve()
+                
+                if file_path_resolved == file1:
+                    return sync_pair, file1.parent, file2.parent, Path(file2.name)
+                elif file_path_resolved == file2:
+                    return sync_pair, file2.parent, file1.parent, Path(file1.name)
+            else:
+                # Original directory-to-directory sync logic
+                dir1 = (self.base_dir / sync_pair['dir1']).resolve()
+                dir2 = (self.base_dir / sync_pair['dir2']).resolve()
+                
+                file_path_resolved = Path(file_path).resolve()
+                
+                if file_path_resolved.is_relative_to(dir1):
+                    return sync_pair, dir1, dir2, file_path_resolved.relative_to(dir1)
+                elif file_path_resolved.is_relative_to(dir2):
+                    return sync_pair, dir2, dir1, file_path_resolved.relative_to(dir2)
                 
         return None
+
+    def is_file_sync_pair(self, sync_pair):
+        return 'file1' in sync_pair and 'file2' in sync_pair
 
     def sync_file(self, source_file):
         current_time = time.time() * 1000
@@ -119,38 +134,64 @@ def validate_config(config):
         return False
         
     for i, pair in enumerate(config['sync_pairs']):
-        if 'dir1' not in pair or 'dir2' not in pair:
-            print(f"Error: sync_pairs[{i}] missing 'dir1' or 'dir2'")
+        # Check if it's a file-to-file sync pair
+        if 'file1' in pair and 'file2' in pair:
+            file1_path = Path(pair['file1'])
+            file2_path = Path(pair['file2'])
+            
+            # Create parent directories if they don't exist
+            file1_path.parent.mkdir(parents=True, exist_ok=True)
+            file2_path.parent.mkdir(parents=True, exist_ok=True)
+        elif 'dir1' in pair and 'dir2' in pair:
+            # Original directory-to-directory validation
+            dir1_path = Path(pair['dir1'])
+            dir2_path = Path(pair['dir2'])
+            
+            if not dir1_path.exists():
+                print(f"Warning: {dir1_path} does not exist, creating...")
+                dir1_path.mkdir(parents=True, exist_ok=True)
+                
+            if not dir2_path.exists():
+                print(f"Warning: {dir2_path} does not exist, creating...")
+                dir2_path.mkdir(parents=True, exist_ok=True)
+        else:
+            print(f"Error: sync_pairs[{i}] must have either ('dir1', 'dir2') or ('file1', 'file2')")
             return False
-            
-        dir1_path = Path(pair['dir1'])
-        dir2_path = Path(pair['dir2'])
-        
-        if not dir1_path.exists():
-            print(f"Warning: {dir1_path} does not exist, creating...")
-            dir1_path.mkdir(parents=True, exist_ok=True)
-            
-        if not dir2_path.exists():
-            print(f"Warning: {dir2_path} does not exist, creating...")
-            dir2_path.mkdir(parents=True, exist_ok=True)
             
     return True
 
 
 def initial_sync(config, base_dir):
     base_path = Path(base_dir)
+    handler = SyncHandler(config, base_dir)
     
     for sync_pair in config['sync_pairs']:
-        dir1 = base_path / sync_pair['dir1']
-        dir2 = base_path / sync_pair['dir2']
-        
-        handler = SyncHandler(config, base_dir)
-        
-        for dir_path in [dir1, dir2]:
-            if dir_path.exists():
-                for file_path in dir_path.rglob('*'):
-                    if file_path.is_file():
-                        handler.sync_file(str(file_path))
+        if 'file1' in sync_pair and 'file2' in sync_pair:
+            # File-to-file sync: sync the newer file to the older one
+            file1 = base_path / sync_pair['file1']
+            file2 = base_path / sync_pair['file2']
+            
+            if file1.exists() or file2.exists():
+                # Determine which file is newer and sync from it
+                if file1.exists() and file2.exists():
+                    if file1.stat().st_mtime > file2.stat().st_mtime:
+                        handler.sync_file(str(file1))
+                    else:
+                        handler.sync_file(str(file2))
+                elif file1.exists():
+                    handler.sync_file(str(file1))
+                elif file2.exists():
+                    handler.sync_file(str(file2))
+        else:
+            # Directory-to-directory sync (original logic)
+            dir1 = base_path / sync_pair['dir1']
+            dir2 = base_path / sync_pair['dir2']
+            
+            for dir_path in [dir1, dir2]:
+                if dir_path.exists():
+                    for file_path in dir_path.rglob('*'):
+                        if file_path.is_file():
+                            handler.sync_file(str(file_path))
 
 
 def main():
@@ -174,13 +215,24 @@ def main():
     observer = Observer()
     
     for sync_pair in config['sync_pairs']:
-        dir1 = Path(base_dir) / sync_pair['dir1']
-        dir2 = Path(base_dir) / sync_pair['dir2']
-        
-        observer.schedule(event_handler, str(dir1), recursive=True)
-        observer.schedule(event_handler, str(dir2), recursive=True)
-        
-        print(f"Watching: {dir1} <-> {dir2}")
+        if 'file1' in sync_pair and 'file2' in sync_pair:
+            # File-to-file sync: watch the parent directories
+            file1 = Path(base_dir) / sync_pair['file1']
+            file2 = Path(base_dir) / sync_pair['file2']
+            
+            observer.schedule(event_handler, str(file1.parent), recursive=False)
+            observer.schedule(event_handler, str(file2.parent), recursive=False)
+            
+            print(f"Watching: {file1} <-> {file2}")
+        else:
+            # Directory-to-directory sync (original logic)
+            dir1 = Path(base_dir) / sync_pair['dir1']
+            dir2 = Path(base_dir) / sync_pair['dir2']
+            
+            observer.schedule(event_handler, str(dir1), recursive=True)
+            observer.schedule(event_handler, str(dir2), recursive=True)
+            
+            print(f"Watching: {dir1} <-> {dir2}")
         
     observer.start()
     

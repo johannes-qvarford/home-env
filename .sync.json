@@ -1,10 +1,41 @@
 {
   "sync_pairs": [
     {
-      "dir1": "./dotfiles",
-      "dir2": "./terminal",
-      "include_regex": "\\.(json|yaml|yml|conf|config)$",
-      "exclude_regex": "\\.(log|tmp|cache)$"
+      "file1": "./dotfiles/.gitconfig",
+      "file2": "/home/jq/.gitconfig"
+    },
+    {
+      "file1": "./dotfiles/.tmux.conf",
+      "file2": "/home/jq/.tmux.conf"
+    },
+    {
+      "file1": "./dotfiles/.ssh/config",
+      "file2": "/home/jq/.ssh/config"
+    },
+    {
+      "dir1": "./dotfiles/.docker",
+      "dir2": "/home/jq/.docker",
+      "exclude_regex": "\\.(log|tmp|cache|backup)$"
+    },
+    {
+      "dir1": "./dotfiles/.config/icons",
+      "dir2": "/home/jq/.config/icons",
+      "exclude_regex": "\\.(log|tmp|cache|backup)$"
+    },
+    {
+      "dir1": "./dotfiles/.config/fish",
+      "dir2": "/home/jq/.config/fish",
+      "exclude_regex": "\\.(log|tmp|cache|backup)$"
+    },
+    {
+      "dir1": "./dotfiles/.config/shell_gpt",
+      "dir2": "/home/jq/.config/shell_gpt",
+      "exclude_regex": "\\.(log|tmp|cache|backup)$"
+    },
+    {
+      "dir1": "./dotfiles/bin",
+      "dir2": "/home/jq/bin",
+      "exclude_regex": "\\.(log|tmp|cache|backup)$"
     }
   ],
   "debounce_ms": 1000,
