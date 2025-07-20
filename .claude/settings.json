@@ -5,7 +5,12 @@
       "Bash(ls -F LibreChat/)",
       "Bash(git:submodule:*)",
       "Bash(find /home/jq/home-env:*)",
-      "Bash(chmod +x:*)"
+      "Bash(chmod +x:*)",
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "Bash(git push -u origin main)",
+      "Bash(git branch:*)",
+      "Bash(find:/home/jq/home-env:*)"
     ],
     "deny": []
   }
