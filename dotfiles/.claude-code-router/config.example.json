@@ -4,7 +4,7 @@
     {
       "name": "openrouter",
       "api_base_url": "https://openrouter.ai/api/v1/chat/completions",
-      "api_key": "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",
+      "api_key": "${OPENROUTER_KEY}",
       "models": [
         "anthropic/claude-sonnet-4",
         "anthropic/claude-opus-3",

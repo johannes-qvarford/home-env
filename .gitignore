@@ -11,3 +11,4 @@ target
 # Claude Code Router
 .claude-code-router.pid
 claude-code-router.log
+dotfiles/.claude-code-router/config.json
