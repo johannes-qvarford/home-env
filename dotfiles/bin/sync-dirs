@@ -1,0 +1,199 @@
+#!/usr/bin/env python3
+
+import json
+import os
+import re
+import shutil
+import sys
+import time
+from pathlib import Path
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
+
+
+class SyncHandler(FileSystemEventHandler):
+    def __init__(self, config, base_dir):
+        self.config = config
+        self.base_dir = Path(base_dir)
+        self.last_sync = {}
+        self.debounce_ms = config.get('debounce_ms', 1000)
+        self.verbose = config.get('verbose', False)
+
+    def should_sync_file(self, file_path, sync_pair):
+        file_str = str(file_path)
+        
+        include_regex = sync_pair.get('include_regex')
+        if include_regex and not re.search(include_regex, file_str):
+            return False
+            
+        exclude_regex = sync_pair.get('exclude_regex')
+        if exclude_regex and re.search(exclude_regex, file_str):
+            return False
+            
+        return True
+
+    def get_sync_pair_for_path(self, file_path):
+        for sync_pair in self.config['sync_pairs']:
+            dir1 = (self.base_dir / sync_pair['dir1']).resolve()
+            dir2 = (self.base_dir / sync_pair['dir2']).resolve()
+            
+            file_path_resolved = Path(file_path).resolve()
+            
+            if file_path_resolved.is_relative_to(dir1):
+                return sync_pair, dir1, dir2, file_path_resolved.relative_to(dir1)
+            elif file_path_resolved.is_relative_to(dir2):
+                return sync_pair, dir2, dir1, file_path_resolved.relative_to(dir2)
+                
+        return None
+
+    def sync_file(self, source_file):
+        current_time = time.time() * 1000
+        file_key = str(source_file)
+        
+        if file_key in self.last_sync:
+            if current_time - self.last_sync[file_key] < self.debounce_ms:
+                return
+                
+        self.last_sync[file_key] = current_time
+        
+        sync_info = self.get_sync_pair_for_path(source_file)
+        if not sync_info:
+            return
+            
+        sync_pair, source_dir, target_dir, relative_path = sync_info
+        
+        if not self.should_sync_file(relative_path, sync_pair):
+            if self.verbose:
+                print(f"Skipping {relative_path} (filtered by regex)")
+            return
+            
+        source_path = source_dir / relative_path
+        target_path = target_dir / relative_path
+        
+        if not source_path.exists():
+            if target_path.exists():
+                if self.verbose:
+                    print(f"Removing {target_path}")
+                target_path.unlink()
+            return
+            
+        target_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        try:
+            shutil.copy2(source_path, target_path)
+            if self.verbose:
+                print(f"Synced: {source_path} -> {target_path}")
+        except Exception as e:
+            print(f"Error syncing {source_path} to {target_path}: {e}")
+
+    def on_modified(self, event):
+        if not event.is_directory:
+            self.sync_file(event.src_path)
+            
+    def on_created(self, event):
+        if not event.is_directory:
+            self.sync_file(event.src_path)
+            
+    def on_deleted(self, event):
+        if not event.is_directory:
+            self.sync_file(event.src_path)
+
+
+def load_config():
+    config_path = Path('.sync.json')
+    if not config_path.exists():
+        print(f"Error: {config_path} not found in current directory")
+        sys.exit(1)
+        
+    try:
+        with open(config_path, 'r') as f:
+            return json.load(f)
+    except json.JSONDecodeError as e:
+        print(f"Error parsing {config_path}: {e}")
+        sys.exit(1)
+
+
+def validate_config(config):
+    if 'sync_pairs' not in config:
+        print("Error: 'sync_pairs' not found in config")
+        return False
+        
+    for i, pair in enumerate(config['sync_pairs']):
+        if 'dir1' not in pair or 'dir2' not in pair:
+            print(f"Error: sync_pairs[{i}] missing 'dir1' or 'dir2'")
+            return False
+            
+        dir1_path = Path(pair['dir1'])
+        dir2_path = Path(pair['dir2'])
+        
+        if not dir1_path.exists():
+            print(f"Warning: {dir1_path} does not exist, creating...")
+            dir1_path.mkdir(parents=True, exist_ok=True)
+            
+        if not dir2_path.exists():
+            print(f"Warning: {dir2_path} does not exist, creating...")
+            dir2_path.mkdir(parents=True, exist_ok=True)
+            
+    return True
+
+
+def initial_sync(config, base_dir):
+    base_path = Path(base_dir)
+    
+    for sync_pair in config['sync_pairs']:
+        dir1 = base_path / sync_pair['dir1']
+        dir2 = base_path / sync_pair['dir2']
+        
+        handler = SyncHandler(config, base_dir)
+        
+        for dir_path in [dir1, dir2]:
+            if dir_path.exists():
+                for file_path in dir_path.rglob('*'):
+                    if file_path.is_file():
+                        handler.sync_file(str(file_path))
+
+
+def main():
+    if len(sys.argv) > 1 and sys.argv[1] in ['-h', '--help']:
+        print("Usage: sync-dirs")
+        print("Watches directories specified in .sync.json and syncs files between them.")
+        print("Configuration is read from .sync.json in the current working directory.")
+        sys.exit(0)
+        
+    config = load_config()
+    
+    if not validate_config(config):
+        sys.exit(1)
+        
+    base_dir = os.getcwd()
+    
+    print("Performing initial sync...")
+    initial_sync(config, base_dir)
+    
+    event_handler = SyncHandler(config, base_dir)
+    observer = Observer()
+    
+    for sync_pair in config['sync_pairs']:
+        dir1 = Path(base_dir) / sync_pair['dir1']
+        dir2 = Path(base_dir) / sync_pair['dir2']
+        
+        observer.schedule(event_handler, str(dir1), recursive=True)
+        observer.schedule(event_handler, str(dir2), recursive=True)
+        
+        print(f"Watching: {dir1} <-> {dir2}")
+        
+    observer.start()
+    
+    try:
+        print("File sync started. Press Ctrl+C to stop.")
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        observer.stop()
+        print("\nStopping file sync...")
+        
+    observer.join()
+
+
+if __name__ == "__main__":
+    main()

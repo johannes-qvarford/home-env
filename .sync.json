@@ -1,0 +1,12 @@
+{
+  "sync_pairs": [
+    {
+      "dir1": "./dotfiles",
+      "dir2": "./terminal",
+      "include_regex": "\\.(json|yaml|yml|conf|config)$",
+      "exclude_regex": "\\.(log|tmp|cache)$"
+    }
+  ],
+  "debounce_ms": 1000,
+  "verbose": true
+}

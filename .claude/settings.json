@@ -3,9 +3,9 @@
     "allow": [
       "Bash(ls -F)",
       "Bash(ls -F LibreChat/)",
-      "Bash(git submodule *)",
-      "Bash(find /home/jq/home-env *)",
-      "Bash(chmod +x *.sh)"
+      "Bash(git:submodule:*)",
+      "Bash(find /home/jq/home-env:*)",
+      "Bash(chmod +x:*)"
     ],
     "deny": []
   }

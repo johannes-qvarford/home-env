@@ -1,0 +1,54 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - "main"
+
+env:
+  cache-version: v6
+  windows-target: x86_64-pc-windows-gnu
+
+jobs:
+  build:
+    name: Deploy
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Cache Cargo packages
+        id: rust-cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          prefix-key: ${{ env.cache-version }}-v3
+      - name: Install Rustup
+        uses: dtolnay/rust-toolchain@stable
+        if: steps.rust-cache.outputs.cache-hit != 'true'
+        with:
+          components: rustfmt, clippy
+          targets: ${{ env.windows-target }}
+      - name: Cache Apt packages
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: mingw-w64 lld
+          version: ${{ env.cache-version }}-v2
+      - name: Install Apt packages
+        run: sudo apt-get install -y mingw-w64 lld
+      - name: Verify Formatting
+        run: cd home-env-bootstrap && cargo fmt --all -- --check
+      - name: Verify Guidelines
+        run: cd home-env-bootstrap && cargo clippy -- -D warnings
+      - name: Build for Linux
+        run: cd home-env-bootstrap && cargo build --release
+      - name: Build for Windows
+        run: cd home-env-bootstrap && cargo build --target ${{ env.windows-target }} --release
+      - name: Release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "release-${{ github.run_id }}-${{ github.run_attempt }}"
+          prerelease: false
+          title: "Home-Env Bootstrap"
+          files: |
+            home-env-bootstrap/target/release/bootstrap
+            home-env-bootstrap/target/${{ env.windows-target }}/release/bootstrap.exe
