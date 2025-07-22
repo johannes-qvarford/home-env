@@ -10,12 +10,14 @@ pub(crate) fn tasks() -> Vec<Box<dyn task::Task>> {
         bash_task!("start"),
         bash_task!("github"),
         bash_task!("clone-home-env"),
+        bash_task!("secrets"),
         // Home-env usage.
         bash_task!("dotfiles-service"),
         bash_task!("fish"),
         // win-server
         bash_task!("wslu"),
         bash_task!("docker"),
+        bash_task!("k3s"),
         // privacy
         bash_task!("ansible"),
         // languages
@@ -25,6 +27,7 @@ pub(crate) fn tasks() -> Vec<Box<dyn task::Task>> {
         bash_task!("java"),
         bash_task!("zig"),
         bash_task!("node"),
+        bash_task!("python"),
         // Fun
         bash_task!("images"),
         bash_task!("httpie"),
