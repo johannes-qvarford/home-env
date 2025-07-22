@@ -9,7 +9,9 @@ set -gx VISUAL "code"
 set -gx PAGER less
 set -gx PULSE_SERVER unix:/mnt/wslg/PulseServer
 set -x OPENROUTER_KEY (cat ~/.openrouter_key)
+set -x LIBRECHAT_USER_PASSWORD (cat ~/.librechat_user_password)
 set -gx OPENAI_API_KEY $OPENROUTER_KEY
+set -x KUBECONFIG ~/.kube/config
 
 fish_add_path $HOME/bin
 fish_add_path $HOME/.npm/bin
