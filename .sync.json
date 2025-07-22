@@ -27,6 +27,12 @@
       "dir2": "/home/jq/.config/fish",
       "exclude_regex": "\\.(log|tmp|cache|backup)$"
     },
+        {
+      "dir1": "./dotfiles/.claude",
+      "dir2": "/home/jq/.claude",
+      "include_regex": "CLAUDE.md$",
+      "exclude_regex": "\\.(log|tmp|cache|backup)$"
+    },
     {
       "dir1": "./dotfiles/.config/shell_gpt",
       "dir2": "/home/jq/.config/shell_gpt",

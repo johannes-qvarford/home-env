@@ -1,3 +1,5 @@
 #!/bin/bash
 
-ccr code "$@"
+exec claude "$@"
+# Use this for OpenRouter-based billing and custom models.
+#ccr code "$@"
