@@ -1,5 +1,5 @@
 #!/bin/bash
-# Setup secure credential files for LibreChat and OpenRouter
+# Setup secure credential files for services used in config.fish
 
 echo "Setting up secure credential files..."
 
@@ -25,6 +25,18 @@ if [ ! -f ~/.openrouter_key ]; then
     echo "Created ~/.openrouter_key with secure permissions (600)"
 else
     echo "~/.openrouter_key already exists, skipping"
+fi
+
+# Create DigitalOcean API token file
+if [ ! -f ~/.digitalocean_token ]; then
+    echo -n "Enter DigitalOcean API token: "
+    read -s digitalocean_token
+    echo
+    echo "$digitalocean_token" > ~/.digitalocean_token
+    chmod 600 ~/.digitalocean_token
+    echo "Created ~/.digitalocean_token with secure permissions (600)"
+else
+    echo "~/.digitalocean_token already exists, skipping"
 fi
 
 echo "Credential setup complete!"
