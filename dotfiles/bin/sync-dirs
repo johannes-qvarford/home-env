@@ -11,11 +11,26 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
 
+class ConfigHandler(FileSystemEventHandler):
+    def __init__(self, reload_callback):
+        self.reload_callback = reload_callback
+        
+    def on_modified(self, event):
+        if not event.is_directory and event.src_path.endswith('.sync.json'):
+            print("Config file changed, reloading...")
+            self.reload_callback()
+
+
 class SyncHandler(FileSystemEventHandler):
     def __init__(self, config, base_dir):
         self.config = config
         self.base_dir = Path(base_dir)
         self.last_sync = {}
+        self.debounce_ms = config.get('debounce_ms', 1000)
+        self.verbose = config.get('verbose', False)
+        
+    def update_config(self, config):
+        self.config = config
         self.debounce_ms = config.get('debounce_ms', 1000)
         self.verbose = config.get('verbose', False)
 
@@ -194,6 +209,28 @@ def initial_sync(config, base_dir):
                             handler.sync_file(str(file_path))
 
 
+def setup_watchers(observer, config, event_handler, base_dir):
+    observer.unschedule_all()
+    
+    for sync_pair in config['sync_pairs']:
+        if 'file1' in sync_pair and 'file2' in sync_pair:
+            file1 = Path(base_dir) / sync_pair['file1']
+            file2 = Path(base_dir) / sync_pair['file2']
+            
+            observer.schedule(event_handler, str(file1.parent), recursive=False)
+            observer.schedule(event_handler, str(file2.parent), recursive=False)
+            
+            print(f"Watching: {file1} <-> {file2}")
+        else:
+            dir1 = Path(base_dir) / sync_pair['dir1']
+            dir2 = Path(base_dir) / sync_pair['dir2']
+            
+            observer.schedule(event_handler, str(dir1), recursive=True)
+            observer.schedule(event_handler, str(dir2), recursive=True)
+            
+            print(f"Watching: {dir1} <-> {dir2}")
+
+
 def main():
     if len(sys.argv) > 1 and sys.argv[1] in ['-h', '--help']:
         print("Usage: sync-dirs")
@@ -214,26 +251,24 @@ def main():
     event_handler = SyncHandler(config, base_dir)
     observer = Observer()
     
-    for sync_pair in config['sync_pairs']:
-        if 'file1' in sync_pair and 'file2' in sync_pair:
-            # File-to-file sync: watch the parent directories
-            file1 = Path(base_dir) / sync_pair['file1']
-            file2 = Path(base_dir) / sync_pair['file2']
-            
-            observer.schedule(event_handler, str(file1.parent), recursive=False)
-            observer.schedule(event_handler, str(file2.parent), recursive=False)
-            
-            print(f"Watching: {file1} <-> {file2}")
-        else:
-            # Directory-to-directory sync (original logic)
-            dir1 = Path(base_dir) / sync_pair['dir1']
-            dir2 = Path(base_dir) / sync_pair['dir2']
-            
-            observer.schedule(event_handler, str(dir1), recursive=True)
-            observer.schedule(event_handler, str(dir2), recursive=True)
-            
-            print(f"Watching: {dir1} <-> {dir2}")
-        
+    def reload_config():
+        nonlocal config
+        try:
+            new_config = load_config()
+            if validate_config(new_config):
+                config = new_config
+                event_handler.update_config(config)
+                setup_watchers(observer, config, event_handler, base_dir)
+                print("Configuration reloaded successfully")
+            else:
+                print("Invalid configuration, keeping current config")
+        except Exception as e:
+            print(f"Error reloading config: {e}")
+    
+    config_handler = ConfigHandler(reload_config)
+    observer.schedule(config_handler, base_dir, recursive=False)
+    
+    setup_watchers(observer, config, event_handler, base_dir)
     observer.start()
     
     try:
