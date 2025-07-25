@@ -1,0 +1,4 @@
+#!/bin/bash
+
+export PATH="$(drop-path $0)"
+tmux -2 "$@"

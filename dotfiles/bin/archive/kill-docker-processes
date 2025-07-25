@@ -1,0 +1,4 @@
+#!/bin/bash
+
+docker ps | tail +2 | cut -f 1 -d ' ' | xargs -n 1 docker inspect --format '{{ .State.Pid }}' | sudo xargs -n 1 kill -9
+# docker ps | tail +2 | cut -f 1 -d ' ' | xargs docker kill

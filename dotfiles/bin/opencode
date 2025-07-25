@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Don't confuse it which key to use.
+unset OPENAI_API_KEY
+exec $HOME/.opencode/bin/opencode "$@"

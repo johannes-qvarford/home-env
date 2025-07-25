@@ -1,0 +1,4 @@
+#!/bin/bash
+dir=$1
+shift
+ansible-playbook -i inventory.yml "$dir/playbook.yml" "$@"

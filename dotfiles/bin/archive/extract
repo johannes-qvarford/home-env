@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Extract into directory of same name except the extension.
+# Remove top directory if it exists.
+
+f="$1"
+shift
+d=$(echo "$f" | sed -E -e 's/\.tar\.gz//' -e 's/\.tar//' -e 's/\.tar\.bz2//')
+root_dir=$(tar --list --file "$f" | head -n 1 | grep '/$' | sed 's|/$||')
+
+if test "X$root_dir" != "X"; then
+    strip_components="--strip-components=1"
+fi
+mkdir -p "$d"
+
+tar "$@" --verbose --extract --file "$f" --directory "$d" "$strip_components" "$root_dir"
