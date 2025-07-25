@@ -39,9 +39,17 @@
       "exclude_regex": "\\.(log|tmp|cache|backup)$"
     },
     {
+      "file1": "./dotfiles/.config/claude-code-router/config.json",
+      "file2": "/home/jq/.config/claude-code-router/config.json"
+    },
+    {
       "dir1": "./dotfiles/bin",
       "dir2": "/home/jq/bin",
       "exclude_regex": "\\.(log|tmp|cache|backup)$"
+    },
+    {
+      "file1": "./dotfiles/.config/opencode/opencode.json",
+      "file2": "/home/jq/.config/opencode/opencode.json"
     }
   ],
   "debounce_ms": 1000,

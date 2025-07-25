@@ -6,17 +6,19 @@
       "api_base_url": "https://openrouter.ai/api/v1/chat/completions",
       "api_key": "${OPENROUTER_KEY}",
       "models": [
+        "anthropic/claude-opus-4",
         "anthropic/claude-sonnet-4",
-        "anthropic/claude-opus-3",
         "google/gemini-2.5-flash",
         "google/gemini-2.5-pro",
         "deepseek/deepseek-r1-0528:free",
+        "moonshotai/kimi-k2",
+        "moonshotai/kimi-k2:free",
         "comment:gemma_and_free_deekseek_doesnt_support_tools"
       ]
     }
   ],
   "Router": {
-    "default": "anthropic/claude-sonnet-4",
+    "default": "moonshotai/kimi-k2",
     "routes": [
       {
         "model_name_pattern": "*",
