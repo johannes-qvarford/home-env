@@ -74,3 +74,27 @@ python3 -m flake8 dotfiles/bin/
 3. Test changes (cargo test for Rust, manual for scripts)
 4. Use file sync daemon for dotfile changes
 5. Cross-compile Windows version from Linux when needed
+
+## Git Workflow
+
+### Commit Guidelines
+- Write clear, concise commit messages that explain the "why" not just the "what"
+- Use present tense ("Add feature" not "Added feature")
+- Keep commits focused on a single logical change
+- Run linting before committing
+
+### Commit Commands
+```bash
+# Stage specific files
+git add <file1> <file2>
+
+# Commit with message
+git commit -m "Add feature X to improve Y
+
+- Details about implementation
+- Reasoning behind changes
+
+🤖 Generated with [opencode](https://opencode.ai)
+
+Co-Authored-By: opencode <noreply@opencode.ai>"
+```
