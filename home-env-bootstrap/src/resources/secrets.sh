@@ -39,4 +39,16 @@ else
     echo "~/.digitalocean_token already exists, skipping"
 fi
 
+# Create Moonshot API key file
+if [ ! -f ~/.moonshot_key ]; then
+    echo -n "Enter Moonshot API key: "
+    read -s moonshot_key
+    echo
+    echo "$moonshot_key" > ~/.moonshot_key
+    chmod 600 ~/.moonshot_key
+    echo "Created ~/.moonshot_key with secure permissions (600)"
+else
+    echo "~/.moonshot_key already exists, skipping"
+fi
+
 echo "Credential setup complete!"
