@@ -12,13 +12,16 @@ set -x OPENROUTER_KEY (cat ~/.openrouter_key)
 set -x LIBRECHAT_USER_PASSWORD (cat ~/.librechat_user_password)
 set -x DIGITALOCEAN_TOKEN (cat ~/.digitalocean_token)
 set -gx OPENAI_API_KEY $OPENROUTER_KEY
-set -x KUBECONFIG ~/.kube/config
+#set -x KUBECONFIG ~/.kube/config
 
-fish_add_path $HOME/bin
 fish_add_path $HOME/.npm/bin
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.local/bin
 fish_add_path $HOME/.local/share/JetBrains/Toolbox/scripts
 fish_add_path $HOME/projects/vcpkg
+fish_add_path $HOME/.opencode/bin
+fish_add_path $HOME/bin
 
 set -x CMAKE_TOOLCHAIN_FILE $HOME/projects/vcpkg/scripts/buildsystems/vcpkg.cmake
+
+# opencode
