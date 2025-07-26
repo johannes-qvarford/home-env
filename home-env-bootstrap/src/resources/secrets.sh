@@ -1,54 +1,48 @@
 #!/bin/bash
-# Setup secure credential files for services used in config.fish
+# Setup secure .env file for services used in config.fish
 
-echo "Setting up secure credential files..."
+# Environment variables to collect
+ENV_VARS=(
+    "LIBRECHAT_USER_PASSWORD"
+    "OPENROUTER_KEY"
+    "DIGITALOCEAN_TOKEN"
+    "MOONSHOT_API_KEY"
+)
 
-# Create LibreChat password file
-if [ ! -f ~/.librechat_user_password ]; then
-    echo -n "Enter LibreChat user password: "
-    read -s librechat_password
-    echo
-    echo "$librechat_password" > ~/.librechat_user_password
-    chmod 600 ~/.librechat_user_password
-    echo "Created ~/.librechat_user_password with secure permissions (600)"
-else
-    echo "~/.librechat_user_password already exists, skipping"
-fi
+echo "Setting up secure .env file..."
 
-# Create OpenRouter API key file
-if [ ! -f ~/.openrouter_key ]; then
-    echo -n "Enter OpenRouter API key: "
-    read -s openrouter_key
-    echo
-    echo "$openrouter_key" > ~/.openrouter_key
-    chmod 600 ~/.openrouter_key
-    echo "Created ~/.openrouter_key with secure permissions (600)"
-else
-    echo "~/.openrouter_key already exists, skipping"
-fi
+# Create or update .env file
+ENV_FILE=~/.env
+touch "$ENV_FILE"
+chmod 600 "$ENV_FILE"
 
-# Create DigitalOcean API token file
-if [ ! -f ~/.digitalocean_token ]; then
-    echo -n "Enter DigitalOcean API token: "
-    read -s digitalocean_token
-    echo
-    echo "$digitalocean_token" > ~/.digitalocean_token
-    chmod 600 ~/.digitalocean_token
-    echo "Created ~/.digitalocean_token with secure permissions (600)"
-else
-    echo "~/.digitalocean_token already exists, skipping"
-fi
+# Function to update or add environment variable in .env file
+update_env_var() {
+    local var_name="$1"
+    local var_value="$2"
+    
+    if grep -q "^${var_name}=" "$ENV_FILE"; then
+        # Update existing variable
+        sed -i "s/^${var_name}=.*/${var_name}=${var_value}/" "$ENV_FILE"
+        echo "Updated ${var_name} in .env"
+    else
+        # Add new variable
+        echo "${var_name}=${var_value}" >> "$ENV_FILE"
+        echo "Added ${var_name} to .env"
+    fi
+}
 
-# Create Moonshot API key file
-if [ ! -f ~/.moonshot_key ]; then
-    echo -n "Enter Moonshot API key: "
-    read -s moonshot_key
-    echo
-    echo "$moonshot_key" > ~/.moonshot_key
-    chmod 600 ~/.moonshot_key
-    echo "Created ~/.moonshot_key with secure permissions (600)"
-else
-    echo "~/.moonshot_key already exists, skipping"
-fi
+# Process each environment variable
+for var_name in "${ENV_VARS[@]}"; do
+    if ! grep -q "^${var_name}=" "$ENV_FILE"; then
+        echo -n "Enter ${var_name}: "
+        read -s var_value
+        echo
+        update_env_var "$var_name" "$var_value"
+    else
+        echo "${var_name} already exists in .env, skipping"
+    fi
+done
 
-echo "Credential setup complete!"
+echo "Created ~/.env with secure permissions (600)"
+echo "Environment setup complete!"
