@@ -21,20 +21,21 @@ update_env_var() {
     local var_name="$1"
     local var_value="$2"
     
-    if grep -q "^${var_name}=" "$ENV_FILE"; then
-        # Update existing variable
-        sed -i "s/^${var_name}=.*/${var_name}=${var_value}/" "$ENV_FILE"
+    if grep -q "^export ${var_name}=" "$ENV_FILE" || grep -q "^${var_name}=" "$ENV_FILE"; then
+        # Update existing variable (handle both export and non-export formats)
+        sed -i "s/^export ${var_name}=.*/export ${var_name}=${var_value}/" "$ENV_FILE"
+        sed -i "s/^${var_name}=.*/export ${var_name}=${var_value}/" "$ENV_FILE"
         echo "Updated ${var_name} in .env"
     else
-        # Add new variable
-        echo "${var_name}=${var_value}" >> "$ENV_FILE"
+        # Add new variable with export
+        echo "export ${var_name}=${var_value}" >> "$ENV_FILE"
         echo "Added ${var_name} to .env"
     fi
 }
 
 # Process each environment variable
 for var_name in "${ENV_VARS[@]}"; do
-    if ! grep -q "^${var_name}=" "$ENV_FILE"; then
+    if ! grep -q "^export ${var_name}=" "$ENV_FILE" && ! grep -q "^${var_name}=" "$ENV_FILE"; then
         echo -n "Enter ${var_name}: "
         read -s var_value
         echo
