@@ -1,5 +1,6 @@
 #!/bin/bash
 
-exec claude "$@"
+exec /home/jq/.npm/bin/claude "$@"
 # Use this for OpenRouter-based billing and custom models.
+#set -x PATH "/home/jq/.npm/bin:$PATH"
 #ccr code "$@"
