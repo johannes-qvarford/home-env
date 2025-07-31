@@ -72,16 +72,38 @@ impl ConfigPanel {
     fn open_in_explorer(&mut self) {
         self.last_explorer_error = None;
 
-        let result = if cfg!(target_os = "windows") || self.is_wsl() {
-            // Use explorer.exe for both Windows and WSL
+        let result = if cfg!(target_os = "windows") {
+            // Native Windows - use path as-is
             Command::new("explorer.exe").arg(&self.config_dir).spawn()
+        } else if self.is_wsl() {
+            // WSL - convert path using wslpath and use explorer.exe
+            match self.convert_wsl_path_for_explorer(&self.config_dir) {
+                Ok(windows_path) => Command::new("explorer.exe").arg(&windows_path).spawn(),
+                Err(e) => {
+                    self.last_explorer_error = Some(format!("Failed to convert WSL path: {e:?}"));
+                    return;
+                }
+            }
         } else {
-            // Use xdg-open for Linux
+            // Pure Linux - use xdg-open
             Command::new("xdg-open").arg(&self.config_dir).spawn()
         };
 
         if let Err(e) = result {
             self.last_explorer_error = Some(format!("{e:?}"));
+        }
+    }
+
+    fn convert_wsl_path_for_explorer(&self, wsl_path: &str) -> Result<String, std::io::Error> {
+        // Use wslpath to convert WSL path to Windows path
+        let output = Command::new("wslpath").arg("-w").arg(wsl_path).output()?;
+
+        if output.status.success() {
+            let windows_path = String::from_utf8_lossy(&output.stdout).trim().to_string();
+            Ok(windows_path)
+        } else {
+            let error = String::from_utf8_lossy(&output.stderr);
+            Err(std::io::Error::other(format!("wslpath failed: {error}")))
         }
     }
 
