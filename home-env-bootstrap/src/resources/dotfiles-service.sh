@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo apt install python3-watchdog -y
+
 # Set up systemd service for dotfiles sync
 SERVICE_NAME="dotfiles-sync"
 SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"

@@ -9,6 +9,7 @@ mod platform;
 mod utility;
 #[cfg(windows)]
 mod windows_tasks;
+mod gui;
 
 use clap::Parser;
 use owo_colors::{OwoColorize, Stream::Stdout};
@@ -22,6 +23,10 @@ struct Args {
 
     #[arg(long, default_value_t = 0)]
     skip: i32,
+
+    /// Run in CLI mode instead of GUI
+    #[arg(long)]
+    cli: bool,
 }
 
 fn main() -> Result<()> {
@@ -58,6 +63,14 @@ fn private_main() -> Result<()> {
     let args = Args::parse();
     let tasks = platform::tasks();
 
+    if args.cli {
+        return run_cli_mode(args, tasks);
+    }
+
+    run_gui_mode(tasks)
+}
+
+fn run_cli_mode(args: Args, tasks: Vec<Box<dyn utility::task::Task>>) -> Result<()> {
     if let Some(task_name) = args.task {
         let task = tasks
             .into_iter()
@@ -97,6 +110,24 @@ fn private_main() -> Result<()> {
         task.execute_if_needed()
             .wrap_err_with(|| format!("Executing task '{name}' if needed"))?;
     }
+
+    Ok(())
+}
+
+fn run_gui_mode(tasks: Vec<Box<dyn utility::task::Task>>) -> Result<()> {
+    let options = eframe::NativeOptions {
+        viewport: egui::ViewportBuilder::default()
+            .with_inner_size([1200.0, 800.0]),
+        ..Default::default()
+    };
+
+    let app = gui::BootstrapApp::new(tasks)?;
+    
+    eframe::run_native(
+        "Bootstrap Environment Setup",
+        options,
+        Box::new(|_cc| Box::new(app)),
+    ).map_err(|e| color_eyre::eyre::eyre!("GUI error: {}", e))?;
 
     Ok(())
 }
