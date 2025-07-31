@@ -1,5 +1,5 @@
-use std::path::PathBuf;
 use std::fs::{create_dir_all, File};
+use std::path::PathBuf;
 
 use color_eyre::{eyre::Context, Result};
 use dirs::config_local_dir;
@@ -20,7 +20,7 @@ impl TaskStatusManager {
     pub fn new() -> Result<Self> {
         let mark_directory = Self::get_mark_directory()?;
         create_dir_all(&mark_directory).wrap_err("Creating mark directory")?;
-        
+
         Ok(Self { mark_directory })
     }
 
@@ -40,30 +40,34 @@ impl TaskStatusManager {
         }
     }
 
+    #[allow(dead_code)]
     pub fn mark_completed(&self, task_name: &str) -> Result<()> {
         self.clear_status_files(task_name)?;
         File::create(self.mark_path(task_name))
-            .wrap_err_with(|| format!("Creating completion mark file for task '{}'", task_name))?;
+            .wrap_err_with(|| format!("Creating completion mark file for task '{task_name}'"))?;
         Ok(())
     }
 
+    #[allow(dead_code)]
     pub fn mark_failed(&self, task_name: &str) -> Result<()> {
         self.clear_status_files(task_name)?;
         File::create(self.failed_path(task_name))
-            .wrap_err_with(|| format!("Creating failure mark file for task '{}'", task_name))?;
+            .wrap_err_with(|| format!("Creating failure mark file for task '{task_name}'"))?;
         Ok(())
     }
 
     pub fn mark_in_progress(&self, task_name: &str) -> Result<()> {
         File::create(self.in_progress_path(task_name))
-            .wrap_err_with(|| format!("Creating in-progress mark file for task '{}'", task_name))?;
+            .wrap_err_with(|| format!("Creating in-progress mark file for task '{task_name}'"))?;
         Ok(())
     }
 
+    #[allow(dead_code)]
     pub fn clear_status(&self, task_name: &str) -> Result<()> {
         self.clear_status_files(task_name)
     }
 
+    #[allow(dead_code)]
     fn clear_status_files(&self, task_name: &str) -> Result<()> {
         let paths = [
             self.mark_path(task_name),
@@ -74,7 +78,7 @@ impl TaskStatusManager {
         for path in &paths {
             if path.exists() {
                 std::fs::remove_file(path)
-                    .wrap_err_with(|| format!("Removing status file: {:?}", path))?;
+                    .wrap_err_with(|| format!("Removing status file: {path:?}"))?;
             }
         }
 
@@ -86,11 +90,11 @@ impl TaskStatusManager {
     }
 
     fn failed_path(&self, task_name: &str) -> PathBuf {
-        self.mark_directory.join(format!("{}.failed", task_name))
+        self.mark_directory.join(format!("{task_name}.failed"))
     }
 
     fn in_progress_path(&self, task_name: &str) -> PathBuf {
-        self.mark_directory.join(format!("{}.in_progress", task_name))
+        self.mark_directory.join(format!("{task_name}.in_progress"))
     }
 
     fn get_mark_directory() -> Result<PathBuf> {

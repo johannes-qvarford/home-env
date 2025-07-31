@@ -17,13 +17,14 @@ pub struct LogManager {
 pub struct LogEntry {
     pub timestamp: DateTime<Local>,
     pub message: String,
+    #[allow(dead_code)]
     pub has_colors: bool,
 }
 
 impl LogManager {
     pub fn new() -> Result<Self> {
         let log_file_path = Self::get_log_file_path()?;
-        
+
         if let Some(parent) = log_file_path.parent() {
             std::fs::create_dir_all(parent).wrap_err("Creating log directory")?;
         }
@@ -32,7 +33,7 @@ impl LogManager {
             .create(true)
             .append(true)
             .open(&log_file_path)
-            .wrap_err_with(|| format!("Opening log file: {:?}", log_file_path))?;
+            .wrap_err_with(|| format!("Opening log file: {log_file_path:?}"))?;
 
         let file_writer = BufWriter::new(file);
 
@@ -45,10 +46,10 @@ impl LogManager {
     pub fn log(&self, message: &str) -> Result<()> {
         let timestamp = Local::now();
         let formatted_timestamp = timestamp.format("%Y-%m-%d %H:%M:%S").to_string();
-        
+
         let has_colors = Self::has_ansi_colors(message);
         let clean_message = Self::strip_ansi_colors(message);
-        
+
         let entry = LogEntry {
             timestamp,
             message: message.to_string(),
@@ -62,7 +63,7 @@ impl LogManager {
 
         {
             let mut writer = self.file_writer.lock().unwrap();
-            writeln!(writer, "{} {}", formatted_timestamp, clean_message)
+            writeln!(writer, "{formatted_timestamp} {clean_message}")
                 .wrap_err("Writing to log file")?;
             writer.flush().wrap_err("Flushing log file")?;
         }
@@ -87,18 +88,18 @@ impl LogManager {
     }
 
     fn has_ansi_colors(text: &str) -> bool {
-        text.contains('\x1b') || text.contains('\u{001b}')
+        text.contains('\x1b')
     }
 
     fn strip_ansi_colors(text: &str) -> String {
         let mut result = String::new();
         let mut chars = text.chars().peekable();
-        
+
         while let Some(ch) = chars.next() {
-            if ch == '\x1b' || ch == '\u{001b}' {
+            if ch == '\x1b' {
                 if chars.peek() == Some(&'[') {
                     chars.next();
-                    while let Some(ch) = chars.next() {
+                    for ch in chars.by_ref() {
                         if ch.is_ascii_alphabetic() {
                             break;
                         }
@@ -110,7 +111,7 @@ impl LogManager {
                 result.push(ch);
             }
         }
-        
+
         result
     }
 }

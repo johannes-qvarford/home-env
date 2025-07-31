@@ -1,17 +1,13 @@
-use std::sync::{Arc, Mutex};
-use egui::{Context, CentralPanel, SidePanel};
-use eframe::{App, Frame};
 use color_eyre::Result;
+use eframe::{App, Frame};
+use egui::{CentralPanel, Context, SidePanel};
+use std::sync::{Arc, Mutex};
 
-use crate::utility::{
-    task::Task,
-    logging::LogManager,
-    task_status::TaskStatusManager,
-};
 use super::{
-    task_panel::{TaskPanel, TaskPanelResponse},
     log_panel::LogPanel,
+    task_panel::{TaskPanel, TaskPanelResponse},
 };
+use crate::utility::{logging::LogManager, task::Task, task_status::TaskStatusManager};
 
 pub struct BootstrapApp {
     task_panel: TaskPanel,
@@ -24,9 +20,9 @@ impl BootstrapApp {
     pub fn new(tasks: Vec<Box<dyn Task>>) -> Result<Self> {
         let log_manager = LogManager::new()?;
         let status_manager = TaskStatusManager::new()?;
-        
+
         log_manager.log("Bootstrap GUI started")?;
-        
+
         Ok(Self {
             task_panel: TaskPanel::new(tasks),
             log_panel: LogPanel::new(log_manager),
@@ -68,7 +64,9 @@ impl BootstrapApp {
                 self.execute_task_by_name(&task_name);
             }
             TaskPanelResponse::RunAllRemaining => {
-                let task_names: Vec<String> = self.task_panel.get_remaining_tasks()
+                let task_names: Vec<String> = self
+                    .task_panel
+                    .get_remaining_tasks()
                     .into_iter()
                     .map(|(_, task)| task.name())
                     .collect();
@@ -80,23 +78,23 @@ impl BootstrapApp {
 
     fn execute_task_by_name(&mut self, task_name: &str) {
         let log_manager = self.log_panel.log_manager().clone();
-        
-        if let Err(e) = log_manager.log(&format!("Starting task: {}", task_name)) {
-            eprintln!("Failed to log: {:?}", e);
+
+        if let Err(e) = log_manager.log(&format!("Starting task: {task_name}")) {
+            eprintln!("Failed to log: {e:?}");
         }
-        
+
         if let Err(e) = self.status_manager.mark_in_progress(task_name) {
-            eprintln!("Failed to mark task in progress: {:?}", e);
+            eprintln!("Failed to mark task in progress: {e:?}");
         }
     }
 
     fn execute_tasks_by_names(&mut self, task_names: Vec<String>) {
         let log_manager = self.log_panel.log_manager().clone();
-        
+
         if let Err(e) = log_manager.log("Starting execution of all remaining tasks") {
-            eprintln!("Failed to log: {:?}", e);
+            eprintln!("Failed to log: {e:?}");
         }
-        
+
         for task_name in task_names {
             self.execute_task_by_name(&task_name);
         }
@@ -107,10 +105,10 @@ impl BootstrapApp {
     }
 }
 
-struct TaskExecutor {
-}
+struct TaskExecutor {}
 
 impl TaskExecutor {
+    #[allow(dead_code)]
     fn new() -> Self {
         Self {}
     }

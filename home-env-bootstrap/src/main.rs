@@ -3,13 +3,13 @@
 use color_eyre::eyre::ContextCompat;
 use color_eyre::{eyre::Context, Result};
 
+mod gui;
 #[cfg(unix)]
 mod linux_tasks;
 mod platform;
 mod utility;
 #[cfg(windows)]
 mod windows_tasks;
-mod gui;
 
 use clap::Parser;
 use owo_colors::{OwoColorize, Stream::Stdout};
@@ -116,18 +116,18 @@ fn run_cli_mode(args: Args, tasks: Vec<Box<dyn utility::task::Task>>) -> Result<
 
 fn run_gui_mode(tasks: Vec<Box<dyn utility::task::Task>>) -> Result<()> {
     let options = eframe::NativeOptions {
-        viewport: egui::ViewportBuilder::default()
-            .with_inner_size([1200.0, 800.0]),
+        viewport: egui::ViewportBuilder::default().with_inner_size([1200.0, 800.0]),
         ..Default::default()
     };
 
     let app = gui::BootstrapApp::new(tasks)?;
-    
+
     eframe::run_native(
         "Bootstrap Environment Setup",
         options,
         Box::new(|_cc| Box::new(app)),
-    ).map_err(|e| color_eyre::eyre::eyre!("GUI error: {}", e))?;
+    )
+    .map_err(|e| color_eyre::eyre::eyre!("GUI error: {}", e))?;
 
     Ok(())
 }

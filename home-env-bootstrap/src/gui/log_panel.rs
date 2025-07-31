@@ -1,5 +1,5 @@
-use egui::{Ui, ScrollArea};
-use crate::utility::logging::{LogManager, LogEntry};
+use crate::utility::logging::{LogEntry, LogManager};
+use egui::{ScrollArea, Ui};
 
 pub struct LogPanel {
     log_manager: LogManager,
@@ -16,7 +16,7 @@ impl LogPanel {
 
     pub fn show(&mut self, ui: &mut Ui) {
         ui.heading("Log Output");
-        
+
         ui.horizontal(|ui| {
             ui.checkbox(&mut self.auto_scroll, "Auto-scroll");
             if ui.button("Clear").clicked() {
@@ -27,7 +27,7 @@ impl LogPanel {
         ui.separator();
 
         let entries = self.log_manager.get_entries();
-        
+
         ScrollArea::vertical()
             .auto_shrink([false; 2])
             .stick_to_bottom(self.auto_scroll)
@@ -40,15 +40,11 @@ impl LogPanel {
 
     fn show_log_entry(&self, ui: &mut Ui, entry: &LogEntry) {
         let timestamp_text = entry.timestamp.format("%Y-%m-%d %H:%M:%S").to_string();
-        
+
         ui.horizontal(|ui| {
             ui.label(egui::RichText::new(&timestamp_text).small().weak());
-            
-            if entry.has_colors {
-                ui.label(egui::RichText::new(&entry.message).monospace());
-            } else {
-                ui.label(egui::RichText::new(&entry.message).monospace());
-            }
+
+            ui.label(egui::RichText::new(&entry.message).monospace());
         });
     }
 

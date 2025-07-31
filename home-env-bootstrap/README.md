@@ -1,5 +1,12 @@
 # home-env-bootstrap
 
+## Quick Commands
+
+- `./check-all.sh` - Run format check, clippy, and tests
+- `./install-hooks.sh` - Install git hooks for automated checks
+
+## Setup
+
 * Download the latest release from https://github.com/johannes-qvarford/home-env-bootstrap/releases/latest
 * Open an admin powershell window in the Downloads directory.
 * Run ./boostrap.exe
