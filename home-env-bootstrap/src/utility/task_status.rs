@@ -60,12 +60,6 @@ impl TaskStatusManager {
         Ok(())
     }
 
-    #[allow(dead_code)]
-    pub fn clear_status(&self, task_name: &str) -> Result<()> {
-        self.clear_status_files(task_name)
-    }
-
-    #[allow(dead_code)]
     fn clear_status_files(&self, task_name: &str) -> Result<()> {
         let paths = [
             self.mark_path(task_name),
