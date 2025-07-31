@@ -39,8 +39,8 @@
       "exclude_regex": "\\.(log|tmp|cache|backup)$"
     },
     {
-      "file1": "./dotfiles/.config/claude-code-router/config.json",
-      "file2": "/home/jq/.config/claude-code-router/config.json"
+      "file1": "./dotfiles/.claude-code-router/config.json",
+      "file2": "/home/jq/.claude-code-router/config.json"
     },
     {
       "dir1": "./dotfiles/bin",

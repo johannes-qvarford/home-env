@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is Johannes Qvarford's personal development environment automation system. The project consists of two main components:
 
-1. **home-env-bootstrap** - A Rust CLI tool for cross-platform environment setup (Windows + Linux/WSL)
+1. **home-env-bootstrap** - A Rust GUI application for cross-platform environment setup (Windows + Linux/WSL)
 2. **home-env** - Configuration management with dotfiles, scripts, and real-time synchronization
 
 ## Development Commands
@@ -44,12 +44,13 @@ python3 dotfiles/bin/sync-dirs
 
 ### Core Components
 
-**home-env-bootstrap/src/**: Rust-based automation engine
-- `main.rs` - Task execution system with skip functionality
-- `platform.rs` - Platform-specific task definitions for Windows/Linux
-- `linux_tasks/` - Linux environment setup (bash, packages, tools)
+**home-env-bootstrap/src/**: Rust-based GUI automation engine
+- `main.rs` - GUI application entry point and initialization
+- `task_registry.rs` - Centralized task management and platform abstraction
+- `gui/` - GUI components built with egui framework
+- `linux_tasks/` - Linux environment setup (bash scripts, development tools)
 - `windows_tasks/` - Windows automation (Winget, Chocolatey, WSL, scheduled tasks)
-- `utility/` - HTTP requests, process management, symlink creation
+- `utility/` - HTTP requests, process management, symlink creation, task state tracking
 - `resources/` - Shell scripts for tool installation (rust, java, docker, etc.)
 
 **dotfiles/**: User configuration and 70+ utility scripts
@@ -65,13 +66,11 @@ python3 dotfiles/bin/sync-dirs
 - `terminal/settings.json` - Windows Terminal configuration
 
 ### Task Execution Model
-The bootstrap tool uses a sequential task system where each platform (Windows/Linux) has defined tasks that can be executed selectively:
-```bash
-./bootstrap --task <task_name>  # Run specific task
-./bootstrap --skip <number>     # Skip initial N tasks
-```
-
-Tasks include package management, tool installation, configuration deployment, and system integration setup.
+The bootstrap tool provides a GUI interface for task execution with automatic platform detection:
+- Tasks are organized by platform (Windows/Linux) and automatically provided based on the current system
+- Each task can be executed individually through the GUI interface
+- Task state is persistently tracked to avoid re-running completed tasks
+- Task categories include package management, tool installation, configuration deployment, and system integration setup
 
 ### Cross-Platform Considerations
 - Windows tasks handle Winget, Chocolatey, WSL installation, Windows Terminal integration

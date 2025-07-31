@@ -18,7 +18,7 @@
     }
   ],
   "Router": {
-    "default": "moonshotai/kimi-k2",
+    "default": "google/gemini-2.5-flash",
     "routes": [
       {
         "model_name_pattern": "*",

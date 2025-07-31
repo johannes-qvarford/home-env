@@ -9,7 +9,6 @@ edition = "2021"
 arboard = "3.4"
 bytes = "1.6.0"
 chrono = { version = "0.4", features = ["serde"] }
-clap = { version = "4.5.4", features = ["derive"] }
 color-eyre = "0.6.2"
 const-str = "0.5.7"
 dirs = "5.0.1"

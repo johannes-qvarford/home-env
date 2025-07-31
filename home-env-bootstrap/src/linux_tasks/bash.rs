@@ -41,7 +41,7 @@ macro_rules! bash_task {
         $crate::linux_tasks::bash_task(
             $file,
             ::const_str::replace!(
-                include_str!(concat!("resources/", $file, ".sh")),
+                include_str!(concat!("../resources/", $file, ".sh")),
                 "\r\n",
                 "\n"
             ),

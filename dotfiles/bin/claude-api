@@ -1,0 +1,11 @@
+#!/bin/bash
+
+source ~/.env
+# anthropic/claude-sonnet-4
+# moonshotai/kimi-k2
+# moonshotai/kimi-k2:free
+export ANTHROPIC_MODEL="moonshotai/kimi-k2"
+export ANTHROPIC_BASE_URL="https://cc.yovy.app"
+export ANTHROPIC_API_KEY="$OPENROUTER_KEY"
+
+exec claude "$@"
