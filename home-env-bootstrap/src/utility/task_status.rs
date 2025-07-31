@@ -40,7 +40,6 @@ impl TaskStatusManager {
         }
     }
 
-    #[allow(dead_code)]
     pub fn mark_completed(&self, task_name: &str) -> Result<()> {
         self.clear_status_files(task_name)?;
         File::create(self.mark_path(task_name))
@@ -48,7 +47,6 @@ impl TaskStatusManager {
         Ok(())
     }
 
-    #[allow(dead_code)]
     pub fn mark_failed(&self, task_name: &str) -> Result<()> {
         self.clear_status_files(task_name)?;
         File::create(self.failed_path(task_name))
@@ -95,6 +93,10 @@ impl TaskStatusManager {
 
     fn in_progress_path(&self, task_name: &str) -> PathBuf {
         self.mark_directory.join(format!("{task_name}.in_progress"))
+    }
+
+    pub fn get_config_directory() -> Result<PathBuf> {
+        Self::get_mark_directory()
     }
 
     fn get_mark_directory() -> Result<PathBuf> {

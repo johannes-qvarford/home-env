@@ -41,7 +41,7 @@ impl TaskPanel {
         ui.separator();
 
         egui::ScrollArea::vertical()
-            .max_height(300.0)
+            .auto_shrink([false; 2])
             .show(ui, |ui| {
                 for (index, task) in self.tasks.iter().enumerate() {
                     let task_name = task.name();
@@ -75,6 +75,13 @@ impl TaskPanel {
         self.tasks.get(index).map(|task| task.as_ref())
     }
 
+    pub fn get_task_by_name(&self, task_name: &str) -> Option<&dyn Task> {
+        self.tasks
+            .iter()
+            .find(|task| task.name() == task_name)
+            .map(|task| task.as_ref())
+    }
+
     pub fn get_remaining_tasks(&self) -> Vec<(usize, &dyn Task)> {
         self.tasks
             .iter()
@@ -93,8 +100,11 @@ impl TaskPanel {
             .collect()
     }
 
-    #[allow(dead_code)]
-    pub fn refresh_status(&mut self) {}
+    pub fn refresh_status(&mut self) {
+        // This method is called when task status changes
+        // The UI will automatically refresh on the next render cycle
+        // We could add more sophisticated caching here if needed
+    }
 }
 
 pub enum TaskPanelResponse {

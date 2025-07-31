@@ -30,22 +30,31 @@ struct Args {
 }
 
 fn main() -> Result<()> {
+    let args = Args::parse();
+    let is_gui_mode = !args.cli;
+
     match private_main() {
         Ok(_) => {
-            println!(
-                "{}",
-                "Done! Press any button!".if_supports_color(Stdout, |x| x.green())
-            );
-            std::io::stdin().read_line(&mut String::new()).unwrap();
+            if !is_gui_mode {
+                println!(
+                    "{}",
+                    "Done! Press any button!".if_supports_color(Stdout, |x| x.green())
+                );
+                std::io::stdin().read_line(&mut String::new()).unwrap();
+            }
             std::process::exit(0)
         }
         Err(e) => {
-            println!("{e:?}");
-            println!(
-                "{}",
-                "No! Press any button!".if_supports_color(Stdout, |x| x.red())
-            );
-            std::io::stdin().read_line(&mut String::new()).unwrap();
+            if !is_gui_mode {
+                println!("{e:?}");
+                println!(
+                    "{}",
+                    "No! Press any button!".if_supports_color(Stdout, |x| x.red())
+                );
+                std::io::stdin().read_line(&mut String::new()).unwrap();
+            } else {
+                eprintln!("{e:?}");
+            }
             std::process::exit(1)
         }
     }
@@ -125,7 +134,34 @@ fn run_gui_mode(tasks: Vec<Box<dyn utility::task::Task>>) -> Result<()> {
     eframe::run_native(
         "Bootstrap Environment Setup",
         options,
-        Box::new(|_cc| Box::new(app)),
+        Box::new(|cc| {
+            // Set larger font sizes for all text styles
+            let mut style = (*cc.egui_ctx.style()).clone();
+            style.text_styles.insert(
+                egui::TextStyle::Body,
+                egui::FontId::new(16.0, egui::FontFamily::Proportional),
+            );
+            style.text_styles.insert(
+                egui::TextStyle::Button,
+                egui::FontId::new(16.0, egui::FontFamily::Proportional),
+            );
+            style.text_styles.insert(
+                egui::TextStyle::Heading,
+                egui::FontId::new(20.0, egui::FontFamily::Proportional),
+            );
+            style.text_styles.insert(
+                egui::TextStyle::Monospace,
+                egui::FontId::new(14.0, egui::FontFamily::Monospace),
+            );
+            style.text_styles.insert(
+                egui::TextStyle::Small,
+                egui::FontId::new(12.0, egui::FontFamily::Proportional),
+            );
+
+            cc.egui_ctx.set_style(style);
+
+            Box::new(app)
+        }),
     )
     .map_err(|e| color_eyre::eyre::eyre!("GUI error: {}", e))?;
 

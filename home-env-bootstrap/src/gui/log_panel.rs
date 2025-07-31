@@ -40,11 +40,11 @@ impl LogPanel {
 
     fn show_log_entry(&self, ui: &mut Ui, entry: &LogEntry) {
         let timestamp_text = entry.timestamp.format("%Y-%m-%d %H:%M:%S").to_string();
+        let combined_text = format!("{} {}", timestamp_text, entry.message);
 
         ui.horizontal(|ui| {
-            ui.label(egui::RichText::new(&timestamp_text).small().weak());
-
-            ui.label(egui::RichText::new(&entry.message).monospace());
+            // Make the entire log entry selectable as one piece
+            let _ = ui.selectable_label(false, egui::RichText::new(&combined_text).monospace());
         });
     }
 
