@@ -1,6 +1,11 @@
 #!/bin/bash
 
-exec /home/jq/.npm/bin/claude "$@"
-# Use this for OpenRouter-based billing and custom models.
-#set -x PATH "/home/jq/.npm/bin:$PATH"
-#ccr code "$@"
+use_tokens=0
+
+if [[ "$use_tokens" == "1" ]]; then
+    # Prevent ccr code from being called recursively
+    export PATH="/home/jq/.npm/bin:$PATH"
+    ccr code "$@"
+else
+    exec /home/jq/.npm/bin/claude "$@"
+fi

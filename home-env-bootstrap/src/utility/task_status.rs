@@ -104,7 +104,6 @@ impl TaskStatusManager {
                 }
             }
         }
-
         Ok(config)
     }
 
