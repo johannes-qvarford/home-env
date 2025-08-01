@@ -1,4 +1,4 @@
-use crate::utility::task_status::TaskStatusManager;
+use crate::utility::config::BootstrapConfig;
 use arboard::Clipboard;
 use color_eyre::Result;
 use egui::Ui;
@@ -13,7 +13,7 @@ pub struct ConfigPanel {
 
 impl ConfigPanel {
     pub fn new() -> Result<Self> {
-        let config_dir = TaskStatusManager::get_config_directory()?
+        let config_dir = BootstrapConfig::get_config_directory()?
             .to_string_lossy()
             .to_string();
 

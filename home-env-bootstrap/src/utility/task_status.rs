@@ -1,8 +1,10 @@
-use std::fs::{create_dir_all, File};
+use std::fs;
 use std::path::PathBuf;
 
 use color_eyre::{eyre::Context, Result};
 use dirs::config_local_dir;
+
+use super::config::BootstrapConfig;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum TaskStatus {
@@ -13,84 +15,97 @@ pub enum TaskStatus {
 }
 
 pub struct TaskStatusManager {
+    config: BootstrapConfig,
     mark_directory: PathBuf,
 }
 
 impl TaskStatusManager {
     pub fn new() -> Result<Self> {
         let mark_directory = Self::get_mark_directory()?;
-        create_dir_all(&mark_directory).wrap_err("Creating mark directory")?;
+        fs::create_dir_all(&mark_directory).wrap_err("Creating mark directory")?;
 
-        Ok(Self { mark_directory })
+        let mut manager = Self {
+            config: BootstrapConfig::default(),
+            mark_directory,
+        };
+
+        // Attempt to load existing TOML config, or migrate from mark files
+        manager.config = match BootstrapConfig::load() {
+            Ok(config) => config,
+            Err(_) => {
+                // TOML config doesn't exist, try to migrate from mark files
+                let migrated_config = manager.migrate_from_mark_files()?;
+                migrated_config.save()?;
+                migrated_config
+            }
+        };
+
+        Ok(manager)
     }
 
     pub fn get_status(&self, task_name: &str) -> Result<TaskStatus> {
-        let mark_path = self.mark_path(task_name);
-        let failed_path = self.failed_path(task_name);
-        let in_progress_path = self.in_progress_path(task_name);
-
-        if failed_path.exists() {
-            Ok(TaskStatus::Failed)
-        } else if in_progress_path.exists() {
-            Ok(TaskStatus::InProgress)
-        } else if mark_path.exists() {
-            Ok(TaskStatus::Completed)
-        } else {
-            Ok(TaskStatus::NotExecuted)
-        }
+        Ok(self.config.get_task_status(task_name))
     }
 
-    pub fn mark_completed(&self, task_name: &str) -> Result<()> {
-        self.clear_status_files(task_name)?;
-        File::create(self.mark_path(task_name))
-            .wrap_err_with(|| format!("Creating completion mark file for task '{task_name}'"))?;
-        Ok(())
+    pub fn mark_completed(&mut self, task_name: &str) -> Result<()> {
+        self.config
+            .set_task_status(task_name, TaskStatus::Completed);
+        self.config
+            .save()
+            .wrap_err_with(|| format!("Saving completion status for task '{task_name}'"))
     }
 
-    pub fn mark_failed(&self, task_name: &str) -> Result<()> {
-        self.clear_status_files(task_name)?;
-        File::create(self.failed_path(task_name))
-            .wrap_err_with(|| format!("Creating failure mark file for task '{task_name}'"))?;
-        Ok(())
+    pub fn mark_failed(&mut self, task_name: &str) -> Result<()> {
+        self.config.set_task_status(task_name, TaskStatus::Failed);
+        self.config
+            .save()
+            .wrap_err_with(|| format!("Saving failure status for task '{task_name}'"))
     }
 
-    pub fn mark_in_progress(&self, task_name: &str) -> Result<()> {
-        File::create(self.in_progress_path(task_name))
-            .wrap_err_with(|| format!("Creating in-progress mark file for task '{task_name}'"))?;
-        Ok(())
+    pub fn mark_in_progress(&mut self, task_name: &str) -> Result<()> {
+        self.config
+            .set_task_status(task_name, TaskStatus::InProgress);
+        self.config
+            .save()
+            .wrap_err_with(|| format!("Saving in-progress status for task '{task_name}'"))
     }
 
-    fn clear_status_files(&self, task_name: &str) -> Result<()> {
-        let paths = [
-            self.mark_path(task_name),
-            self.failed_path(task_name),
-            self.in_progress_path(task_name),
-        ];
+    /// Migrate existing mark files to TOML configuration
+    fn migrate_from_mark_files(&self) -> Result<BootstrapConfig> {
+        let mut config = BootstrapConfig::default();
 
-        for path in &paths {
-            if path.exists() {
-                std::fs::remove_file(path)
-                    .wrap_err_with(|| format!("Removing status file: {path:?}"))?;
+        // Read all files in the mark directory
+        if self.mark_directory.exists() {
+            let entries = fs::read_dir(&self.mark_directory)
+                .wrap_err_with(|| format!("Reading mark directory: {:?}", self.mark_directory))?;
+
+            for entry in entries {
+                let entry = entry.wrap_err("Reading directory entry")?;
+                let path = entry.path();
+
+                if path.is_file() {
+                    if let Some(file_name) = path.file_name().and_then(|n| n.to_str()) {
+                        // Skip log files and other non-mark files
+                        if file_name.ends_with(".log") {
+                            continue;
+                        }
+
+                        if file_name.ends_with(".failed") {
+                            let task_name = file_name.strip_suffix(".failed").unwrap();
+                            config.set_task_status(task_name, TaskStatus::Failed);
+                        } else if file_name.ends_with(".in_progress") {
+                            let task_name = file_name.strip_suffix(".in_progress").unwrap();
+                            config.set_task_status(task_name, TaskStatus::InProgress);
+                        } else {
+                            // Regular completion mark file
+                            config.set_task_status(file_name, TaskStatus::Completed);
+                        }
+                    }
+                }
             }
         }
 
-        Ok(())
-    }
-
-    fn mark_path(&self, task_name: &str) -> PathBuf {
-        self.mark_directory.join(task_name)
-    }
-
-    fn failed_path(&self, task_name: &str) -> PathBuf {
-        self.mark_directory.join(format!("{task_name}.failed"))
-    }
-
-    fn in_progress_path(&self, task_name: &str) -> PathBuf {
-        self.mark_directory.join(format!("{task_name}.in_progress"))
-    }
-
-    pub fn get_config_directory() -> Result<PathBuf> {
-        Self::get_mark_directory()
+        Ok(config)
     }
 
     fn get_mark_directory() -> Result<PathBuf> {

@@ -533,7 +533,9 @@ dependencies = [
  "embed-resource",
  "owo-colors 4.0.0",
  "reqwest",
+ "serde",
  "tokio",
+ "toml",
  "winapi",
 ]
 

@@ -17,8 +17,6 @@ pub struct LogManager {
 pub struct LogEntry {
     pub timestamp: DateTime<Local>,
     pub message: String,
-    #[allow(dead_code)]
-    pub has_colors: bool,
 }
 
 impl LogManager {
@@ -47,13 +45,11 @@ impl LogManager {
         let timestamp = Local::now();
         let formatted_timestamp = timestamp.format("%Y-%m-%d %H:%M:%S").to_string();
 
-        let has_colors = Self::has_ansi_colors(message);
         let clean_message = Self::strip_ansi_colors(message);
 
         let entry = LogEntry {
             timestamp,
             message: message.to_string(),
-            has_colors,
         };
 
         {
@@ -85,10 +81,6 @@ impl LogManager {
         path.push("home-env-bootstrap");
         path.push("bootstrap.log");
         Ok(path)
-    }
-
-    fn has_ansi_colors(text: &str) -> bool {
-        text.contains('\x1b')
     }
 
     fn strip_ansi_colors(text: &str) -> String {

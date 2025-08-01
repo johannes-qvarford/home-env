@@ -23,15 +23,8 @@ pub struct BootstrapApp {
 
 #[derive(Debug)]
 enum TaskMessage {
-    Output {
-        #[allow(dead_code)]
-        task_name: String,
-        output: String,
-    },
-    Completed {
-        task_name: String,
-        success: bool,
-    },
+    Output { output: String },
+    Completed { task_name: String, success: bool },
 }
 
 impl BootstrapApp {
@@ -148,10 +141,7 @@ impl BootstrapApp {
     fn process_task_messages(&mut self) {
         while let Ok(message) = self.message_receiver.try_recv() {
             match message {
-                TaskMessage::Output {
-                    task_name: _,
-                    output,
-                } => {
+                TaskMessage::Output { output } => {
                     if let Err(e) = self.log_panel.log_manager().log(&output) {
                         eprintln!("Failed to log task output: {e:?}");
                     }
@@ -202,7 +192,6 @@ impl TaskExecutor {
 
         // Send initial output message
         let _ = sender.send(TaskMessage::Output {
-            task_name: task_name.clone(),
             output: format!("Executing task: {task_name}"),
         });
 
@@ -212,7 +201,6 @@ impl TaskExecutor {
 
         if let Err(e) = result {
             let _ = sender.send(TaskMessage::Output {
-                task_name: task_name.clone(),
                 output: format!("Task error: {e:?}"),
             });
         }
