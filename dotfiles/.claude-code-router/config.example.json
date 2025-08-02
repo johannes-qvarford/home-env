@@ -6,6 +6,7 @@
       "api_base_url": "https://openrouter.ai/api/v1/chat/completions",
       "api_key": "${OPENROUTER_KEY}",
       "models": [
+        "openrouter/horizon-alpha",
         "anthropic/claude-opus-4",
         "anthropic/claude-sonnet-4",
         "google/gemini-2.5-flash",

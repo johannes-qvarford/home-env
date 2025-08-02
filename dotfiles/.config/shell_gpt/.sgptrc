@@ -4,6 +4,7 @@
 #DEFAULT_MODEL=openai/anthropic/claude-opus-3
 #DEFAULT_MODEL=openai/google/gemma-3-27b-it:free
 #DEFAULT_MODEL=openai/google/gemma-3n-e2b-it:free
+#DEFAULT_MODEL=openrouter/horizon-alpha
 DEFAULT_MODEL=openai/google/gemini-2.0-flash-001
 OPENAI_USE_FUNCTIONS=false
 USE_LITELLM=true
