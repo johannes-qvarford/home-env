@@ -47,6 +47,7 @@ impl TaskProvider for LinuxTaskProvider {
         registry.register_task(bash_task!("claude"));
         registry.register_task(bash_task!("gemini"));
         registry.register_task(bash_task!("act"));
+        registry.register_task(bash_task!("android"));
 
         Ok(())
     }
