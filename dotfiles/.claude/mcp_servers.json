@@ -1,0 +1,14 @@
+{
+    "mcpServers": {
+        "home-env-mcp": {
+            "type": "stdio",
+            "command": "mvn",
+            "args": [
+                "exec:java",
+                "-Dexec.mainClass=com.jqvarford.homeenvmcp.McpApplication"
+            ],
+            "cwd": "/home/jq/home-env/home-env-mcp",
+            "env": {}
+        }
+    }
+}
