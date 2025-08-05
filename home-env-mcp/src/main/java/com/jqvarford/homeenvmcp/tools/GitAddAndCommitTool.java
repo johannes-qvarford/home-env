@@ -8,13 +8,108 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.jqvarford.homeenvmcp.util.GitUtils;
 import com.jqvarford.homeenvmcp.util.ProcessRunner;
 
-import java.util.ArrayList;
+import io.modelcontextprotocol.server.McpServerFeatures.SyncToolSpecification;
+import io.modelcontextprotocol.server.McpSyncServerExchange;
+import io.modelcontextprotocol.spec.McpSchema;
+import io.modelcontextprotocol.spec.McpSchema.CallToolResult.Builder;
+
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class GitAddAndCommitTool {
     private final ObjectMapper mapper = new ObjectMapper();
     private final GitUtils gitUtils = new GitUtils();
+
+    public SyncToolSpecification specification() {
+        return new SyncToolSpecification(
+            new McpSchema.Tool(
+                "GitAddAndCommit",
+                "Commits specified files with a message. Supports --all flag or individual files. Runs VERIFIER env variable if set.",
+                getInputSchema().toPrettyString()),
+            this::execute);
+    }
+
+    @SuppressWarnings("unchecked")
+    public McpSchema.CallToolResult execute(McpSyncServerExchange exchange, Map<String, Object> params) {
+        Builder result = McpSchema.CallToolResult.builder();
+        try {
+            String message = params.get("message").toString();
+            boolean all = params.containsKey("all") && (boolean)params.get("all");
+            List<String> files = (List<String>)params.get("file");
+
+            // Check and run VERIFIER if it exists
+            String verifier = ProcessRunner.getEnvironmentVariable("VERIFIER");
+            if (verifier != null && !verifier.trim().isEmpty()) {
+            result.addTextContent("Running VERIFIER: %s\n".formatted(verifier));
+            ProcessRunner.ProcessResult verifierResult = ProcessRunner.run(
+                Arrays.asList("sh", "-c", verifier), 
+                java.nio.file.Paths.get(".")
+            );
+            
+            if (!verifierResult.isSuccess()) {
+                result.addTextContent("VERIFIER failed with exit code %d: %s".formatted(verifierResult.getExitCode(), verifierResult.getStderr()));
+                result.isError(true);
+                return result.build();
+            }
+            result.addTextContent("VERIFIER completed successfully\n");
+            }
+
+            // Unstage all currently staged files
+            ProcessRunner.ProcessResult resetResult = gitUtils.reset();
+            if (!resetResult.isSuccess()) {
+            result.addTextContent("Warning: git reset failed: %s\n".formatted(resetResult.getStderr()));
+            } else {
+            result.addTextContent("Reset staging area\n");
+            }
+
+            // Stage files based on parameters
+            if (all) {
+            ProcessRunner.ProcessResult addResult = gitUtils.addAll();
+            if (!addResult.isSuccess()) {
+                result.addTextContent("Failed to stage all files: " + addResult.getStderr());
+                result.isError(true);
+                return result.build();
+            }
+            result.addTextContent("Staged all files\n");
+            } else if (files != null && !files.isEmpty()) {
+            ProcessRunner.ProcessResult addResult = gitUtils.addFiles(files);
+            if (!addResult.isSuccess()) {
+                result.addTextContent("Failed to stage files " + files + ": " + addResult.getStderr());
+                result.isError(true);
+                return result.build();
+            }
+            result.addTextContent("Staged files: %s\n".formatted(String.join(", ", files)));
+            } else {
+            result.addTextContent("Either --all=true or --file must be specified");
+            result.isError(true);
+            return result.build();
+            }
+
+            // Commit with message
+            ProcessRunner.ProcessResult commitResult = gitUtils.commit(message);
+            if (!commitResult.isSuccess()) {
+            result.addTextContent("Failed to commit: " + commitResult.getStderr());
+            result.isError(true);
+            return result.build();
+            }
+            result.addTextContent("Committed with message: %s\n".formatted(message));
+
+            // Unstage any remaining staged files
+            ProcessRunner.ProcessResult finalResetResult = gitUtils.reset();
+            if (!finalResetResult.isSuccess()) {
+            result.addTextContent("Warning: final git reset failed: %s\n".formatted(finalResetResult.getStderr()));
+            } else {
+            result.addTextContent("Unstaged remaining files\n");
+            }
+
+            return result.build();
+        } catch (Exception e) {
+            result.addTextContent("Exception occurred: " + e);
+            result.isError(true);
+            return result.build();
+        }
+    }
     
     public String getName() {
         return "GitAddAndCommit";
@@ -58,78 +153,5 @@ public class GitAddAndCommitTool {
         return schema;
     }
 
-    public JsonNode execute(JsonNode params) throws Exception {
-            String message = params.get("message").asText();
-            boolean all = params.has("all") ? params.get("all").asBoolean() : false;
-            List<String> files = new ArrayList<>();
-            
-            if (params.has("file")) {
-                JsonNode fileArray = params.get("file");
-                if (fileArray.isArray()) {
-                    for (JsonNode fileNode : fileArray) {
-                        files.add(fileNode.asText());
-                    }
-                }
-            }
-
-            StringBuilder result = new StringBuilder();
-
-            // Check and run VERIFIER if it exists
-            String verifier = ProcessRunner.getEnvironmentVariable("VERIFIER");
-            if (verifier != null && !verifier.trim().isEmpty()) {
-                result.append("Running VERIFIER: ").append(verifier).append("\n");
-                ProcessRunner.ProcessResult verifierResult = ProcessRunner.run(
-                    Arrays.asList("sh", "-c", verifier), 
-                    java.nio.file.Paths.get(".")
-                );
-                
-                if (!verifierResult.isSuccess()) {
-                    throw new RuntimeException("VERIFIER failed with exit code " + verifierResult.getExitCode() + 
-                        ": " + verifierResult.getStderr());
-                }
-                result.append("VERIFIER completed successfully\n");
-            }
-
-            // Unstage all currently staged files
-            ProcessRunner.ProcessResult resetResult = gitUtils.reset();
-            if (!resetResult.isSuccess()) {
-                result.append("Warning: git reset failed: ").append(resetResult.getStderr()).append("\n");
-            } else {
-                result.append("Reset staging area\n");
-            }
-
-            // Stage files based on parameters
-            if (all) {
-                ProcessRunner.ProcessResult addResult = gitUtils.addAll();
-                if (!addResult.isSuccess()) {
-                    throw new RuntimeException("Failed to stage all files: " + addResult.getStderr());
-                }
-                result.append("Staged all files\n");
-            } else if (!files.isEmpty()) {
-                ProcessRunner.ProcessResult addResult = gitUtils.addFiles(files);
-                if (!addResult.isSuccess()) {
-                    throw new RuntimeException("Failed to stage files " + files + ": " + addResult.getStderr());
-                }
-                result.append("Staged files: ").append(String.join(", ", files)).append("\n");
-            } else {
-                throw new RuntimeException("Either --all=true or --file must be specified");
-            }
-
-            // Commit with message
-            ProcessRunner.ProcessResult commitResult = gitUtils.commit(message);
-            if (!commitResult.isSuccess()) {
-                throw new RuntimeException("Failed to commit: " + commitResult.getStderr());
-            }
-            result.append("Committed with message: '").append(message).append("'\n");
-
-            // Unstage any remaining staged files
-            ProcessRunner.ProcessResult finalResetResult = gitUtils.reset();
-            if (!finalResetResult.isSuccess()) {
-                result.append("Warning: final git reset failed: ").append(finalResetResult.getStderr()).append("\n");
-            } else {
-                result.append("Unstaged remaining files\n");
-            }
-
-            return mapper.valueToTree(result.toString());
-    }
+    
 }
