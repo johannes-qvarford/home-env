@@ -1,4 +1,4 @@
-package com.jqvarford.homeenvmcp.util;
+package net.qvarford.homeenvmcp.util;
 
 import java.io.IOException;
 import java.nio.file.Path;

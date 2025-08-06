@@ -1,4 +1,4 @@
-package com.jqvarford.homeenvmcp.util;
+package net.qvarford.homeenvmcp.util;
 
 public record ProcessResult(int exitCode, String stdout, String stderr) {
   public boolean isSuccess() {

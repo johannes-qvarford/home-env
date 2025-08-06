@@ -1,4 +1,4 @@
-package com.jqvarford.homeenvmcp.exceptions;
+package net.qvarford.homeenvmcp.exceptions;
 
 public class ToolFailureException extends ToolException {
 

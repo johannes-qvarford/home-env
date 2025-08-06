@@ -1,6 +1,6 @@
-package com.jqvarford.homeenvmcp;
+package net.qvarford.homeenvmcp;
 
-import com.jqvarford.homeenvmcp.tools.GitAddAndCommit;
+import net.qvarford.homeenvmcp.tools.GitAddAndCommit;
 import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.McpSyncServer;
 import io.modelcontextprotocol.server.transport.StdioServerTransportProvider;
@@ -13,9 +13,7 @@ public class McpApplication {
             .serverInfo("home-env-mcp", "1.0.0")
             .capabilities(
                 ServerCapabilities.builder()
-                    .resources(false, false)
                     .tools(true)
-                    .prompts(false)
                     .logging()
                     .build())
             .build();

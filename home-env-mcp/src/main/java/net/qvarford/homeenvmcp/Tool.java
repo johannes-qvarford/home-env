@@ -1,6 +1,6 @@
-package com.jqvarford.homeenvmcp;
+package net.qvarford.homeenvmcp;
 
-import com.jqvarford.homeenvmcp.exceptions.ToolException;
+import net.qvarford.homeenvmcp.exceptions.ToolException;
 import io.modelcontextprotocol.server.McpSyncServerExchange;
 import io.modelcontextprotocol.spec.McpSchema;
 

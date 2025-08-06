@@ -1,11 +1,11 @@
-package com.jqvarford.homeenvmcp.tools;
+package net.qvarford.homeenvmcp.tools;
 
-import com.jqvarford.homeenvmcp.Tool;
-import com.jqvarford.homeenvmcp.exceptions.ToolException;
-import com.jqvarford.homeenvmcp.exceptions.ToolFailureException;
-import com.jqvarford.homeenvmcp.util.GitUtils;
-import com.jqvarford.homeenvmcp.util.ProcessRunner;
-import com.jqvarford.homeenvmcp.util.ToolHelper;
+import net.qvarford.homeenvmcp.Tool;
+import net.qvarford.homeenvmcp.exceptions.ToolException;
+import net.qvarford.homeenvmcp.exceptions.ToolFailureException;
+import net.qvarford.homeenvmcp.util.GitUtils;
+import net.qvarford.homeenvmcp.util.ProcessRunner;
+import net.qvarford.homeenvmcp.util.ToolHelper;
 import io.modelcontextprotocol.server.McpSyncServerExchange;
 import io.modelcontextprotocol.spec.McpSchema;
 import jakarta.validation.constraints.NotNull;

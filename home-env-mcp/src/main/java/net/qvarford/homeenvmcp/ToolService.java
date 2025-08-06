@@ -1,4 +1,4 @@
-package com.jqvarford.homeenvmcp;
+package net.qvarford.homeenvmcp;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.victools.jsonschema.generator.*;

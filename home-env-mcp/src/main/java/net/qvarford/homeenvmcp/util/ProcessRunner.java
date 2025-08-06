@@ -1,4 +1,4 @@
-package com.jqvarford.homeenvmcp.util;
+package net.qvarford.homeenvmcp.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class ProcessRunner {
                   stdout.append(line).append("\n");
                 }
               } catch (IOException e) {
-                // Ignore
+                // Ignore this
               }
             });
 

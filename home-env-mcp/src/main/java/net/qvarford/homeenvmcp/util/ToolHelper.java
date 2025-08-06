@@ -1,8 +1,8 @@
-package com.jqvarford.homeenvmcp.util;
+package net.qvarford.homeenvmcp.util;
 
-import com.jqvarford.homeenvmcp.exceptions.ToolCallException;
-import com.jqvarford.homeenvmcp.exceptions.ToolException;
-import com.jqvarford.homeenvmcp.exceptions.ToolFailureException;
+import net.qvarford.homeenvmcp.exceptions.ToolCallException;
+import net.qvarford.homeenvmcp.exceptions.ToolException;
+import net.qvarford.homeenvmcp.exceptions.ToolFailureException;
 
 public class ToolHelper {
 
