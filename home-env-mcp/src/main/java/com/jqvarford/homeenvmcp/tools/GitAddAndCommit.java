@@ -71,8 +71,10 @@ public class GitAddAndCommit implements Tool<GitAddAndCommit.Arguments> {
       toolHelper.runCommand("Git Commit", () -> gitUtils.commit(message));
       result.addTextContent("Committed with message: %s".formatted(message));
 
-      toolHelper.runCommand("Git Reset", gitUtils::reset);
-      result.addTextContent("Unstaged remaining files");
+      if (!all) {
+        toolHelper.runCommand("Git Reset", gitUtils::reset);
+        result.addTextContent("Unstaged remaining files");
+      }
 
       return result.build();
     } catch (Exception e) {
@@ -83,40 +85,4 @@ public class GitAddAndCommit implements Tool<GitAddAndCommit.Arguments> {
   }
 
   public record Arguments(Boolean all, List<String> files, @NotNull String message) {}
-
-  /*
-  public JsonNode getInputSchema() {
-
-      ObjectNode schema = mapper.createObjectNode();
-      schema.put("type", "object");
-
-      ObjectNode properties = mapper.createObjectNode();
-
-      ObjectNode messageProperty = mapper.createObjectNode();
-      messageProperty.put("type", "string");
-      messageProperty.put("description", "Commit message");
-      properties.set("message", messageProperty);
-
-      ObjectNode allProperty = mapper.createObjectNode();
-      allProperty.put("type", "boolean");
-      allProperty.put("description", "Stage all files (default: false)");
-      allProperty.put("default", false);
-      properties.set("all", allProperty);
-
-      ObjectNode fileProperty = mapper.createObjectNode();
-      fileProperty.put("type", "array");
-      ObjectNode fileItems = mapper.createObjectNode();
-      fileItems.put("type", "string");
-      fileProperty.set("items", fileItems);
-      fileProperty.put("description", "Specific files to stage and commit");
-      properties.set("file", fileProperty);
-
-      schema.set("properties", properties);
-
-      ArrayNode required = mapper.createArrayNode();
-      required.add("message");
-      schema.set("required", required);
-
-      return schema;
-  }*/
 }
