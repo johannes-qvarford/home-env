@@ -16,3 +16,10 @@ dotfiles/.claude-code-router/config.json
 
 #Claude Code
 settings.local.json
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
