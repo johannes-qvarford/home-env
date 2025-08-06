@@ -3,39 +3,37 @@ package com.jqvarford.homeenvmcp.util;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
 public class GitUtils {
-    private final Path workingDirectory;
+  private final Path workingDirectory;
+  private final ProcessRunner processRunner;
 
-    public GitUtils(Path workingDirectory) {
-        this.workingDirectory = workingDirectory;
-    }
+  public GitUtils(ProcessRunner processRunner) {
+    this.processRunner = processRunner;
+    this.workingDirectory = Paths.get(System.getProperty("user.dir"));
+  }
 
-    public GitUtils() {
-        this.workingDirectory = Paths.get(System.getProperty("user.dir"));
-    }
+  public ProcessResult reset() throws IOException, InterruptedException {
+    return processRunner.run(
+        Arrays.asList("git", "reset"), workingDirectory, Duration.ofSeconds(60));
+  }
 
-    public ProcessRunner.ProcessResult reset() throws IOException, InterruptedException {
-        return ProcessRunner.run(Arrays.asList("git", "reset"), workingDirectory);
-    }
+  public ProcessResult addAll() throws IOException, InterruptedException {
+    return processRunner.run(
+        Arrays.asList("git", "add", "."), workingDirectory, Duration.ofSeconds(60));
+  }
 
-    public ProcessRunner.ProcessResult addAll() throws IOException, InterruptedException {
-        return ProcessRunner.run(Arrays.asList("git", "add", "."), workingDirectory);
-    }
+  public ProcessResult addFiles(List<String> files) throws IOException, InterruptedException {
+    List<String> command = new java.util.ArrayList<>(Arrays.asList("git", "add"));
+    command.addAll(files);
+    return processRunner.run(command, workingDirectory, Duration.ofSeconds(60));
+  }
 
-    public ProcessRunner.ProcessResult addFiles(List<String> files) throws IOException, InterruptedException {
-        List<String> command = new java.util.ArrayList<>(Arrays.asList("git", "add"));
-        command.addAll(files);
-        return ProcessRunner.run(command, workingDirectory);
-    }
-
-    public ProcessRunner.ProcessResult commit(String message) throws IOException, InterruptedException {
-        return ProcessRunner.run(Arrays.asList("git", "commit", "-m", message), workingDirectory);
-    }
-
-    public ProcessRunner.ProcessResult status() throws IOException, InterruptedException {
-        return ProcessRunner.run(Arrays.asList("git", "status", "--porcelain"), workingDirectory);
-    }
+  public ProcessResult commit(String message) throws IOException, InterruptedException {
+    return processRunner.run(
+        Arrays.asList("git", "commit", "-m", message), workingDirectory, Duration.ofSeconds(60));
+  }
 }
