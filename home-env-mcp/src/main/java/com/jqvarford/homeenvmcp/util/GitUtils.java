@@ -33,7 +33,14 @@ public class GitUtils {
   }
 
   public ProcessResult commit(String message) throws IOException, InterruptedException {
-    return processRunner.run(
-        Arrays.asList("git", "commit", "-m", message), workingDirectory, Duration.ofSeconds(60));
+    return commit(message, false);
+  }
+
+  public ProcessResult commit(String message, boolean amend) throws IOException, InterruptedException {
+    List<String> command = new java.util.ArrayList<>(Arrays.asList("git", "commit", "-m", message));
+    if (amend) {
+      command.add("--amend");
+    }
+    return processRunner.run(command, workingDirectory, Duration.ofSeconds(60));
   }
 }

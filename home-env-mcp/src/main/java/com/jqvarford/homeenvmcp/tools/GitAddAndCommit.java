@@ -28,7 +28,7 @@ public class GitAddAndCommit implements Tool<GitAddAndCommit.Arguments> {
   }
 
   public String description() {
-    return "Commits specified files with a message. Supports --all flag or individual files. Runs VERIFIER env variable if set.";
+    return "Commits specified files with a message. Supports --all flag, individual files, and --amend option. Runs VERIFIER env variable if set.";
   }
 
   public McpSchema.CallToolResult run(
@@ -37,6 +37,7 @@ public class GitAddAndCommit implements Tool<GitAddAndCommit.Arguments> {
     String message = arguments.message();
     boolean all = Boolean.TRUE.equals(arguments.all);
     List<String> files = arguments.files();
+    boolean amend = Boolean.TRUE.equals(arguments.amend);
 
     String verifier = processRunner.getEnvironmentVariable("VERIFIER");
     if (verifier != null && !verifier.trim().isEmpty()) {
@@ -66,8 +67,9 @@ public class GitAddAndCommit implements Tool<GitAddAndCommit.Arguments> {
       throw new ToolFailureException("Either --all=true or --file must be specified");
     }
 
-    toolHelper.runCommand("Git Commit", () -> gitUtils.commit(message));
-    result.addTextContent("Committed with message: %s".formatted(message));
+    toolHelper.runCommand("Git Commit", () -> gitUtils.commit(message, amend));
+    String commitType = amend ? "Amended commit" : "Committed";
+    result.addTextContent("%s with message: %s".formatted(commitType, message));
 
     if (!all) {
       toolHelper.runCommand("Git Reset", gitUtils::reset);
@@ -77,5 +79,5 @@ public class GitAddAndCommit implements Tool<GitAddAndCommit.Arguments> {
     return result.build();
   }
 
-  public record Arguments(Boolean all, List<String> files, @NotNull String message) {}
+  public record Arguments(Boolean all, List<String> files, @NotNull String message, Boolean amend) {}
 }
