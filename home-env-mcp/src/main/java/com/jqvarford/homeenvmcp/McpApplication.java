@@ -10,14 +10,13 @@ public class McpApplication {
   public static void main(String[] args) throws InterruptedException {
     McpSyncServer syncServer =
         McpServer.sync(new StdioServerTransportProvider())
-            .serverInfo("my-server", "1.0.0")
+            .serverInfo("home-env-mcp", "1.0.0")
             .capabilities(
                 ServerCapabilities.builder()
-                    .resources(false, true)
+                    .resources(false, false)
                     .tools(true)
-                    .prompts(true)
+                    .prompts(false)
                     .logging()
-                    .completions()
                     .build())
             .build();
     ToolService toolService = new ToolService();

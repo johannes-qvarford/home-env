@@ -13,5 +13,7 @@ public interface Tool<T> {
 
   Class<T> schema();
 
-  McpSchema.CallToolResult run(McpSyncServerExchange exchange, T request) throws ToolException;
+  McpSchema.CallToolResult run(
+      McpSyncServerExchange exchange, McpSchema.CallToolResult.Builder result, T request)
+      throws ToolException;
 }

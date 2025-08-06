@@ -35,10 +35,13 @@ public class ToolService {
             tool.description(),
             generator.generateSchema(tool.schema()).toPrettyString()),
         (exchange, call) -> {
+          McpSchema.CallToolResult.Builder result = McpSchema.CallToolResult.builder();
           try {
-            return tool.run(exchange, objectMapper.convertValue(call, tool.schema()));
+            return tool.run(exchange, result, objectMapper.convertValue(call, tool.schema()));
           } catch (Exception e) {
-            return new McpSchema.CallToolResult(e.toString(), true);
+            result.isError(true);
+            result.addTextContent(e.toString());
+            return result.build();
           }
         });
   }
