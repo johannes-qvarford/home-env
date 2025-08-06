@@ -23,6 +23,7 @@ public class McpApplication {
 
     while (true) {
       Thread.sleep(1_000);
+
     }
   }
 }
