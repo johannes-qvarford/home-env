@@ -48,6 +48,7 @@ impl TaskProvider for LinuxTaskProvider {
         registry.register_task(bash_task!("gemini"));
         registry.register_task(bash_task!("act"));
         registry.register_task(bash_task!("android"));
+        registry.register_task(bash_task!("install-mcp-hooks"));
 
         Ok(())
     }
