@@ -36,7 +36,8 @@ public class GitUtils {
     return commit(message, false);
   }
 
-  public ProcessResult commit(String message, boolean amend) throws IOException, InterruptedException {
+  public ProcessResult commit(String message, boolean amend)
+      throws IOException, InterruptedException {
     List<String> command = new java.util.ArrayList<>(Arrays.asList("git", "commit", "-m", message));
     if (amend) {
       command.add("--amend");

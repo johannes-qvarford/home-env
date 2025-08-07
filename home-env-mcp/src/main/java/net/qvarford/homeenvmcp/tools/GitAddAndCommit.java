@@ -1,17 +1,17 @@
 package net.qvarford.homeenvmcp.tools;
 
-import net.qvarford.homeenvmcp.Tool;
-import net.qvarford.homeenvmcp.exceptions.ToolException;
-import net.qvarford.homeenvmcp.exceptions.ToolFailureException;
-import net.qvarford.homeenvmcp.util.GitUtils;
-import net.qvarford.homeenvmcp.util.ProcessRunner;
-import net.qvarford.homeenvmcp.util.ToolHelper;
 import io.modelcontextprotocol.server.McpSyncServerExchange;
 import io.modelcontextprotocol.spec.McpSchema;
 import jakarta.validation.constraints.NotNull;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
+import net.qvarford.homeenvmcp.Tool;
+import net.qvarford.homeenvmcp.exceptions.ToolException;
+import net.qvarford.homeenvmcp.exceptions.ToolFailureException;
+import net.qvarford.homeenvmcp.util.GitUtils;
+import net.qvarford.homeenvmcp.util.ProcessRunner;
+import net.qvarford.homeenvmcp.util.ToolHelper;
 
 public class GitAddAndCommit implements Tool<GitAddAndCommit.Arguments> {
   private final ToolHelper toolHelper = new ToolHelper();
@@ -79,5 +79,6 @@ public class GitAddAndCommit implements Tool<GitAddAndCommit.Arguments> {
     return result.build();
   }
 
-  public record Arguments(Boolean all, List<String> files, @NotNull String message, Boolean amend) {}
+  public record Arguments(
+      Boolean all, List<String> files, @NotNull String message, Boolean amend) {}
 }

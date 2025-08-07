@@ -1,8 +1,8 @@
 package net.qvarford.homeenvmcp;
 
-import net.qvarford.homeenvmcp.exceptions.ToolException;
 import io.modelcontextprotocol.server.McpSyncServerExchange;
 import io.modelcontextprotocol.spec.McpSchema;
+import net.qvarford.homeenvmcp.exceptions.ToolException;
 
 public interface Tool<T> {
   String description();
