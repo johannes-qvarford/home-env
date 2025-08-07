@@ -9,27 +9,31 @@ import java.util.List;
 
 public class GitUtils {
   private final Path workingDirectory;
-  private final ProcessRunner processRunner;
+  private final CommandExecutor commandExecutor;
 
-  public GitUtils(ProcessRunner processRunner) {
-    this.processRunner = processRunner;
+  public GitUtils(CommandExecutor commandExecutor) {
+    this.commandExecutor = commandExecutor;
     this.workingDirectory = Paths.get(System.getProperty("user.dir"));
   }
 
+  public GitUtils(ProcessRunner processRunner) {
+    this((CommandExecutor) processRunner);
+  }
+
   public ProcessResult reset() throws IOException, InterruptedException {
-    return processRunner.run(
+    return commandExecutor.run(
         Arrays.asList("git", "reset"), workingDirectory, Duration.ofSeconds(60));
   }
 
   public ProcessResult addAll() throws IOException, InterruptedException {
-    return processRunner.run(
+    return commandExecutor.run(
         Arrays.asList("git", "add", "."), workingDirectory, Duration.ofSeconds(60));
   }
 
   public ProcessResult addFiles(List<String> files) throws IOException, InterruptedException {
     List<String> command = new java.util.ArrayList<>(Arrays.asList("git", "add"));
     command.addAll(files);
-    return processRunner.run(command, workingDirectory, Duration.ofSeconds(60));
+    return commandExecutor.run(command, workingDirectory, Duration.ofSeconds(60));
   }
 
   public ProcessResult commit(String message) throws IOException, InterruptedException {
@@ -42,6 +46,6 @@ public class GitUtils {
     if (amend) {
       command.add("--amend");
     }
-    return processRunner.run(command, workingDirectory, Duration.ofSeconds(60));
+    return commandExecutor.run(command, workingDirectory, Duration.ofSeconds(60));
   }
 }

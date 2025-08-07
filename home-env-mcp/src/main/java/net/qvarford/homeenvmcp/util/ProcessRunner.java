@@ -8,7 +8,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class ProcessRunner {
+public class ProcessRunner implements CommandExecutor, EnvironmentProvider {
   public ProcessResult run(List<String> command, Path workingDirectory, Duration timeout)
       throws IOException, InterruptedException {
     System.err.printf("Running command '%s' in %s for %s%n", command, workingDirectory, timeout);

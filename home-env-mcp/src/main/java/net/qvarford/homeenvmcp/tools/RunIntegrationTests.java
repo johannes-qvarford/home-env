@@ -8,12 +8,24 @@ import java.util.Arrays;
 import java.util.List;
 import net.qvarford.homeenvmcp.Tool;
 import net.qvarford.homeenvmcp.exceptions.ToolException;
+import net.qvarford.homeenvmcp.util.CommandExecutor;
 import net.qvarford.homeenvmcp.util.ProcessRunner;
 import net.qvarford.homeenvmcp.util.ToolHelper;
 
 public class RunIntegrationTests implements Tool<RunIntegrationTests.Arguments> {
-  private final ToolHelper toolHelper = new ToolHelper();
-  private final ProcessRunner processRunner = new ProcessRunner();
+  private final ToolHelper toolHelper;
+  private final CommandExecutor commandExecutor;
+
+  public RunIntegrationTests() {
+    ProcessRunner processRunner = new ProcessRunner();
+    this.toolHelper = new ToolHelper();
+    this.commandExecutor = processRunner;
+  }
+
+  public RunIntegrationTests(ToolHelper toolHelper, CommandExecutor commandExecutor) {
+    this.toolHelper = toolHelper;
+    this.commandExecutor = commandExecutor;
+  }
 
   public String name() {
     return "RunIntegrationTests";
@@ -39,7 +51,7 @@ public class RunIntegrationTests implements Tool<RunIntegrationTests.Arguments> 
 
     toolHelper.runCommand(
         "Cucumber Integration Tests",
-        () -> processRunner.run(command, java.nio.file.Paths.get("."), Duration.ofMinutes(15)));
+        () -> commandExecutor.run(command, java.nio.file.Paths.get("."), Duration.ofMinutes(15)));
 
     result.addTextContent("Integration tests completed successfully");
     return result.build();

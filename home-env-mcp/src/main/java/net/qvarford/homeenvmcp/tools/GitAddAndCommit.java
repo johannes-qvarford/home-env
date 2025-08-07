@@ -9,14 +9,36 @@ import java.util.List;
 import net.qvarford.homeenvmcp.Tool;
 import net.qvarford.homeenvmcp.exceptions.ToolException;
 import net.qvarford.homeenvmcp.exceptions.ToolFailureException;
+import net.qvarford.homeenvmcp.util.CommandExecutor;
+import net.qvarford.homeenvmcp.util.EnvironmentProvider;
 import net.qvarford.homeenvmcp.util.GitUtils;
 import net.qvarford.homeenvmcp.util.ProcessRunner;
 import net.qvarford.homeenvmcp.util.ToolHelper;
 
 public class GitAddAndCommit implements Tool<GitAddAndCommit.Arguments> {
-  private final ToolHelper toolHelper = new ToolHelper();
-  private final ProcessRunner processRunner = new ProcessRunner();
-  private final GitUtils gitUtils = new GitUtils(processRunner);
+  private final ToolHelper toolHelper;
+  private final CommandExecutor commandExecutor;
+  private final EnvironmentProvider environmentProvider;
+  private final GitUtils gitUtils;
+
+  public GitAddAndCommit() {
+    ProcessRunner processRunner = new ProcessRunner();
+    this.toolHelper = new ToolHelper();
+    this.commandExecutor = processRunner;
+    this.environmentProvider = processRunner;
+    this.gitUtils = new GitUtils(processRunner);
+  }
+
+  public GitAddAndCommit(
+      ToolHelper toolHelper,
+      CommandExecutor commandExecutor,
+      EnvironmentProvider environmentProvider,
+      GitUtils gitUtils) {
+    this.toolHelper = toolHelper;
+    this.commandExecutor = commandExecutor;
+    this.environmentProvider = environmentProvider;
+    this.gitUtils = gitUtils;
+  }
 
   public String name() {
     return "GitAddAndCommit";
@@ -39,13 +61,13 @@ public class GitAddAndCommit implements Tool<GitAddAndCommit.Arguments> {
     List<String> files = arguments.files();
     boolean amend = Boolean.TRUE.equals(arguments.amend);
 
-    String verifier = processRunner.getEnvironmentVariable("VERIFIER");
+    String verifier = environmentProvider.getEnvironmentVariable("VERIFIER");
     if (verifier != null && !verifier.trim().isEmpty()) {
       result.addTextContent("Running VERIFIER: %s".formatted(verifier));
       toolHelper.runCommand(
           verifier,
           () ->
-              processRunner.run(
+              commandExecutor.run(
                   Arrays.asList("sh", "-c", verifier),
                   java.nio.file.Paths.get("."),
                   Duration.ofSeconds(60)));

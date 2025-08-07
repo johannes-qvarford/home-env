@@ -4,7 +4,9 @@ import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.McpSyncServer;
 import io.modelcontextprotocol.server.transport.StdioServerTransportProvider;
 import io.modelcontextprotocol.spec.McpSchema.ServerCapabilities;
+import net.qvarford.homeenvmcp.tools.GetCodeSample;
 import net.qvarford.homeenvmcp.tools.GitAddAndCommit;
+import net.qvarford.homeenvmcp.tools.ListCodeSamples;
 import net.qvarford.homeenvmcp.tools.RunIntegrationTests;
 import net.qvarford.homeenvmcp.tools.RunUnitTests;
 
@@ -20,6 +22,8 @@ public class McpApplication {
     syncServer.addTool(toolService.specification(new GitAddAndCommit()));
     syncServer.addTool(toolService.specification(new RunUnitTests()));
     syncServer.addTool(toolService.specification(new RunIntegrationTests()));
+    syncServer.addTool(toolService.specification(new GetCodeSample()));
+    syncServer.addTool(toolService.specification(new ListCodeSamples()));
 
     while (true) {
       Thread.sleep(1_000);
