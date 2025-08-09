@@ -8,6 +8,7 @@ set -gx EDITOR "code"
 set -gx VISUAL "code"
 set -gx PAGER less
 set -gx PULSE_SERVER unix:/mnt/wslg/PulseServer
+set -gx SUDO_ASKPASS "$HOME/bin/askpass"
 # Load environment variables from .env file using bass
 if test -f ~/.env
     bass source ~/.env

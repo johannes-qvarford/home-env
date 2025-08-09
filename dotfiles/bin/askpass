@@ -1,0 +1,3 @@
+#!/bin/bash
+# Simple askpass wrapper for GUI sudo password prompts
+zenity --password --title="Authentication Required"
