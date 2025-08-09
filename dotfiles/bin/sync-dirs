@@ -37,6 +37,10 @@ class SyncHandler(FileSystemEventHandler):
     def should_sync_file(self, file_path, sync_pair):
         file_str = str(file_path)
         
+        # Global exclusion: Skip temp files with pattern .temp.digits.digits
+        if re.search(r'\.temp\.\d+\.\d+$', file_str):
+            return False
+        
         include_regex = sync_pair.get('include_regex')
         if include_regex and not re.search(include_regex, file_str):
             return False
@@ -47,7 +51,9 @@ class SyncHandler(FileSystemEventHandler):
             
         return True
 
-    def get_sync_pair_for_path(self, file_path):
+    def get_sync_pairs_for_path(self, file_path):
+        matching_pairs = []
+        
         for sync_pair in self.config['sync_pairs']:
             # Check if this is a file-to-file sync pair
             if self.is_file_sync_pair(sync_pair):
@@ -55,10 +61,17 @@ class SyncHandler(FileSystemEventHandler):
                 file2 = (self.base_dir / sync_pair['file2']).resolve()
                 file_path_resolved = Path(file_path).resolve()
                 
-                if file_path_resolved == file1:
-                    return sync_pair, file1.parent, file2.parent, Path(file2.name)
-                elif file_path_resolved == file2:
-                    return sync_pair, file2.parent, file1.parent, Path(file1.name)
+                # For one-way sync, only sync from file1 to file2
+                if sync_pair.get('one_way', False):
+                    if file_path_resolved == file1:
+                        matching_pairs.append((sync_pair, file1.parent, file2.parent, Path(file2.name)))
+                    # Don't sync from file2 to file1 in one-way mode
+                else:
+                    # Bidirectional sync (original behavior)
+                    if file_path_resolved == file1:
+                        matching_pairs.append((sync_pair, file1.parent, file2.parent, Path(file2.name)))
+                    elif file_path_resolved == file2:
+                        matching_pairs.append((sync_pair, file2.parent, file1.parent, Path(file1.name)))
             else:
                 # Original directory-to-directory sync logic
                 dir1 = (self.base_dir / sync_pair['dir1']).resolve()
@@ -66,12 +79,24 @@ class SyncHandler(FileSystemEventHandler):
                 
                 file_path_resolved = Path(file_path).resolve()
                 
-                if file_path_resolved.is_relative_to(dir1):
-                    return sync_pair, dir1, dir2, file_path_resolved.relative_to(dir1)
-                elif file_path_resolved.is_relative_to(dir2):
-                    return sync_pair, dir2, dir1, file_path_resolved.relative_to(dir2)
+                # For one-way sync, only sync from dir1 to dir2
+                if sync_pair.get('one_way', False):
+                    if file_path_resolved.is_relative_to(dir1):
+                        matching_pairs.append((sync_pair, dir1, dir2, file_path_resolved.relative_to(dir1)))
+                    # Don't sync from dir2 to dir1 in one-way mode
+                else:
+                    # Bidirectional sync (original behavior)
+                    if file_path_resolved.is_relative_to(dir1):
+                        matching_pairs.append((sync_pair, dir1, dir2, file_path_resolved.relative_to(dir1)))
+                    elif file_path_resolved.is_relative_to(dir2):
+                        matching_pairs.append((sync_pair, dir2, dir1, file_path_resolved.relative_to(dir2)))
                 
-        return None
+        return matching_pairs
+
+    def get_sync_pair_for_path(self, file_path):
+        # Keep backward compatibility - return first match
+        pairs = self.get_sync_pairs_for_path(file_path)
+        return pairs[0] if pairs else None
 
     def is_file_sync_pair(self, sync_pair):
         return 'file1' in sync_pair and 'file2' in sync_pair
@@ -86,35 +111,34 @@ class SyncHandler(FileSystemEventHandler):
                 
         self.last_sync[file_key] = current_time
         
-        sync_info = self.get_sync_pair_for_path(source_file)
-        if not sync_info:
+        sync_infos = self.get_sync_pairs_for_path(source_file)
+        if not sync_infos:
             return
             
-        sync_pair, source_dir, target_dir, relative_path = sync_info
-        
-        if not self.should_sync_file(relative_path, sync_pair):
-            if self.verbose:
-                print(f"Skipping {relative_path} (filtered by regex)")
-            return
-            
-        source_path = source_dir / relative_path
-        target_path = target_dir / relative_path
-        
-        if not source_path.exists():
-            if target_path.exists():
+        for sync_pair, source_dir, target_dir, relative_path in sync_infos:
+            if not self.should_sync_file(relative_path, sync_pair):
                 if self.verbose:
-                    print(f"Removing {target_path}")
-                target_path.unlink()
-            return
+                    print(f"Skipping {relative_path} (filtered by regex)")
+                continue
+                
+            source_path = source_dir / relative_path
+            target_path = target_dir / relative_path
             
-        target_path.parent.mkdir(parents=True, exist_ok=True)
-        
-        try:
-            shutil.copy2(source_path, target_path)
-            if self.verbose:
-                print(f"Synced: {source_path} -> {target_path}")
-        except Exception as e:
-            print(f"Error syncing {source_path} to {target_path}: {e}")
+            if not source_path.exists():
+                if target_path.exists():
+                    if self.verbose:
+                        print(f"Removing {target_path}")
+                    target_path.unlink()
+                continue
+                
+            target_path.parent.mkdir(parents=True, exist_ok=True)
+            
+            try:
+                shutil.copy2(source_path, target_path)
+                if self.verbose:
+                    print(f"Synced: {source_path} -> {target_path}")
+            except Exception as e:
+                print(f"Error syncing {source_path} to {target_path}: {e}")
 
     def on_modified(self, event):
         if not event.is_directory:
@@ -182,53 +206,88 @@ def initial_sync(config, base_dir):
     
     for sync_pair in config['sync_pairs']:
         if 'file1' in sync_pair and 'file2' in sync_pair:
-            # File-to-file sync: sync the newer file to the older one
             file1 = base_path / sync_pair['file1']
             file2 = base_path / sync_pair['file2']
             
-            if file1.exists() or file2.exists():
-                # Determine which file is newer and sync from it
-                if file1.exists() and file2.exists():
-                    if file1.stat().st_mtime > file2.stat().st_mtime:
-                        handler.sync_file(str(file1))
-                    else:
-                        handler.sync_file(str(file2))
-                elif file1.exists():
+            if sync_pair.get('one_way', False):
+                # One-way sync: always sync from file1 to file2
+                if file1.exists():
                     handler.sync_file(str(file1))
-                elif file2.exists():
-                    handler.sync_file(str(file2))
+            else:
+                # Bidirectional sync: sync the newer file to the older one
+                if file1.exists() or file2.exists():
+                    if file1.exists() and file2.exists():
+                        if file1.stat().st_mtime > file2.stat().st_mtime:
+                            handler.sync_file(str(file1))
+                        else:
+                            handler.sync_file(str(file2))
+                    elif file1.exists():
+                        handler.sync_file(str(file1))
+                    elif file2.exists():
+                        handler.sync_file(str(file2))
         else:
-            # Directory-to-directory sync (original logic)
+            # Directory-to-directory sync
             dir1 = base_path / sync_pair['dir1']
             dir2 = base_path / sync_pair['dir2']
             
-            for dir_path in [dir1, dir2]:
-                if dir_path.exists():
-                    for file_path in dir_path.rglob('*'):
+            if sync_pair.get('one_way', False):
+                # One-way sync: only sync from dir1 to dir2
+                if dir1.exists():
+                    for file_path in dir1.rglob('*'):
                         if file_path.is_file():
                             handler.sync_file(str(file_path))
+            else:
+                # Bidirectional sync (original logic)
+                for dir_path in [dir1, dir2]:
+                    if dir_path.exists():
+                        for file_path in dir_path.rglob('*'):
+                            if file_path.is_file():
+                                handler.sync_file(str(file_path))
 
 
 def setup_watchers(observer, config, event_handler, base_dir):
     observer.unschedule_all()
+    watched_dirs = set()
     
     for sync_pair in config['sync_pairs']:
         if 'file1' in sync_pair and 'file2' in sync_pair:
             file1 = Path(base_dir) / sync_pair['file1']
             file2 = Path(base_dir) / sync_pair['file2']
             
-            observer.schedule(event_handler, str(file1.parent), recursive=False)
-            observer.schedule(event_handler, str(file2.parent), recursive=False)
-            
-            print(f"Watching: {file1} <-> {file2}")
+            if sync_pair.get('one_way', False):
+                # One-way sync: only watch the source (file1)
+                if str(file1.parent) not in watched_dirs:
+                    observer.schedule(event_handler, str(file1.parent), recursive=False)
+                    watched_dirs.add(str(file1.parent))
+                print(f"Watching: {file1} -> {file2} (one-way)")
+            else:
+                # Bidirectional sync: watch both files
+                if str(file1.parent) not in watched_dirs:
+                    observer.schedule(event_handler, str(file1.parent), recursive=False)
+                    watched_dirs.add(str(file1.parent))
+                if str(file2.parent) not in watched_dirs:
+                    observer.schedule(event_handler, str(file2.parent), recursive=False)
+                    watched_dirs.add(str(file2.parent))
+                print(f"Watching: {file1} <-> {file2}")
         else:
             dir1 = Path(base_dir) / sync_pair['dir1']
             dir2 = Path(base_dir) / sync_pair['dir2']
             
-            observer.schedule(event_handler, str(dir1), recursive=True)
-            observer.schedule(event_handler, str(dir2), recursive=True)
-            
-            print(f"Watching: {dir1} <-> {dir2}")
+            if sync_pair.get('one_way', False):
+                # One-way sync: only watch the source (dir1)
+                if str(dir1) not in watched_dirs:
+                    observer.schedule(event_handler, str(dir1), recursive=True)
+                    watched_dirs.add(str(dir1))
+                print(f"Watching: {dir1} -> {dir2} (one-way)")
+            else:
+                # Bidirectional sync: watch both directories
+                if str(dir1) not in watched_dirs:
+                    observer.schedule(event_handler, str(dir1), recursive=True)
+                    watched_dirs.add(str(dir1))
+                if str(dir2) not in watched_dirs:
+                    observer.schedule(event_handler, str(dir2), recursive=True)
+                    watched_dirs.add(str(dir2))
+                print(f"Watching: {dir1} <-> {dir2}")
 
 
 def main():
@@ -258,6 +317,11 @@ def main():
             if validate_config(new_config):
                 config = new_config
                 event_handler.update_config(config)
+                
+                # Perform initial sync for any new or changed sync pairs
+                print("Performing initial sync after config reload...")
+                initial_sync(config, base_dir)
+                
                 setup_watchers(observer, config, event_handler, base_dir)
                 print("Configuration reloaded successfully")
             else:

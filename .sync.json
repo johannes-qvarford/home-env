@@ -14,29 +14,24 @@
     },
     {
       "dir1": "./dotfiles/.docker",
-      "dir2": "/home/jq/.docker",
-      "exclude_regex": "\\.(log|tmp|cache|backup)$"
+      "dir2": "/home/jq/.docker"
     },
     {
       "dir1": "./dotfiles/.config/icons",
-      "dir2": "/home/jq/.config/icons",
-      "exclude_regex": "\\.(log|tmp|cache|backup)$"
+      "dir2": "/home/jq/.config/icons"
     },
     {
       "dir1": "./dotfiles/.config/fish",
-      "dir2": "/home/jq/.config/fish",
-      "exclude_regex": "\\.(log|tmp|cache|backup)$"
+      "dir2": "/home/jq/.config/fish"
     },
         {
       "dir1": "./dotfiles/.claude",
       "dir2": "/home/jq/.claude",
-      "include_regex": "^(CLAUDE.md|settings.json)$",
-      "exclude_regex": "\\.(log|tmp|cache|backup)$"
+      "include_regex": "^(CLAUDE.md|settings.json)$"
     },
     {
       "dir1": "./dotfiles/.config/shell_gpt",
-      "dir2": "/home/jq/.config/shell_gpt",
-      "exclude_regex": "\\.(log|tmp|cache|backup)$"
+      "dir2": "/home/jq/.config/shell_gpt"
     },
     {
       "file1": "./dotfiles/.claude-code-router/config.json",
@@ -44,12 +39,32 @@
     },
     {
       "dir1": "./dotfiles/bin",
-      "dir2": "/home/jq/bin",
-      "exclude_regex": "\\.(log|tmp|cache|backup)$"
+      "dir2": "/home/jq/bin"
     },
     {
-      "file1": "./dotfiles/.config/opencode/opencode.json",
-      "file2": "/home/jq/.config/opencode/opencode.json"
+      "file1": "./dotfiles/.gitconfig",
+      "file2": "/mnt/c/Users/deffo/.gitconfig",
+      "one_way": true
+    },
+    {
+      "file1": "/home/jq/.ssh/id_rsa",
+      "file2": "/mnt/c/Users/deffo/.ssh/id_rsa",
+      "one_way": true
+    },
+    {
+      "file1": "/home/jq/.ssh/id_rsa.pub",
+      "file2": "/mnt/c/Users/deffo/.ssh/id_rsa.pub",
+      "one_way": true
+    },
+    {
+      "file1": "/home/jq/.ssh/id_rsa_privacy",
+      "file2": "/mnt/c/Users/deffo/.ssh/id_rsa_privacy",
+      "one_way": true
+    },
+    {
+      "file1": "/home/jq/.ssh/id_rsa_privacy.pub",
+      "file2": "/mnt/c/Users/deffo/.ssh/id_rsa_privacy.pub",
+      "one_way": true
     }
   ],
   "debounce_ms": 1000,
