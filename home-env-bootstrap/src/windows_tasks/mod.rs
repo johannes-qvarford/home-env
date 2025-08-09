@@ -1,6 +1,8 @@
 pub(crate) mod bootstrap_linux;
 pub(crate) mod choco;
 pub(crate) mod connect_windows_terminal;
+pub(crate) mod create_dev_drive;
+pub(crate) mod install_claude_code;
 pub(crate) mod install_wsl;
 pub(crate) mod scheduled_task;
 pub(crate) mod set_path;
@@ -9,6 +11,8 @@ pub(crate) mod winget;
 pub(crate) use bootstrap_linux::*;
 pub(crate) use choco::*;
 pub(crate) use connect_windows_terminal::*;
+pub(crate) use create_dev_drive::*;
+pub(crate) use install_claude_code::*;
 pub(crate) use install_wsl::*;
 pub(crate) use scheduled_task::*;
 pub(crate) use set_path::*;
@@ -39,6 +43,12 @@ impl TaskProvider for WindowsTaskProvider {
         registry.register_task(winget_task("9PGCV4V3BK4W")); // DevToys
         registry.register_task(winget_task("DBBrowserForSQLite.DBBrowserForSQLite"));
         registry.register_task(winget_task("Microsoft.PowerToys"));
+        
+        // Core development environment
+        registry.register_task(winget_task("Git.Git"));
+        registry.register_task(winget_task("Python.Python.3.12"));
+        registry.register_task(winget_task("OpenJS.NodeJS"));
+        registry.register_task(install_claude_code_task());
 
         // Media applications
         registry.register_task(winget_task("Mozilla.Firefox"));
@@ -64,6 +74,7 @@ impl TaskProvider for WindowsTaskProvider {
         registry.register_task(choco_task("messenger"));
 
         // System integration
+        registry.register_task(create_dev_drive_task());
         registry.register_task(scheduled_task_task("backup-media", "11:00 am"));
         registry.register_task(scheduled_task_task("upgrade-tools", "12:00 pm"));
         registry.register_task(set_path_task());
