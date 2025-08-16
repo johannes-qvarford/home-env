@@ -26,6 +26,10 @@
       "dir2": "/home/jq/.config/shell_gpt"
     },
     {
+      "file1": "./dotfiles/.config/fish-ai.ini",
+      "file2": "/home/jq/.config/fish-ai.ini"
+    },
+    {
       "file1": "./dotfiles/.claude-code-router/config.json",
       "file2": "/home/jq/.claude-code-router/config.json"
     },
