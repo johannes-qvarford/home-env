@@ -80,12 +80,37 @@ exit
             New-Item -Path "Z:\Tools" -ItemType Directory -Force
             New-Item -Path "Z:\Cache" -ItemType Directory -Force
             
+            # Copy auto-attach script to user profile
+            $scriptContent = @'
+{}
+'@
+            $attachScriptPath = "$env:USERPROFILE\attach_dev_drive.ps1"
+            $scriptContent | Out-File -FilePath $attachScriptPath -Encoding UTF8 -Force
+            Write-Host "Auto-attach script copied to $attachScriptPath"
+            
+            # Create scheduled task for auto-attach at startup
+            Write-Host "Creating scheduled task for auto-attach..."
+            $taskName = "AutoAttachDevDrive"
+            $action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-WindowStyle Hidden -ExecutionPolicy Bypass -File `"$attachScriptPath`""
+            $trigger = New-ScheduledTaskTrigger -AtStartup
+            $principal = New-ScheduledTaskPrincipal -UserId "SYSTEM" -LogonType ServiceAccount -RunLevel Highest
+            $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
+            
+            try {{
+                Unregister-ScheduledTask -TaskName $taskName -Confirm:$false -ErrorAction SilentlyContinue
+                Register-ScheduledTask -TaskName $taskName -Action $action -Trigger $trigger -Principal $principal -Settings $settings -Force
+                Write-Host "Scheduled task created for auto-attach at startup"
+            }} catch {{
+                Write-Warning "Failed to create scheduled task: $_"
+            }}
+            
             Write-Host "DEV drive created successfully at Z:"
         }} catch {{
             Write-Error "Failed to create DEV drive: $_"
             exit 1
         }}
-        "#
+        "#,
+        include_str!("../resources/attach_dev_drive.ps1")
     )
 }
 

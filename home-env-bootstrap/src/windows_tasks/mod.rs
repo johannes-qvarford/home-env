@@ -43,7 +43,7 @@ impl TaskProvider for WindowsTaskProvider {
         registry.register_task(winget_task("9PGCV4V3BK4W")); // DevToys
         registry.register_task(winget_task("DBBrowserForSQLite.DBBrowserForSQLite"));
         registry.register_task(winget_task("Microsoft.PowerToys"));
-        
+
         // Core development environment
         registry.register_task(winget_task("Git.Git"));
         registry.register_task(winget_task("Python.Python.3.12"));

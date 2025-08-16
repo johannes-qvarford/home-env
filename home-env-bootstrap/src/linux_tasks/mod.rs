@@ -49,6 +49,8 @@ impl TaskProvider for LinuxTaskProvider {
         registry.register_task(bash_task!("act"));
         registry.register_task(bash_task!("android"));
         registry.register_task(bash_task!("install-mcp-hooks"));
+        registry.register_task(bash_task!("install-git-hooks"));
+        registry.register_task(bash_task!("mount-z-drive"));
 
         Ok(())
     }

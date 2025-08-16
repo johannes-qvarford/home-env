@@ -13,12 +13,8 @@ impl task::Task for InstallClaudeCodeTask {
     }
 
     fn execute(&self) -> Result<()> {
-        process::execute(
-            "npm",
-            &["install", "-g", "@anthropic-ai/claude-code"],
-            &[],
-        )
-        .wrap_err_with(|| "Installing Claude Code via npm")
+        process::execute("npm", &["install", "-g", "@anthropic-ai/claude-code"], &[])
+            .wrap_err_with(|| "Installing Claude Code via npm")
     }
 }
 
