@@ -34,4 +34,11 @@ set -x CMAKE_TOOLCHAIN_FILE $HOME/projects/vcpkg/scripts/buildsystems/vcpkg.cmak
 
 
 
+# Auto-mount Z: drive in WSL
+if not mountpoint -q /mnt/z 2>/dev/null
+    if test -d /mnt/z; or sudo mkdir -p /mnt/z 2>/dev/null
+        sudo mount -t drvfs Z: /mnt/z 2>/dev/null
+    end
+end
+
 # opencode
