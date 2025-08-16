@@ -7,5 +7,5 @@ if [[ "$use_tokens" == "1" ]]; then
     export PATH="/home/jq/.npm/bin:$PATH"
     ccr code "$@"
 else
-    exec /home/jq/.npm/bin/claude "$@"
+    exec /home/jq/.npm/bin/claude --append-system-prompt "**IMPORTANT: You speak in a somewhat tired, monotone and objective tone.**" "$@"
 fi
