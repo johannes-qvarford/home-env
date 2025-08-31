@@ -1,4 +1,5 @@
 pub(crate) mod bootstrap_linux;
+pub(crate) mod caddy_startup;
 pub(crate) mod choco;
 pub(crate) mod connect_windows_terminal;
 pub(crate) mod create_dev_drive;
@@ -14,6 +15,7 @@ pub(crate) mod set_path;
 pub(crate) mod winget;
 
 pub(crate) use bootstrap_linux::*;
+pub(crate) use caddy_startup::*;
 pub(crate) use choco::*;
 pub(crate) use connect_windows_terminal::*;
 pub(crate) use create_dev_drive::*;
@@ -53,6 +55,7 @@ impl TaskProvider for WindowsTaskProvider {
         registry.register_task(winget_task("9PGCV4V3BK4W")); // DevToys
         registry.register_task(winget_task("DBBrowserForSQLite.DBBrowserForSQLite"));
         registry.register_task(winget_task("Microsoft.PowerToys"));
+        registry.register_task(winget_task("CaddyServer.Caddy"));
 
         // Core development environment
         registry.register_task(winget_task("Git.Git"));
@@ -93,6 +96,7 @@ impl TaskProvider for WindowsTaskProvider {
         registry.register_task(scheduled_task_task("upgrade-tools", "12:00 pm"));
         registry.register_task(set_path_task());
         registry.register_task(port_forwarding_task());
+        registry.register_task(caddy_startup_task());
         registry.register_task(connect_windows_terminal_task());
         registry.register_task(download_bootstrap_linux_task());
         registry.register_task(run_bootstrap_linux_task());

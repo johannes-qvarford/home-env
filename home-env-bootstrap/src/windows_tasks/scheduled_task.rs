@@ -37,7 +37,7 @@ fn powershell_string(task: &ScheduledTask) -> String {
         $at = "{at}"
         $exists = (Get-ScheduledTask | Where-Object {{ $_.TaskName -eq $name }}).Count -ne 0
         if ($exists) {{
-            return;
+            Unregister-ScheduledTask -TaskName $name -Confirm:$false
         }}
         $trigger = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Sunday -At $at
         $action = New-ScheduledTaskAction -Execute 'C:\WINDOWS\system32\wsl.exe' -Argument "/home/jq/home-env/schedule/$name"
