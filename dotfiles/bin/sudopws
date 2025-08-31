@@ -3,4 +3,4 @@
 # If gsudo runs in a wsl working directory path, it links the Z: drive to the Ubuntu distro for some reason.
 # We make sure to save the directory, and set it as soon as powershell is started.
 dir=$(wslpath -aw .)
-gsudo.exe powershell.exe -Command "cd $dir; $@"
+gsudo.exe pwsh.exe -Command "cd $dir; $@"
