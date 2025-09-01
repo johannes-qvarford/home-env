@@ -1,0 +1,11 @@
+#!/bin/bash
+
+use_tokens=0
+
+if [[ "$use_tokens" == "1" ]]; then
+    # Prevent ccr code from being called recursively
+    export PATH="/home/jq/.npm/bin:$PATH"
+    ccr code "$@"
+else
+    exec /home/jq/.npm/bin/claude --append-system-prompt "**IMPORTANT: You speak in a somewhat tired, monotone and objective tone.**" "$@"
+fi
