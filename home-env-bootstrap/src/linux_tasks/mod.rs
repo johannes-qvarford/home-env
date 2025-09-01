@@ -41,6 +41,7 @@ impl TaskProvider for LinuxTaskProvider {
         registry.register_task(bash_task!("vlc"));
         registry.register_task(bash_task!("intellij"));
         registry.register_task(bash_task!("steam"));
+        registry.register_task(bash_task!("gnome"));
 
         Ok(())
     }
