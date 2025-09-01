@@ -1,0 +1,8 @@
+# LSD Configuration
+# Disable icons to avoid font compatibility issues
+
+# == Icons ==
+icons:
+  # When to use icons.
+  # Possible values: always, auto, never
+  when: never

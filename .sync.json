@@ -36,6 +36,10 @@
     {
       "dir1": "./dotfiles/bin",
       "dir2": "/home/jq/bin"
+    },
+    {
+      "dir1": "./dotfiles/.config/lsd",
+      "dir2": "/home/jq/.config/lsd"
     }
   ],
   "debounce_ms": 1000,
