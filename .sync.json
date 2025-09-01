@@ -36,36 +36,6 @@
     {
       "dir1": "./dotfiles/bin",
       "dir2": "/home/jq/bin"
-    },
-    {
-      "file1": "./dotfiles/.gitconfig",
-      "file2": "/mnt/c/Users/deffo/.gitconfig",
-      "one_way": true
-    },
-    {
-      "file1": "/home/jq/.ssh/id_rsa",
-      "file2": "/mnt/c/Users/deffo/.ssh/id_rsa",
-      "one_way": true
-    },
-    {
-      "file1": "/home/jq/.ssh/id_rsa.pub",
-      "file2": "/mnt/c/Users/deffo/.ssh/id_rsa.pub",
-      "one_way": true
-    },
-    {
-      "file1": "/home/jq/.ssh/id_rsa_privacy",
-      "file2": "/mnt/c/Users/deffo/.ssh/id_rsa_privacy",
-      "one_way": true
-    },
-    {
-      "file1": "/home/jq/.ssh/id_rsa_privacy.pub",
-      "file2": "/mnt/c/Users/deffo/.ssh/id_rsa_privacy.pub",
-      "one_way": true
-    },
-    {
-      "dir1": "/home/jq/.claude",
-      "dir2": "/mnt/c/Users/deffo/.claude",
-      "include_regex": "^(CLAUDE.md|settings.json)$"
     }
   ],
   "debounce_ms": 1000,
