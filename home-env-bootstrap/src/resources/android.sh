@@ -21,7 +21,7 @@ if [ ! -d "$LATEST_DIR" ]; then
     rm commandlinetools-linux-11076708_latest.zip
 fi
 
-# Set up environment variables
+# Set up temporary environment variables for this script
 export ANDROID_HOME="$ANDROID_HOME"
 export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
 
@@ -29,18 +29,7 @@ export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
 yes | sdkmanager --licenses >/dev/null 2>&1 || true
 sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
-# Add environment variables to shell profiles
-echo "Adding Android SDK environment variables to shell profiles..."
-for profile in ~/.bashrc ~/.zshrc ~/.profile; do
-    if [ -f "$profile" ]; then
-        if ! grep -q "ANDROID_HOME" "$profile"; then
-            echo "" >> "$profile"
-            echo "# Android SDK" >> "$profile"
-            echo "export ANDROID_HOME=\"$HOME/android-sdk\"" >> "$profile"
-            echo "export PATH=\"\$ANDROID_HOME/cmdline-tools/latest/bin:\$ANDROID_HOME/platform-tools:\$PATH\"" >> "$profile"
-        fi
-    fi
-done
+echo "Note: Android SDK environment variables are configured in config.fish"
 
 echo "Android SDK setup completed!"
 echo "ANDROID_HOME: $ANDROID_HOME"
