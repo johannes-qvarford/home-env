@@ -39,6 +39,9 @@ impl TaskProvider for LinuxTaskProvider {
         registry.register_task(bash_task!("metamcp"));
         registry.register_task(bash_task!("bluetooth"));
         registry.register_task(bash_task!("vscode"));
+        registry.register_task(bash_task!("vlc"));
+        registry.register_task(bash_task!("intellij"));
+        registry.register_task(bash_task!("steam"));
 
         Ok(())
     }
