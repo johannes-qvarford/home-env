@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Install python3.10-venv package
+sudo apt update
+sudo apt install -y python3.10-venv
+
 install () {
     repo="$1"
     pattern="$2"
