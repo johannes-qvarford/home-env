@@ -66,6 +66,10 @@
       "dir1": "/home/jq/.claude",
       "dir2": "/mnt/c/Users/deffo/.claude",
       "include_regex": "^(CLAUDE.md|settings.json)$"
+    },
+    {
+      "dir1": "./dotfiles/.config/lsd",
+      "dir2": "/home/jq/.config/lsd"
     }
   ],
   "debounce_ms": 1000,
