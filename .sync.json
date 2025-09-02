@@ -70,6 +70,10 @@
     {
       "dir1": "./dotfiles/.config/lsd",
       "dir2": "/home/jq/.config/lsd"
+    },
+    {
+      "file1": "./dotfiles/.tmux.conf",
+      "file2": "/home/jq/.tmux.conf"
     }
   ],
   "debounce_ms": 1000,
