@@ -14,8 +14,6 @@ if test -f ~/.env
     bass source ~/.env
 end
 set -gx OPENAI_API_KEY $OPENROUTER_KEY
-#set -x KUBECONFIG ~/.kube/config
-
 # Android SDK
 set -gx ANDROID_HOME ~/android-sdk
 
@@ -23,16 +21,9 @@ fish_add_path $HOME/.npm/bin
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.local/bin
 fish_add_path $HOME/.local/share/JetBrains/Toolbox/scripts
-fish_add_path $HOME/projects/vcpkg
-fish_add_path $HOME/.opencode/bin
 fish_add_path $HOME/bin
 fish_add_path $ANDROID_HOME/platform-tools
 fish_add_path $ANDROID_HOME/cmdline-tools/latest/bin
-
-
-set -x CMAKE_TOOLCHAIN_FILE $HOME/projects/vcpkg/scripts/buildsystems/vcpkg.cmake
-
-
 
 # Auto-mount Z: drive in WSL
 if not mountpoint -q /mnt/z 2>/dev/null
@@ -40,5 +31,3 @@ if not mountpoint -q /mnt/z 2>/dev/null
         sudo mount -t drvfs Z: /mnt/z 2>/dev/null
     end
 end
-
-# opencode
