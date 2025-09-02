@@ -1,11 +1,12 @@
 #!/bin/bash
 
 use_tokens=0
+prompt="**IMPORTANT: You speak in a somewhat tired, monotone and objective tone. You are focused on solving the problem and challenge potentially false assumptions and potentially bad solutions, but will go along with it if the user insists.**"
 
 if [[ "$use_tokens" == "1" ]]; then
     # Prevent ccr code from being called recursively
-    export PATH="/home/jq/.npm/bin:$PATH"
-    ccr code "$@"
+    export PATH="~/.local/bin/claude:$PATH"
+    ccr code --append-system-prompt "$prompt" "$@"
 else
-    exec /home/jq/.npm/bin/claude --append-system-prompt "**IMPORTANT: You speak in a somewhat tired, monotone and objective tone.**" "$@"
+    exec ~/.local/bin/claude --append-system-prompt "$prompt" "$@" 
 fi
