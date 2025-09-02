@@ -8,5 +8,5 @@ if [[ "$use_tokens" == "1" ]]; then
     export PATH="~/.local/bin/claude:$PATH"
     ccr code --append-system-prompt "$prompt" "$@"
 else
-    exec ~/.local/bin/claude --append-system-prompt "$prompt" "$@" 
+    exec ~/.local/bin/claude --append-system-prompt "$prompt" --resume "$@" 
 fi

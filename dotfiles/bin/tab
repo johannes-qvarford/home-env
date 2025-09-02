@@ -1,0 +1,33 @@
+#!/usr/bin/env python3
+
+import sys
+import subprocess
+import argparse
+
+def main():
+    parser = argparse.ArgumentParser(description='Start claude in a tmux tab')
+    parser.add_argument('location', choices=['home-env', 'chat'], 
+                        help='Where to start claude: home-env or chat')
+    parser.add_argument('--here', action='store_true', 
+                        help='Replace current tab instead of creating new one')
+    
+    args = parser.parse_args()
+    
+    if args.location == 'home-env':
+        if args.here:
+            # Replace current window with claude in home-env
+            subprocess.run(['tmux', 'respawn-window', '-k', '-c', '/home/jq/home-env', 'claude'])
+        else:
+            # Create new window with claude in home-env
+            subprocess.run(['tmux', 'new-window', '-c', '/home/jq/home-env', 'claude'])
+    
+    elif args.location == 'chat':
+        if args.here:
+            # Replace current window with chat
+            subprocess.run(['tmux', 'respawn-window', '-k', 'chat'])
+        else:
+            # Create new window with chat
+            subprocess.run(['tmux', 'new-window', 'chat'])
+
+if __name__ == '__main__':
+    main()
