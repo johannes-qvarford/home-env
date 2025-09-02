@@ -22,12 +22,14 @@ def main():
             subprocess.run(['tmux', 'new-window', '-c', '/home/jq/home-env', 'claude'])
     
     elif args.location == 'chat':
+        # Ensure chat directory exists
+        subprocess.run(['mkdir', '-p', '/home/jq/chat'])
         if args.here:
-            # Replace current window with chat
-            subprocess.run(['tmux', 'respawn-window', '-k', 'chat'])
+            # Replace current window with claude directly in ~/chat directory
+            subprocess.run(['tmux', 'respawn-window', '-k', '-c', '/home/jq/chat', 'claude'])
         else:
-            # Create new window with chat
-            subprocess.run(['tmux', 'new-window', 'chat'])
+            # Create new window with claude directly in ~/chat directory
+            subprocess.run(['tmux', 'new-window', '-c', '/home/jq/chat', 'claude'])
 
 if __name__ == '__main__':
     main()
