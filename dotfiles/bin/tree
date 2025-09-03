@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Wrapper for tree command that always includes --gitignore
+exec /usr/bin/tree --gitignore "$@"
