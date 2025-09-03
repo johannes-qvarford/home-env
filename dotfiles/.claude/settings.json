@@ -5,6 +5,13 @@
         "type": "command",
 "command": "powershell.exe -ExecutionPolicy Bypass -File \"\\\\\\\\wsl.localhost\\Ubuntu\\home\\jq\\home-env\\claude\\play-random-alert.ps1\""
       }]
+    }],
+    "PostToolUse": [{
+      "matcher": "Edit|Write|MultiEdit",
+      "hooks": [{
+        "type": "command",
+        "command": "touch \"$CLAUDE_FILE_PATH\""
+      }]
     }]
   }
 }
