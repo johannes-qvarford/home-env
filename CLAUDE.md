@@ -36,6 +36,32 @@ python3 dotfiles/bin/sync-dirs
 # Manual sync configuration in .sync.json
 ```
 
+The file synchronization system provides real-time bidirectional sync between dotfiles and their target locations using:
+
+1. **`.sync.json`** - Configuration file defining sync pairs with support for:
+   - File-to-file syncing (`file1`/`file2`)
+   - Directory-to-directory syncing (`dir1`/`dir2`)
+   - One-way sync (`"one_way": true`)
+   - Regex-based include/exclude filtering (`include_regex`/`exclude_regex`)
+   - Debounce timing (`debounce_ms`: 1000ms default)
+
+2. **`sync-dirs` script** - Python daemon that:
+   - Uses watchdog library for filesystem monitoring
+   - Performs initial sync on startup (newest file wins for bidirectional, source->target for one-way)
+   - Watches configured directories for changes and syncs immediately
+   - Supports hot-reloading when `.sync.json` is modified
+   - Filters temporary files (`.temp.digits.digits` pattern)
+
+3. **`dotfiles-sync.service`** - System-level systemd service (not user service):
+   - Runs as user `jq` from `/home/jq/home-env` working directory
+   - Auto-starts on boot, restarts on failure
+   - Logs to systemd journal
+   - Enabled in `/etc/systemd/system/dotfiles-sync.service`
+
+**Best Practice**: Always edit configuration files in the `dotfiles/` directory rather than their target locations (e.g., edit `dotfiles/.tmux.conf` not `/home/jq/.tmux.conf`). The sync system will automatically propagate changes to all configured locations, ensuring consistency across environments.
+
+**Important**: When creating new configuration files in `dotfiles/`, ensure they are registered in `.sync.json` if not already covered by existing directory rules. Files without sync rules will remain isolated in the dotfiles directory.
+
 ### Important Conventions
 - Use `docker compose` instead of `docker-compose` (as noted in dotfiles/.claude/CLAUDE.md)
 - File paths and configurations assume username "Johannes Qvarford" and specific drive mappings (L, D, G, F drives)
