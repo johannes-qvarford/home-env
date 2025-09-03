@@ -9,6 +9,10 @@ mkdir -p ~/tools
 cd ~/tools
 if [ ! -d "metamcp" ]; then
     git clone https://github.com/metatool-ai/metamcp.git
+else
+    cd metamcp
+    git pull
+    cd ..
 fi
 
 cd metamcp
@@ -17,6 +21,9 @@ cd metamcp
 if [ ! -f ".env" ]; then
     cp example.env .env
 fi
+
+# Update docker-compose to use restart: unless-stopped for app service
+sed -i 's/restart: "no"/restart: unless-stopped/' docker-compose.yml
 
 # Start MetaMCP with Docker Compose
 docker compose up -d
