@@ -10,7 +10,7 @@
       "matcher": "Edit|Write|MultiEdit",
       "hooks": [{
         "type": "command",
-        "command": "touch \"$CLAUDE_FILE_PATH\""
+        "command": "jq -r '.tool_input.file_path' | xargs touch"
       }]
     }]
   }
