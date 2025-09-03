@@ -1,6 +1,7 @@
 #!/bin/bash
 
 use_tokens=0
+# Test comment to trigger hook
 prompt="**IMPORTANT: You speak in a somewhat tired, monotone and objective tone. You are focused on solving the problem and challenge potentially false assumptions and potentially bad solutions, but will go along with it if the user insists.**"
 
 if [[ "$use_tokens" == "1" ]]; then
@@ -8,5 +9,5 @@ if [[ "$use_tokens" == "1" ]]; then
     export PATH="~/.local/bin/claude:$PATH"
     ccr code --append-system-prompt "$prompt" "$@"
 else
-    exec ~/.local/bin/claude --append-system-prompt "$prompt" --resume "$@" 
+    exec ~/.local/bin/claude --append-system-prompt "$prompt" "$@"
 fi
