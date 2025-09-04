@@ -1,3 +1,3 @@
 #!/bin/bash
 
-sudo apt install -y tmux zip xdg-utils ffmpeg jq tree
+sudo apt install -y tmux zip xdg-utils ffmpeg jq tree espeak

@@ -6,8 +6,8 @@ import argparse
 
 def main():
     parser = argparse.ArgumentParser(description='Start claude in a tmux tab')
-    parser.add_argument('location', choices=['home-env', 'chat'], 
-                        help='Where to start claude: home-env or chat')
+    parser.add_argument('location', 
+                        help='Where to start claude: home-env or project name')
     parser.add_argument('--here', action='store_true', 
                         help='Replace current tab instead of creating new one')
     
@@ -21,15 +21,16 @@ def main():
             # Create new window with claude in home-env
             subprocess.run(['tmux', 'new-window', '-c', '/home/jq/home-env', 'claude'])
     
-    elif args.location == 'chat':
-        # Ensure chat directory exists
-        subprocess.run(['mkdir', '-p', '/home/jq/chat'])
+    else:
+        # Treat as project name - ensure project directory exists
+        project_path = f'/home/jq/projects/{args.location}'
+        subprocess.run(['mkdir', '-p', project_path])
         if args.here:
-            # Replace current window with claude directly in ~/chat directory
-            subprocess.run(['tmux', 'respawn-window', '-k', '-c', '/home/jq/chat', 'claude'])
+            # Replace current window with claude in project directory
+            subprocess.run(['tmux', 'respawn-window', '-k', '-c', project_path, 'claude'])
         else:
-            # Create new window with claude directly in ~/chat directory
-            subprocess.run(['tmux', 'new-window', '-c', '/home/jq/chat', 'claude'])
+            # Create new window with claude in project directory
+            subprocess.run(['tmux', 'new-window', '-c', project_path, 'claude'])
 
 if __name__ == '__main__':
     main()
