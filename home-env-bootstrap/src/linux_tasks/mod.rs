@@ -34,6 +34,7 @@ impl TaskProvider for LinuxTaskProvider {
         registry.register_task(bash_task!("node"));
         registry.register_task(bash_task!("colors"));
         registry.register_task(bash_task!("extra"));
+        registry.register_task(bash_task!("espeak"));
         registry.register_task(bash_task!("backup"));
         registry.register_task(bash_task!("claude"));
         registry.register_task(bash_task!("android"));
@@ -41,6 +42,7 @@ impl TaskProvider for LinuxTaskProvider {
         registry.register_task(bash_task!("install-git-hooks"));
         registry.register_task(bash_task!("metamcp"));
         registry.register_task(bash_task!("mount-z-drive"));
+        registry.register_task(bash_task!("openai-codex"));
 
         Ok(())
     }
