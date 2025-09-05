@@ -18,6 +18,7 @@ set -gx OPENAI_API_KEY $OPENROUTER_KEY
 set -gx ANDROID_HOME ~/android-sdk
 
 fish_add_path $HOME/.npm/bin
+fish_add_path $HOME/.bun/bin
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.local/bin
 fish_add_path $HOME/.local/share/JetBrains/Toolbox/scripts
