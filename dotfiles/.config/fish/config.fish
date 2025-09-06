@@ -32,3 +32,6 @@ if not mountpoint -q /mnt/z 2>/dev/null
         sudo mount -t drvfs Z: /mnt/z 2>/dev/null
     end
 end
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
