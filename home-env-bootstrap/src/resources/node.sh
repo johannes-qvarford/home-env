@@ -18,4 +18,17 @@ else
     echo "Warning: Bun installation may have failed or is not in PATH"
 fi
 
-echo "Node.js and Bun installation completed successfully."
+echo "Installing Deno..."
+curl -fsSL https://deno.land/install.sh | sh
+
+# Add deno to current session PATH
+export PATH="$HOME/.deno/bin:$PATH"
+
+# Verify deno installation
+if command -v deno &> /dev/null; then
+    echo "Deno $(deno --version | head -n1) installed successfully."
+else
+    echo "Warning: Deno installation may have failed or is not in PATH"
+fi
+
+echo "Node.js, Bun, and Deno installation completed successfully."
