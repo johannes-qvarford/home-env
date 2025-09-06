@@ -48,15 +48,16 @@ def read_use_oauth_session(config_path: str) -> bool:
 
 
 def main() -> NoReturn:
+    # Prevent ccr code from being called recursively
+    if os.environ.get("CCR_RECURSION") is not None:
+        argv = [CLAUDE_BIN, *sys.argv[1:]]
+        os.execvp(argv[0], argv)
+
     use_oauth: bool = read_use_oauth_session(CONFIG_PATH)
 
-    if use_oauth:
-        # Prevent ccr code from being called recursively
+    if not use_oauth:
         env = os.environ.copy()
-        # Mirror the original behavior: prepend ~/.local/bin/claude to PATH
-        # so an internal 'claude' invocation doesn't hit this wrapper again.
-        path_entry = os.path.expanduser("~/.local/bin/claude")
-        env["PATH"] = path_entry + (":" + env["PATH"] if env.get("PATH") else "")
+        env["CCR_RECURSION"] = "1"
         argv = ["ccr", "code", "--append-system-prompt", PROMPT, *sys.argv[1:]]
         os.execvpe(argv[0], argv, env)
     else:
