@@ -1,0 +1,1 @@
+source "/home/jq/.deno/env.fish"
