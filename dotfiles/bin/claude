@@ -1,13 +1,68 @@
-#!/bin/bash
+#!/usr/bin/env python3
+from __future__ import annotations
 
-use_tokens=0
-# Test comment to trigger hook
-prompt="**IMPORTANT: You speak in a somewhat tired, monotone and objective tone. You are focused on solving the problem and challenge potentially false assumptions and potentially bad solutions, but will go along with it if the user insists.**"
+import os
+import sys
+from typing import NoReturn
 
-if [[ "$use_tokens" == "1" ]]; then
-    # Prevent ccr code from being called recursively
-    export PATH="~/.local/bin/claude:$PATH"
-    ccr code --append-system-prompt "$prompt" "$@"
-else
-    exec ~/.local/bin/claude --append-system-prompt "$prompt" "$@"
-fi
+PROMPT: str = (
+    "**IMPORTANT: You speak in a somewhat tired, monotone and objective tone. "
+    "You are focused on solving the problem and challenge potentially false assumptions "
+    "and potentially bad solutions, but will go along with it if the user insists.**"
+)
+
+CONFIG_PATH: str = os.path.expanduser("~/.config/ai-remote-control/config.toml")
+CLAUDE_BIN: str = os.path.expanduser("~/.local/bin/claude")
+
+
+def read_use_oauth_session(config_path: str) -> bool:
+    """
+    Read ~/.ai-remote-control/config.toml and return the boolean value of
+    'use_oauth_session'. If the file is missing, unreadable, or the key is absent,
+    default to False to preserve normal claude behavior.
+    """
+    try:
+        import tomllib  # Python 3.11+ built-in
+    except Exception:
+        # No built-in toml reader available; default to normal claude
+        return False
+
+    try:
+        with open(config_path, "rb") as f:
+            data = tomllib.load(f)  # type: ignore[name-defined]
+        if isinstance(data, dict):
+            val = data.get("use_oauth_session", False)
+            if isinstance(val, bool):
+                return val
+            if isinstance(val, str):
+                s = val.strip().lower()
+                if s in ("1", "true", "yes", "on"):
+                    return True
+                if s in ("0", "false", "no", "off"):
+                    return False
+        return False
+    except FileNotFoundError:
+        return False
+    except Exception:
+        return False
+
+
+def main() -> NoReturn:
+    use_oauth: bool = read_use_oauth_session(CONFIG_PATH)
+
+    if use_oauth:
+        # Prevent ccr code from being called recursively
+        env = os.environ.copy()
+        # Mirror the original behavior: prepend ~/.local/bin/claude to PATH
+        # so an internal 'claude' invocation doesn't hit this wrapper again.
+        path_entry = os.path.expanduser("~/.local/bin/claude")
+        env["PATH"] = path_entry + (":" + env["PATH"] if env.get("PATH") else "")
+        argv = ["ccr", "code", "--append-system-prompt", PROMPT, *sys.argv[1:]]
+        os.execvpe(argv[0], argv, env)
+    else:
+        argv = [CLAUDE_BIN, "--append-system-prompt", PROMPT, *sys.argv[1:]]
+        os.execvpe(argv[0], argv, os.environ)
+
+
+if __name__ == "__main__":
+    main()
