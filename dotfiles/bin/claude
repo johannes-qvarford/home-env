@@ -3,7 +3,8 @@ from __future__ import annotations
 
 import os
 import sys
-from typing import NoReturn
+from typing import NoReturn, Any
+import tomllib
 
 PROMPT: str = (
     "**IMPORTANT: You speak in a somewhat tired, monotone and objective tone. "
@@ -14,51 +15,45 @@ PROMPT: str = (
 CONFIG_PATH: str = os.path.expanduser("~/.config/ai-remote-control/config.toml")
 CLAUDE_BIN: str = os.path.expanduser("~/.local/bin/claude")
 
+def read_config() -> dict[str, Any]:
+    with open(CONFIG_PATH, "rb") as f:
+        return tomllib.load(f)  # type: ignore[name-defined]
 
-def read_use_oauth_session(config_path: str) -> bool:
-    """
-    Read ~/.ai-remote-control/config.toml and return the boolean value of
-    'use_oauth_session'. If the file is missing, unreadable, or the key is absent,
-    default to False to preserve normal claude behavior.
-    """
-    try:
-        import tomllib  # Python 3.11+ built-in
-    except Exception:
-        # No built-in toml reader available; default to normal claude
-        return False
+def read_use_claude_code_subscription(data: dict[str, Any]) -> bool:
+    val = data.get("use_claude_code_subscription", False)
+    if isinstance(val, bool):
+        return val
+    if isinstance(val, str):
+        s = val.strip().lower()
+        if s in ("1", "true", "yes", "on"):
+            return True
+        if s in ("0", "false", "no", "off"):
+            return False
+    return True
 
-    try:
-        with open(config_path, "rb") as f:
-            data = tomllib.load(f)  # type: ignore[name-defined]
-        if isinstance(data, dict):
-            val = data.get("use_oauth_session", False)
-            if isinstance(val, bool):
-                return val
-            if isinstance(val, str):
-                s = val.strip().lower()
-                if s in ("1", "true", "yes", "on"):
-                    return True
-                if s in ("0", "false", "no", "off"):
-                    return False
-        return False
-    except FileNotFoundError:
-        return False
-    except Exception:
-        return False
-
+def read_model_option(data: dict[str, Any]) -> list[str]:
+    val = data.get("claude_code_model", None)
+    if val is not None:
+        return ["--model", str(val)]
+    else:
+        return []
 
 def main() -> NoReturn:
+
     # Prevent ccr code from being called recursively
     if os.environ.get("CCR_RECURSION") is not None:
         argv = [CLAUDE_BIN, *sys.argv[1:]]
+        print(argv)
         os.execvp(argv[0], argv)
 
-    use_oauth: bool = read_use_oauth_session(CONFIG_PATH)
+    config = read_config()
+    use_claude_code_subscription: bool = read_use_claude_code_subscription(config)
+    model_option = read_model_option(config)
 
-    if not use_oauth:
+    if not use_claude_code_subscription:
         env = os.environ.copy()
         env["CCR_RECURSION"] = "1"
-        argv = ["ccr", "code", "--append-system-prompt", PROMPT, *sys.argv[1:]]
+        argv = ["ccr", "code", "--append-system-prompt", PROMPT, *model_option, *sys.argv[1:]]
         os.execvpe(argv[0], argv, env)
     else:
         argv = [CLAUDE_BIN, "--append-system-prompt", PROMPT, *sys.argv[1:]]
