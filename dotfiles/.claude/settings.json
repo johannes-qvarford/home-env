@@ -1,17 +1,25 @@
 {
   "hooks": {
-    "Notification": [{
-      "hooks": [{
-        "type": "command",
-"command": "powershell.exe -ExecutionPolicy Bypass -File \"\\\\\\\\wsl.localhost\\Ubuntu\\home\\jq\\home-env\\claude\\play-random-alert.ps1\""
-      }]
-    }],
-    "PostToolUse": [{
-      "matcher": "Edit|Write|MultiEdit",
-      "hooks": [{
-        "type": "command",
-        "command": "jq -r '.tool_input.file_path' | xargs touch"
-      }]
-    }]
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -ExecutionPolicy Bypass -File \"\\\\\\\\wsl.localhost\\Ubuntu\\home\\jq\\home-env\\claude\\play-random-alert.ps1\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path' | xargs touch"
+          }
+        ]
+      }
+    ]
   }
 }
